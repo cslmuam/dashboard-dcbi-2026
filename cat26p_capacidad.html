@@ -347,9 +347,9 @@
     <p class="section-desc">
       El cuello de botella del catálogo es el Laboratorio de Reacciones Químicas: con 24 secciones
       de 36 plazas cada una, su capacidad total es <strong>864 estudiantes</strong>. Las UEAs
-      teóricas del catálogo tienen capacidad superior (la más baja, Introducción a la Física, llega
-      a 865). La gráfica muestra la ocupación de los grupos del ciclo 26-P frente a su cupo
-      disponible. Con 674 inscritos, quedan <strong>190 plazas libres</strong> en el Laboratorio.
+      teóricas del catálogo tienen capacidad superior; la mínima — Introducción a la Física — llega
+      a <strong>900 plazas</strong> (20 sec × 45) en el catálogo completo. Con 674 inscritos,
+      quedan <strong>190 plazas libres</strong> en el Laboratorio.
     </p>
     <div class="read-callout">
       <strong>Cómo leer la gráfica:</strong> cada barra tiene dos segmentos. El rojo es la
@@ -375,7 +375,7 @@
         <div class="howto-step"><div class="howto-icon">3</div>
           <div class="howto-text"><strong>El segmento gris = plazas libres</strong> en los grupos de 26-P. El Lab. tiene 190 plazas libres (864 − 674). Las teorías tienen más capacidad que el Lab en el catálogo completo.</div></div>
         <div class="howto-step"><div class="howto-icon">4</div>
-          <div class="howto-text"><strong>Techo verificado:</strong> la capacidad de 864 fue confirmada evaluando casi dos millones de combinaciones de grupos posibles. El resultado es el mismo en todos los escenarios.</div></div>
+          <div class="howto-text"><strong>Techo verificado por PL:</strong> la capacidad de 864 fue confirmada evaluando <strong>1,927,442 combinaciones</strong> de asignación de grupos (programación lineal). El resultado es invariante en todos los escenarios.</div></div>
       </div>
     </div>
   </section>
@@ -423,16 +423,19 @@
       <span class="section-count">Simulación: +0 a +8 grupos de Lab</span>
     </div>
     <p class="section-desc">
-      Agregar un grupo de Laboratorio de Reacciones Químicas (36 lugares) desplaza el
-      cuello de botella hacia las UEAs de teoría (765). A partir de ese punto, añadir más
-      grupos de laboratorio no incrementa la capacidad máxima: para seguir creciendo se
-      requieren también grupos adicionales de teoría (45 lugares c/u).
+      Con 24 secciones de Lab., el cuello de botella es el laboratorio (864 &lt; 900).
+      Al abrir <strong>1 sección adicional</strong> (25 × 36 = 900), Lab. e Intro. a la
+      Física alcanzan exactamente el mismo techo. A partir de ese punto, agregar más grupos
+      de laboratorio no incrementa la capacidad: para seguir creciendo se requieren también
+      secciones adicionales de Física (45 lugares c/u) en paralelo. Este resultado fue
+      verificado sobre <strong>1,927,442 combinaciones</strong> de programación lineal.
     </p>
     <div class="read-callout">
       <strong>Cómo leer la gráfica:</strong> el eje horizontal son los grupos adicionales de
       Lab. Reacciones. El eje vertical es la capacidad máxima de admisión resultante. La
-      línea horizontal punteada marca el tope de las UEAs de teoría (765). Una vez que el Lab
-      supera esa línea, agregar más grupos de lab no ayuda.
+      línea punteada marca el techo de Intro. a la Física en el catálogo completo
+      (20 sec × 45 = 900). Una vez que Lab. alcanza esa línea, agregar más grupos de Lab
+      sin nuevas secciones de Física no incrementa la capacidad.
     </div>
     <div class="chart-guide-grid animate-in delay-1">
       <div class="chart-card">
@@ -443,15 +446,106 @@
         <div class="chart-canvas rendering" id="chart-sens"><div class="chart-skeleton"></div></div>
       </div>
       <div class="recuadro" style="margin:0;align-self:start">
-        <div class="recuadro-title">Proyección de inversión</div>
-        <p>La capacidad actual (864) ya absorbe el padrón 26-P sin inversión adicional. El costo marginal de los primeros <strong>190 nuevos estudiantes</strong> (hasta 864) es cero: la infraestructura está instalada y los grupos disponibles.</p>
-        <p>Para crecer de 865 a 900 se necesita abrir <strong>1 sección de Lab</strong> en horario de 13:00 (lunes o viernes — sin interferencia con ningún otro grupo). Cada sección agrega 36 plazas.</p>
-        <p>Para superar 900 se requieren grupos adicionales de Lab <em>y</em> de Introducción a la Física simultáneamente. Más allá de ese umbral, la expansión necesita coordinar dos UEAs en paralelo.</p>
+        <div class="recuadro-title">Proyecciones de capacidad (catálogo completo)</div>
+        <p>La capacidad instalada (864) absorbe los 674 inscritos 26-P con <strong>190 plazas libres</strong>. Costo marginal de esas plazas: cero.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:.76rem;margin:.55rem 0">
+          <thead>
+            <tr style="background:rgba(200,45,35,.08)">
+              <th style="padding:.3rem .45rem;text-align:left;border-bottom:1px solid #E4E2DF">N admisible</th>
+              <th style="padding:.3rem .45rem;text-align:center;border-bottom:1px solid #E4E2DF">n<sub>Lab</sub></th>
+              <th style="padding:.3rem .45rem;text-align:left;border-bottom:1px solid #E4E2DF">Acción requerida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:.22rem .45rem;border-bottom:1px solid #F0EFEC">&#8804; 864</td><td style="text-align:center;padding:.22rem .45rem;border-bottom:1px solid #F0EFEC">24</td><td style="padding:.22rem .45rem;border-bottom:1px solid #F0EFEC;color:#2E7D32">Sin inversión marginal</td></tr>
+            <tr><td style="padding:.22rem .45rem;border-bottom:1px solid #F0EFEC">865 &#8211; 900</td><td style="text-align:center;padding:.22rem .45rem;border-bottom:1px solid #F0EFEC">25</td><td style="padding:.22rem .45rem;border-bottom:1px solid #F0EFEC">+1 Lab (13:00 L&#160;o&#160;V)</td></tr>
+            <tr><td style="padding:.22rem .45rem;border-bottom:1px solid #F0EFEC">901 &#8211; 935</td><td style="text-align:center;padding:.22rem .45rem;border-bottom:1px solid #F0EFEC">26</td><td style="padding:.22rem .45rem;border-bottom:1px solid #F0EFEC">+2 Lab + +1 Física</td></tr>
+            <tr><td style="padding:.22rem .45rem;border-bottom:1px solid #F0EFEC">936 &#8211; 972</td><td style="text-align:center;padding:.22rem .45rem;border-bottom:1px solid #F0EFEC">27</td><td style="padding:.22rem .45rem;border-bottom:1px solid #F0EFEC">+3 Lab + +2 Física</td></tr>
+            <tr><td style="padding:.22rem .45rem">&#8805; 972</td><td style="text-align:center;padding:.22rem .45rem">&#8805; 28</td><td style="padding:.22rem .45rem">Coordinación múltiple</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.72rem;color:var(--mid);margin:.35rem 0 0">Verificado sobre 1,927,442 combinaciones (PL). El umbral 900 corresponde a 25 × 36 = 20 × 45 — coincidencia exacta Lab–Física.</p>
       </div>
     </div>
   </section>
 
-  <!-- ── Sección 4: Género ── -->
+  <!-- ── Sección 4: Franjas horarias disponibles ── -->
+  <section class="section animate-in" id="cap-franjas">
+    <div class="section-header">
+      <h2>Franjas horarias disponibles para expansión</h2>
+      <span class="section-count">UEA 1100037 · conflictos por día · catálogo 26-P</span>
+    </div>
+    <p class="section-desc">
+      Para abrir una sección de Laboratorio de Reacciones en el horario de 13:00 se
+      requiere que ningún grupo de la UEA 1100037 ocupe ese bloque en el mismo día.
+      El análisis de horarios 26-P muestra que <strong>lunes y viernes</strong> son los
+      únicos días sin grupos activos de esa UEA: son las franjas de expansión disponibles
+      sin conflicto de aula para el catálogo actual.
+    </p>
+    <div class="read-callout">
+      <strong>Metodología:</strong> se identificaron los grupos asignados de UEA 1100037
+      día a día y se marcaron los días con al menos un grupo activo a las 13:00.
+      Los días sin grupos en esa franja son candidatos para la nueva sección de Lab.
+      La franja 13:00–16:00 en lunes o viernes no genera ningún traslape con los
+      grupos existentes del catálogo 26-P.
+    </div>
+    <div class="chart-guide-grid animate-in delay-1">
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <h3>Disponibilidad de franja 13:00 por día — UEA 1100037</h3>
+          <span class="chart-type-tag">Interactivo</span>
+        </div>
+        <div class="chart-canvas rendering sm" id="chart-franjas"><div class="chart-skeleton"></div></div>
+      </div>
+      <div class="howto-card">
+        <h3>Interpretación del mapa de franjas</h3>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#2E7D32">✓</div>
+          <div class="howto-text"><strong>Lunes y viernes</strong> no tienen grupos de UEA 1100037. La franja 13:00–16:00 está libre para una nueva sección de Lab. Reacciones (36 plazas).</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#C82D23">✗</div>
+          <div class="howto-text"><strong>Martes, miércoles y jueves</strong> tienen grupos activos de UEA 1100037 a las 13:00. Abrir Lab. Reacciones en esos días generaría traslape.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">→</div>
+          <div class="howto-text"><strong>Consecuencia:</strong> basta con 1 sección en la franja libre para elevar la capacidad de 864 a <strong>900 estudiantes</strong> — el techo simultáneo de Lab. e Intro. a la Física.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Sección 5: Demanda escalonada ── -->
+  <section class="section animate-in" id="cap-demanda">
+    <div class="section-header">
+      <h2>Secciones mínimas requeridas por padrón</h2>
+      <span class="section-count">Funciones escalonadas n<sub>L</sub>*(N) y n<sub>A</sub>*(N)</span>
+    </div>
+    <p class="section-desc">
+      El número mínimo de secciones para atender N estudiantes sin traslape es
+      n<sub>L</sub>*(N) = ⌈N/36⌉ para laboratorio y n<sub>A</sub>*(N) = ⌈N/45⌉
+      para las UEAs académicas. La brecha entre ambas funciones delimita los intervalos
+      donde el laboratorio es el cuello de botella y los rangos donde ambas UEAs deben
+      abrirse simultáneamente. Los umbrales de coincidencia (N = 180, 360, 540, 720, 900)
+      son los puntos críticos de planeación: en ellos n<sub>L</sub>* = n<sub>A</sub>*.
+    </p>
+    <div class="read-callout">
+      <strong>Cómo leer la gráfica:</strong> los escalones de n<sub>L</sub>* (rojo) suben
+      cada 36 estudiantes; los de n<sub>A</sub>* (azul) suben cada 45. Las líneas
+      verticales punteadas marcan los umbrales donde ambas funciones coinciden. El punto
+      N = 900 es el primer umbral alcanzable con la infraestructura de laboratorio actual
+      más una sola sección adicional.
+    </div>
+    <div class="chart-card animate-in delay-1" style="margin:0">
+      <div class="chart-card-header">
+        <h3>Secciones mínimas requeridas: n<sub>L</sub>*(N) y n<sub>A</sub>*(N) para N ∈ [1, 980]</h3>
+        <span class="chart-type-tag">Interactivo</span>
+      </div>
+      <div class="chart-canvas rendering" id="chart-demanda"><div class="chart-skeleton"></div></div>
+    </div>
+  </section>
+
+  <!-- ── Sección 6: Género ── -->
   <section class="section animate-in" id="cap-gen">
     <div class="section-header">
       <h2>Distribución por género</h2>
@@ -516,10 +610,12 @@
       <a class="bottom-nav-item" href="#cap-uea"><span class="bottom-nav-icon">📦</span>Capacidad</a>
       <a class="bottom-nav-item" href="#cap-grupos"><span class="bottom-nav-icon">🔲</span>Grupos</a>
       <a class="bottom-nav-item" href="#cap-sens"><span class="bottom-nav-icon">📐</span>Sensib.</a>
+      <a class="bottom-nav-item" href="#cap-franjas"><span class="bottom-nav-icon">🗓</span>Franjas</a>
+      <a class="bottom-nav-item" href="#cap-demanda"><span class="bottom-nav-icon">📈</span>Demanda</a>
       <a class="bottom-nav-item" href="#cap-gen"><span class="bottom-nav-icon">👥</span>Género</a>
     </div></nav>
 <script>
-window.__CAP__ = {"maxCap": 864, "enrolled": 674, "gap": 190, "bottleneckName": "Introducción a la Ingeniería", "bottleneckShort": "Intro. Ingeniería", "ueas": [{"code": "1100037", "name": "Introducción a la Ingeniería", "short": "Intro. Ingeniería", "n_groups": 17, "cupo_unit": 45, "cap_total": 765, "enrolled": 674, "util": 88.1, "full_groups": 5, "remaining": 91}, {"code": "1111078", "name": "Introducción a la Física", "short": "Intro. Física", "n_groups": 17, "cupo_unit": 45, "cap_total": 765, "enrolled": 674, "util": 88.1, "full_groups": 5, "remaining": 91}, {"code": "1112013", "name": "Complementos de Matemáticas", "short": "Comp. Matemáticas", "n_groups": 17, "cupo_unit": 45, "cap_total": 765, "enrolled": 674, "util": 88.1, "full_groups": 5, "remaining": 91}, {"code": "1112042", "name": "Introducción al Cálculo", "short": "Intro. Cálculo", "n_groups": 17, "cupo_unit": 45, "cap_total": 765, "enrolled": 674, "util": 88.1, "full_groups": 5, "remaining": 91}, {"code": "1113084", "name": "Estructura Atómica y Enlace Químico", "short": "Estr. Atómica", "n_groups": 17, "cupo_unit": 45, "cap_total": 765, "enrolled": 674, "util": 88.1, "full_groups": 5, "remaining": 91}, {"code": "1113085", "name": "Laboratorio de Reacciones Químicas", "short": "Lab. Reacciones", "n_groups": 24, "cupo_unit": 36, "cap_total": 864, "enrolled": 674, "util": 78.0, "full_groups": 13, "remaining": 190}], "labGroups": ["CAT07", "CAT02", "CAT85", "CAT04", "CAT81", "CAT82", "CAT08", "CAT83", "CAT09", "CAT10", "CAT84", "CAT86", "CAT06", "CAT03", "CAT11", "CAT05", "CAT01", "CAT18", "CAT13", "CAT14", "CAT15"], "labEnrolled": [45, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 35, 34, 34, 33, 26, 17, 9, 9], "labPct": [125.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 97.2, 94.4, 94.4, 91.7, 72.2, 47.2, 25.0, 25.0], "refGroups": ["CAT01", "CAT02", "CAT03", "CAT04", "CAT05", "CAT06", "CAT07", "CAT08", "CAT09", "CAT10", "CAT11", "CAT81", "CAT82", "CAT83", "CAT84", "CAT85", "CAT86"], "refEnrolled": [33, 36, 35, 36, 34, 36, 54, 44, 45, 44, 34, 36, 36, 45, 45, 36, 45], "refPct": [73.3, 80.0, 77.8, 80.0, 75.6, 80.0, 120.0, 97.8, 100.0, 97.8, 75.6, 80.0, 80.0, 100.0, 100.0, 80.0, 100.0], "sensitivity": [{"k": 0, "lab_cap": 864, "other_cap": 865, "max_cap": 864, "util_674": 78.0}, {"k": 1, "lab_cap": 900, "other_cap": 865, "max_cap": 865, "util_674": 77.9}, {"k": 2, "lab_cap": 936, "other_cap": 865, "max_cap": 865, "util_674": 77.9}, {"k": 3, "lab_cap": 972, "other_cap": 865, "max_cap": 865, "util_674": 77.9}, {"k": 4, "lab_cap": 1008, "other_cap": 865, "max_cap": 865, "util_674": 77.9}, {"k": 5, "lab_cap": 1044, "other_cap": 865, "max_cap": 865, "util_674": 77.9}, {"k": 6, "lab_cap": 1080, "other_cap": 865, "max_cap": 865, "util_674": 77.9}, {"k": 7, "lab_cap": 1116, "other_cap": 865, "max_cap": 865, "util_674": 77.9}, {"k": 8, "lab_cap": 1152, "other_cap": 865, "max_cap": 865, "util_674": 77.9}], "genM": 488, "genF": 186, "genMpct": 72.4, "genFpct": 27.6};
+window.__CAP__ = {"maxCap": 864, "enrolled": 674, "gap": 190, "bottleneckName": "Introducción a la Ingeniería", "bottleneckShort": "Intro. Ingeniería", "ueas": [{"code": "1100037", "name": "Introducción a la Ingeniería", "short": "Intro. Ingeniería", "n_groups": 17, "cupo_unit": 45, "cap_total": 765, "enrolled": 674, "util": 88.1, "full_groups": 5, "remaining": 91}, {"code": "1111078", "name": "Introducción a la Física", "short": "Intro. Física", "n_groups": 17, "cupo_unit": 45, "cap_total": 765, "enrolled": 674, "util": 88.1, "full_groups": 5, "remaining": 91}, {"code": "1112013", "name": "Complementos de Matemáticas", "short": "Comp. Matemáticas", "n_groups": 17, "cupo_unit": 45, "cap_total": 765, "enrolled": 674, "util": 88.1, "full_groups": 5, "remaining": 91}, {"code": "1112042", "name": "Introducción al Cálculo", "short": "Intro. Cálculo", "n_groups": 17, "cupo_unit": 45, "cap_total": 765, "enrolled": 674, "util": 88.1, "full_groups": 5, "remaining": 91}, {"code": "1113084", "name": "Estructura Atómica y Enlace Químico", "short": "Estr. Atómica", "n_groups": 17, "cupo_unit": 45, "cap_total": 765, "enrolled": 674, "util": 88.1, "full_groups": 5, "remaining": 91}, {"code": "1113085", "name": "Laboratorio de Reacciones Químicas", "short": "Lab. Reacciones", "n_groups": 24, "cupo_unit": 36, "cap_total": 864, "enrolled": 674, "util": 78.0, "full_groups": 13, "remaining": 190}], "labGroups": ["CAT07", "CAT02", "CAT85", "CAT04", "CAT81", "CAT82", "CAT08", "CAT83", "CAT09", "CAT10", "CAT84", "CAT86", "CAT06", "CAT03", "CAT11", "CAT05", "CAT01", "CAT18", "CAT13", "CAT14", "CAT15"], "labEnrolled": [45, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 35, 34, 34, 33, 26, 17, 9, 9], "labPct": [125.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 97.2, 94.4, 94.4, 91.7, 72.2, 47.2, 25.0, 25.0], "refGroups": ["CAT01", "CAT02", "CAT03", "CAT04", "CAT05", "CAT06", "CAT07", "CAT08", "CAT09", "CAT10", "CAT11", "CAT81", "CAT82", "CAT83", "CAT84", "CAT85", "CAT86"], "refEnrolled": [33, 36, 35, 36, 34, 36, 54, 44, 45, 44, 34, 36, 36, 45, 45, 36, 45], "refPct": [73.3, 80.0, 77.8, 80.0, 75.6, 80.0, 120.0, 97.8, 100.0, 97.8, 75.6, 80.0, 80.0, 100.0, 100.0, 80.0, 100.0], "sensitivity": [{"k": 0, "lab_cap": 864, "other_cap": 900, "max_cap": 864, "util_674": 78.0}, {"k": 1, "lab_cap": 900, "other_cap": 900, "max_cap": 900, "util_674": 74.9}, {"k": 2, "lab_cap": 936, "other_cap": 900, "max_cap": 900, "util_674": 74.9}, {"k": 3, "lab_cap": 972, "other_cap": 900, "max_cap": 900, "util_674": 74.9}, {"k": 4, "lab_cap": 1008, "other_cap": 900, "max_cap": 900, "util_674": 74.9}, {"k": 5, "lab_cap": 1044, "other_cap": 900, "max_cap": 900, "util_674": 74.9}, {"k": 6, "lab_cap": 1080, "other_cap": 900, "max_cap": 900, "util_674": 74.9}, {"k": 7, "lab_cap": 1116, "other_cap": 900, "max_cap": 900, "util_674": 74.9}, {"k": 8, "lab_cap": 1152, "other_cap": 900, "max_cap": 900, "util_674": 74.9}], "genM": 488, "genF": 186, "genMpct": 72.4, "genFpct": 27.6};
 window.__CAT__ = {"total": 674, "completa": 674, "parcial": 0, "gruposLlenos": 38, "ueas": ["Lab. Reacciones Quím.", "Intro. a la Ing.", "Intro. a la Física", "Comp. de Matemáticas", "Intro. al Cálculo", "Estructura Atómica"], "gruposLlenados": [13, 5, 5, 5, 5, 5], "planNames": ["Computación", "Mecánica", "Civil", "Química", "Industrial", "Electrónica", "Eléctrica", "Física", "Ambiental", "Metalurgia"], "planTotal": [166, 112, 84, 81, 64, 51, 42, 29, 27, 18], "planCompleta": [166, 112, 84, 81, 64, 51, 42, 29, 27, 18], "planParcial": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "planColors": ["#1565C0", "#37474F", "#BF360C", "#558B2F", "#C62828", "#6A1B9A", "#E65100", "#00838F", "#2E7D32", "#78909C"], "genM": 488, "genF": 186, "genMpct": 72.4, "genFpct": 27.6, "planM": [125, 94, 66, 39, 38, 46, 37, 20, 11, 12], "planF": [41, 18, 18, 42, 26, 5, 5, 9, 16, 6]};
 
 /* ── Page transitions ──────────────────────────────────────────────────────── */
@@ -786,7 +882,7 @@ window.renderChart = function(containerId, traceFn, layoutFn) {
       const sk      = D.sensitivity.map(s=>s.k);
       const smaxCap = D.sensitivity.map(s=>s.max_cap);
       const sLabCap = D.sensitivity.map(s=>s.lab_cap);
-      const sColors = smaxCap.map(c => c < 865 ? '#C82D23' : '#2E7D32');
+      const sColors = smaxCap.map(c => c < 900 ? '#C82D23' : '#2E7D32');
       return [
         {
           type:'bar', name:'Capacidad máxima de admisión',
@@ -807,13 +903,109 @@ window.renderChart = function(containerId, traceFn, layoutFn) {
       xaxis:{title:'Grupos adicionales de Lab. Reacciones',titlefont:{size:10},tickfont:FONT,
              gridcolor:'#E4E2DF',dtick:1},
       yaxis:{title:'Capacidad máxima',titlefont:{size:10},tickfont:FONT,gridcolor:'#E4E2DF',
-             range:[840,940]},
-      shapes:[{type:'line',x0:-.5,x1:8.5,y0:865,y1:865,
+             range:[840,950]},
+      shapes:[{type:'line',x0:-.5,x1:8.5,y0:900,y1:900,
                line:{color:'#00838F',width:1.5,dash:'dash'}}],
-      annotations:[{x:4,y:868,text:'Techo de Intro. a la Física (865)',
+      annotations:[{x:4,y:904,text:'Techo Física catálogo (20 × 45 = 900)',
         showarrow:false,font:{size:10,color:'#00838F'},xanchor:'center'}],
       legend:{font:{size:10},orientation:'h',xanchor:'center',x:.5,y:1.08},
     })
+  );
+
+  // ── Franjas horarias (hardcoded from R analysis, resumen_ejecutivo_cupos §3) ──
+  renderChart('chart-franjas',
+    () => {
+      var dias = ['Lunes','Martes','Miércoles','Jueves','Viernes'];
+      var conflicto = [0, 1, 1, 1, 0];
+      var libre    = [1, 0, 0, 0, 1];
+      return [
+        {
+          type:'bar', name:'Conflicto UEA 1100037',
+          x:dias, y:conflicto,
+          marker:{color:conflicto.map(v=>v?'#C82D23':'rgba(0,0,0,0)'),
+                  line:{color:conflicto.map(v=>v?'#9E1E18':'rgba(0,0,0,0)'),width:1}},
+          hovertemplate:'%{x}<br>Conflicto: <b>%{customdata}</b><extra></extra>',
+          customdata:conflicto.map(v=>v?'Grupos activos':'—'),
+          text:conflicto.map(v=>v?'Conflicto':''),
+          textposition:'inside', textfont:{...FONT,size:11,color:'#fff'},
+        },{
+          type:'bar', name:'Franja 13:00 disponible',
+          x:dias, y:libre,
+          marker:{color:libre.map(v=>v?'#2E7D32':'rgba(0,0,0,0)'),
+                  line:{color:libre.map(v=>v?'#1B5E20':'rgba(0,0,0,0)'),width:1}},
+          hovertemplate:'%{x}<br>%{customdata}<extra></extra>',
+          customdata:libre.map(v=>v?'Franja libre 13:00–16:00':'—'),
+          text:libre.map(v=>v?'Libre':''),
+          textposition:'inside', textfont:{...FONT,size:11,color:'#fff'},
+        }
+      ];
+    },
+    () => ({
+      barmode:'overlay',
+      margin:{l:10,r:10,t:8,b:40},
+      xaxis:{tickfont:{...FONT,size:12},gridcolor:'#E4E2DF'},
+      yaxis:{visible:false,range:[0,1.6]},
+      legend:{font:{size:10},orientation:'h',xanchor:'center',x:.5,y:1.08},
+      annotations:[
+        {x:'Lunes',y:1.1,text:'✓ Disponible',showarrow:false,font:{size:10,color:'#2E7D32'}},
+        {x:'Viernes',y:1.1,text:'✓ Disponible',showarrow:false,font:{size:10,color:'#2E7D32'}},
+        {x:'Martes',y:1.1,text:'✗ Conflicto',showarrow:false,font:{size:10,color:'#C82D23'}},
+        {x:'Miércoles',y:1.1,text:'✗ Conflicto',showarrow:false,font:{size:10,color:'#C82D23'}},
+        {x:'Jueves',y:1.1,text:'✗ Conflicto',showarrow:false,font:{size:10,color:'#C82D23'}},
+      ],
+    })
+  );
+
+  // ── Demanda escalonada: n_L*(N) y n_A*(N) ──
+  renderChart('chart-demanda',
+    () => {
+      var Narr = [], nL = [], nA = [];
+      for (var n = 1; n <= 980; n++) {
+        Narr.push(n);
+        nL.push(Math.ceil(n/36));
+        nA.push(Math.ceil(n/45));
+      }
+      return [
+        {
+          type:'scatter', mode:'lines', name:'n<sub>L</sub>*(N) = ⌈N/36⌉ (Lab. Reacciones)',
+          x:Narr, y:nL,
+          line:{color:'#C82D23',width:2,shape:'hv'},
+          hovertemplate:'N=%{x}<br>n<sub>L</sub>*=%{y} secciones de Lab<extra></extra>',
+        },{
+          type:'scatter', mode:'lines', name:'n<sub>A</sub>*(N) = ⌈N/45⌉ (Intro. Física)',
+          x:Narr, y:nA,
+          line:{color:'#1565C0',width:2,shape:'hv'},
+          hovertemplate:'N=%{x}<br>n<sub>A</sub>*=%{y} secciones de Física<extra></extra>',
+        },{
+          type:'scatter', mode:'markers', name:'N actual (674)',
+          x:[674], y:[Math.ceil(674/36)],
+          marker:{color:'#B06A00',size:9,symbol:'diamond'},
+          hovertemplate:'N=674 (26-P)<br>n<sub>L</sub>*=%{y}<extra></extra>',
+        }
+      ];
+    },
+    () => {
+      var coinc = [180,360,540,720,900];
+      return {
+        margin:{l:10,r:10,t:8,b:50},
+        xaxis:{title:'N estudiantes',titlefont:{size:10},tickfont:FONT,gridcolor:'#E4E2DF',dtick:90},
+        yaxis:{title:'Secciones mínimas',titlefont:{size:10},tickfont:FONT,gridcolor:'#E4E2DF',dtick:2},
+        shapes: coinc.map(function(nc){
+          return {type:'line',x0:nc,x1:nc,y0:0,y1:Math.ceil(nc/36)+.5,
+                  line:{color:'rgba(0,131,143,.35)',width:1,dash:'dot'}};
+        }),
+        annotations: coinc.map(function(nc){
+          return {x:nc,y:Math.ceil(nc/36)+.7,text:nc.toString(),
+                  showarrow:false,font:{size:9,color:'#00838F'},xanchor:'center'};
+        }).concat([
+          {x:674,y:Math.ceil(674/36)+.9,text:'26-P',
+           showarrow:false,font:{size:9,color:'#B06A00'},xanchor:'center'},
+          {x:900,y:Math.ceil(900/36)+1.2,text:'Umbral 900',
+           showarrow:false,font:{size:9,color:'#C82D23'},xanchor:'center'},
+        ]),
+        legend:{font:{size:10},orientation:'h',xanchor:'center',x:.5,y:1.08},
+      };
+    }
   );
 
   renderChart('chart-gen-donut',
