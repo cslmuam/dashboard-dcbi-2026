@@ -2929,15 +2929,15 @@ META6_CONTENT = """
   <p class="section-desc">La consecuencia es que RA opera, en la práctica, como un componente fijo cercano a 0.79 para la población general, y cerca de cero para los estudiantes bloqueados por seriaciones. El índice P hereda este déficit en su término de mayor peso: la componente RA contribuye con un coeficiente que oscila entre 0.40 y 0.50 según el plan, de modo que el techo real de P para un estudiante no bloqueado es sensiblemente inferior a 1 antes incluso de considerar los demás factores.</p>
 
   <div class="read-callout">
-    <strong>Cómo leer la gráfica:</strong> el mapa de calor muestra, para cada combinación de plan y trimestre, la fracción de estudiantes con RA&#8202;&lt;&#8202;1. Una celda completamente saturada (fracción&#8202;=&#8202;1.00) significa que ningún estudiante del plan alcanzó el umbral de 38 créditos en ese trimestre. Los planes con mayor densidad de seriaciones&#8202;—&#8202;Electrónica, Electrónica y Computación, Mecatrónica&#8202;—&#8202;muestran las franjas más oscuras a partir del trimestre 4, cuando las cadenas de prerrequisitos comienzan a bloquear la oferta disponible de forma sistemática.
+    <strong>Cómo leer la gráfica:</strong> cada barra muestra la carga efectiva c<sub>s</sub> calibrada para ese plan (créditos promedio aprobados por trimestre en la trayectoria histórica). La línea punteada marca el umbral de referencia de 38 cr/trim que usa el denominador de RA. Todas las barras <strong>rojas</strong> quedan por debajo de esa línea&#8202;—&#8202;lo que convierte el déficit de RA en un resultado estructural, no en una característica de las cohortes. La barra <strong>verde</strong> (Metalurgia, c<sub>s</sub>=41) es la única excepción; su superávit se debe a que su plan de estudios tiene menor densidad de seriaciones bloqueantes. Pase el cursor sobre cada barra para ver el valor exacto de RA = c<sub>s</sub>/38.
   </div>
 
   <div class="chart-card animate-in delay-1">
     <div class="chart-card-header">
-      <h3>Fracción con RA&lt;1 por plan y trimestre (escenario baseline)</h3>
+      <h3>Carga efectiva c<sub>s</sub> vs. calibrador de RA (38 cr/trim) por plan</h3>
       <span class="chart-type-tag">Interactivo</span>
     </div>
-    <div class="chart-canvas rendering lg" id="chart-ra-deficit"><div class="chart-skeleton"></div></div>
+    <div class="chart-canvas rendering md" id="chart-ra-deficit"><div class="chart-skeleton"></div></div>
   </div>
 
   <div class="howto-card animate-in delay-1">
@@ -3206,32 +3206,45 @@ renderChart('chart-h-coherencia',
 
 renderChart('chart-ra-deficit',
   () => {
-    const plans = ['met','com','ele','qui','elo','civ','fis','amb','mec','ind'];
-    const tCols = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
-    const matrix = {
-      met:[0.861,0.9433,0.9633,0.98,0.9903,0.9912,0.993,0.9931,0.9996,0.9968,1.0,1.0,1.0,1.0,1.0,1.0],
-      com:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
-      ele:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
-      qui:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
-      elo:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
-      civ:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
-      fis:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
-      amb:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
-      mec:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
-      ind:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]
+    // Plans sorted ascending by c_s (calibrated load from model)
+    const plans = ['Mec.','Amb.','Civil','Eléctr.','Electron.','Física','Comp.','Ind.','Química','Metalurgia'];
+    const cs    = [27, 30, 30, 30, 30, 30, 31, 31, 33, 41];
+    const ra    = cs.map(c => Math.min(c/38, 1));
+    const colors = cs.map(c => c >= 38 ? '#2E7D32' : '#C82D23');
+    const ref   = cs.map(() => 38);
+
+    const trBar = {
+      type:'bar', orientation:'v',
+      name:'Carga efectiva c<sub>s</sub> (cr/trim)',
+      x:plans, y:cs,
+      marker:{color:colors, opacity:.85, line:{color:'rgba(0,0,0,.07)',width:.5}},
+      hovertemplate:'<b>%{x}</b><br>c<sub>s</sub> = %{y} cr/trim<br>RA = %{customdata:.2f}<extra></extra>',
+      customdata:ra,
+      text:cs.map(c=>'<b>'+c+'</b>'),
+      textposition:'outside', textfont:{...FONT, size:11}, cliponaxis:false,
     };
-    const planLabels = {met:'Met',com:'Comp',ele:'Ele',qui:'Qui',elo:'Elo',civ:'Civ',fis:'Fis',amb:'Amb',mec:'Mec',ind:'Ind'};
-    const z = plans.map(p => matrix[p]);
-    return [{ type:'heatmap', x:tCols.map(String), y:plans.map(p=>planLabels[p]), z:z, colorscale:[[0,'#FFFFFF'],[0.80,'#FFCDD2'],[0.90,'#EF9A9A'],[0.95,'#E57373'],[1.00,'#C82D23']], zmin:0, zmax:1, colorbar:{title:{text:'Frac. RA<1',font:FONT,side:'right'},thickness:14,tickformat:'.0%',len:0.8}, hovertemplate:'Plan: %{y}<br>Trimestre: %{x}<br>Fracción RA<1: %{z:.1%}<extra></extra>', xgap:1, ygap:1 }];
+    const trRef = {
+      type:'scatter', mode:'lines',
+      name:'Referencia RA = 38 cr/trim',
+      x:plans, y:ref,
+      line:{color:'#00838F', width:2, dash:'dash'},
+      hovertemplate:'Calibrador RA: 38 cr/trim<extra></extra>',
+    };
+    return [trBar, trRef];
   },
   () => ({
     ...LAYOUT_BASE,
-    margin:{l:10,r:10,t:10,b:50},
-    xaxis:{title:{text:'Trimestre T',font:FONT},automargin:true,type:'category',tickangle:0},
-    yaxis:{title:{text:'Plan de estudios',font:FONT},automargin:true,type:'category'},
+    margin:{l:10,r:10,t:10,b:80},
+    xaxis:{tickfont:{...FONT,size:11}, automargin:true, tickangle:-30},
+    yaxis:{title:{text:'cr/trim',font:FONT}, range:[0,48], gridcolor:'#E4E2DF', dtick:10},
+    legend:{orientation:'h', xanchor:'center', x:.5, y:1.08, font:FONT},
     annotations:[
-      {x:'1',y:'Met',xref:'x',yref:'y',text:'c<sub>s</sub>=41>38',showarrow:true,arrowhead:2,arrowsize:0.8,ax:50,ay:-30,font:{color:'#00838F',size:10},arrowcolor:'#00838F'},
-      {x:0.5,y:-0.12,xref:'paper',yref:'paper',text:'Denominador RA = 38 cr/trim — déficit estructural, no fracaso individual',showarrow:false,font:{color:'#646464',size:10,style:'italic'},xanchor:'center'}
+      {x:'Metalurgia', y:44, text:'único plan con c<sub>s</sub> ≥ 38',
+       showarrow:true, arrowhead:2, arrowsize:.8, ax:0, ay:-24,
+       font:{color:'#2E7D32', size:10}, arrowcolor:'#2E7D32'},
+      {x:0.5, y:-0.22, xref:'paper', yref:'paper',
+       text:'9 de 10 planes operan por debajo del calibrador — déficit estructural de RA, no fracaso individual',
+       showarrow:false, font:{color:'#646464', size:10, style:'italic'}, xanchor:'center'}
     ]
   })
 );
