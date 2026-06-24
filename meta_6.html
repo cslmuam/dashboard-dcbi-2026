@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="theme-color" content="#C82D23">
+  <title>Metaanálisis · Infografía 6 — Índices de prelación P y h · DCBI UAM-A</title>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+  :root {
+    --red:#C82D23; --red-d:#9E1E18; --red-l:#FBEEED;
+    --ink:#1A1A1A; --mid:#444; --muted:#888;
+    --border:#E4E2DF; --bg:#F5F4F1; --card:#fff;
+    --teal:#00838F; --teal-light:#E0F4F5;
+    --amber:#B06A00; --green:#2E7D32;
+    --shadow-sm:0 1px 4px rgba(0,0,0,.07),0 4px 12px rgba(0,0,0,.06);
+    --shadow-md:0 4px 16px rgba(0,0,0,.10),0 12px 32px rgba(0,0,0,.08);
+    --radius:10px;
+    --font:'Helvetica Neue',Arial,system-ui,sans-serif;
+    --ease:.22s cubic-bezier(.4,0,.2,1);
+    --c-amb:#2E7D32; --c-civ:#BF360C; --c-com:#1565C0; --c-ele:#E65100;
+    --c-elo:#6A1B9A; --c-fis:#00838F; --c-ind:#C62828;
+    --c-mec:#37474F; --c-met:#78909C; --c-qui:#558B2F;
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0 }
+  html { font-size:16px; scroll-behavior:smooth }
+  body { font-family:var(--font); background:var(--bg); color:var(--ink);
+         line-height:1.6; -webkit-font-smoothing:antialiased;
+         animation:fadeInPage .45s ease both }
+  body.page-exit { opacity:0; transform:translateY(6px);
+                   transition:opacity .28s ease,transform .28s ease; pointer-events:none }
+  @keyframes fadeInPage { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+  a { color:inherit; text-decoration:none }
+  img { display:block; max-width:100% }
+
+  /* ── Nav ── */
+  .nav { position:sticky; top:0; z-index:100;
+         background:rgba(255,255,255,.92); backdrop-filter:blur(12px);
+         border-bottom:1px solid var(--border); padding:0 2rem }
+  .nav-inner { max-width:1440px; margin:0 auto;
+               display:flex; align-items:center; gap:.25rem; height:52px }
+  .nav-brand { font-size:.78rem; font-weight:700; letter-spacing:.08em;
+               text-transform:uppercase; color:var(--red); white-space:nowrap;
+               margin-right:auto; padding:.3rem .6rem .3rem 0 }
+  .nav-links { display:flex; gap:0; list-style:none }
+  .nav-links a { display:block; padding:.3rem .9rem; font-size:.82rem; color:var(--mid);
+                 border-radius:6px; transition:background var(--ease),color var(--ease) }
+  .nav-links a:hover { background:var(--red-l); color:var(--red) }
+  .nav-links a.active { background:var(--red-l); color:var(--red); font-weight:600 }
+  .nav-hamburger { display:none; background:none; border:none; cursor:pointer;
+                   padding:8px; flex-direction:column; justify-content:center; gap:5px;
+                   width:36px; height:36px; border-radius:6px;
+                   transition:background var(--ease) }
+  .nav-hamburger:hover { background:var(--red-l) }
+  .nav-hamburger span { display:block; width:20px; height:2px; background:var(--ink);
+                        border-radius:2px; transition:transform .22s ease,opacity .22s ease }
+  .nav-hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg) }
+  .nav-hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0) }
+  .nav-hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg) }
+
+  /* ── Hero ── */
+  .hero { background:var(--ink); color:#fff; padding:4rem 2rem 3rem }
+  .hero-inner { max-width:1440px; margin:0 auto;
+                display:grid; grid-template-columns:1fr auto; gap:2rem; align-items:end }
+  .hero-label { font-size:.72rem; font-weight:700; letter-spacing:.14em;
+                text-transform:uppercase; color:var(--red); margin-bottom:.6rem }
+  .hero h1 { font-size:clamp(1.6rem,3vw,2.6rem); font-weight:300;
+             line-height:1.2; letter-spacing:-.02em }
+  .hero h1 strong { font-weight:700 }
+  .hero-sub { margin-top:.75rem; font-size:.92rem; color:rgba(255,255,255,.55); max-width:580px }
+  .hero-bar { width:48px; height:3px; background:var(--red); margin:1.5rem 0 }
+  .stats { display:flex; flex-wrap:wrap; gap:.5rem 1.5rem }
+  .stat { display:flex; flex-direction:column; padding:.75rem 1.1rem;
+          background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1);
+          border-radius:8px; min-width:90px }
+  .stat-val { font-size:2rem; font-weight:700; color:#fff; line-height:1 }
+  .stat-lbl { font-size:.68rem; color:rgba(255,255,255,.45); margin-top:.25rem; letter-spacing:.04em }
+  .palette { display:flex; flex-direction:column; gap:.4rem }
+  .palette-title { font-size:.66rem; color:rgba(255,255,255,.4);
+                   text-transform:uppercase; letter-spacing:.1em; margin-bottom:.2rem }
+  .palette-chips { display:flex; flex-direction:column; gap:.28rem }
+  .chip { display:flex; align-items:center; gap:.5rem; font-size:.72rem; color:rgba(255,255,255,.65) }
+  .chip-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0 }
+
+  /* ── Main / Sections ── */
+  .main { max-width:1440px; margin:0 auto; padding:0 2rem 4rem }
+  .section { margin-top:3.5rem }
+  .section-header { display:flex; align-items:baseline; gap:1rem;
+                    padding-bottom:.75rem; border-bottom:2px solid var(--border); margin-bottom:1.5rem }
+  .section-header h2 { font-size:1.2rem; font-weight:700; letter-spacing:-.01em }
+  .section-count { font-size:.78rem; color:var(--muted); background:var(--bg);
+                   border:1px solid var(--border); padding:.15rem .55rem; border-radius:20px }
+  .section-desc { font-size:.87rem; color:var(--mid); margin-bottom:1.5rem;
+                  max-width:740px; line-height:1.7 }
+
+  /* ── Callout / Recuadro ── */
+  .read-callout { background:var(--teal-light); border-left:4px solid var(--teal);
+                  border-radius:0 8px 8px 0; padding:.9rem 1.1rem;
+                  margin-bottom:1.4rem; font-size:.84rem; line-height:1.65 }
+  .read-callout strong { color:var(--teal) }
+  .recuadro { background:var(--card); border:1px solid var(--border);
+              border-left:4px solid var(--red); border-radius:0 8px 8px 0;
+              padding:1.1rem 1.3rem; margin:1.5rem 0 }
+  .recuadro-title { font-size:.85rem; font-weight:700; color:var(--red); margin-bottom:.6rem }
+  .recuadro p { font-size:.84rem; color:var(--mid); line-height:1.7; margin-bottom:.5rem }
+  .recuadro p:last-child { margin-bottom:0 }
+
+  /* ── Howto ── */
+  .howto-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem }
+  .howto-card { background:var(--card); border:1px solid var(--border);
+                border-radius:10px; padding:1.25rem }
+  .howto-card h3 { font-size:.95rem; font-weight:700; margin-bottom:.75rem;
+                   padding-bottom:.5rem; border-bottom:1px solid var(--border) }
+  .howto-step { display:flex; gap:.6rem; margin-bottom:.6rem; align-items:flex-start }
+  .howto-icon { width:22px; height:22px; border-radius:50%;
+                background:var(--red-l); color:var(--red);
+                font-size:.72rem; font-weight:700;
+                display:flex; align-items:center; justify-content:center;
+                flex-shrink:0; margin-top:.1rem }
+  .howto-text { font-size:.82rem; color:var(--mid); line-height:1.55 }
+
+  /* ── Chart cards ── */
+  .chart-card { background:var(--card); border-radius:var(--radius);
+                box-shadow:var(--shadow-sm); border:1px solid var(--border);
+                overflow:hidden; display:flex; flex-direction:column }
+  .chart-card-header { display:flex; align-items:center; justify-content:space-between;
+                       padding:.85rem 1rem .7rem; border-bottom:1px solid var(--border); gap:.75rem }
+  .chart-card-header h3 { font-size:.88rem; font-weight:700; color:var(--ink); line-height:1.3; flex:1; margin:0 }
+  .chart-type-tag { font-size:.62rem; font-weight:700; text-transform:uppercase;
+                    letter-spacing:.07em; padding:.2rem .55rem; border-radius:20px; flex-shrink:0;
+                    background:rgba(0,131,143,.15); color:#006064; border:1px solid rgba(0,131,143,.3) }
+  .chart-canvas { position:relative; width:100%; height:320px; padding:.5rem }
+  .chart-canvas.sm  { height:260px }
+  .chart-canvas.md  { height:340px }
+  .chart-canvas.lg  { height:420px }
+  .chart-canvas.xl  { height:500px }
+
+  /* ── Skeleton shimmer ── */
+  @keyframes shimmer {
+    0%   { background-position: -600px 0 }
+    100% { background-position:  600px 0 }
+  }
+  .chart-skeleton {
+    position:absolute; inset:0; border-radius:4px; z-index:2;
+    background: linear-gradient(
+      90deg,
+      var(--bg) 0%, var(--bg) 30%,
+      var(--border) 50%,
+      var(--bg) 70%, var(--bg) 100%
+    );
+    background-size:600px 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+    pointer-events:none;
+    transition: opacity .3s ease;
+  }
+  .chart-canvas.rendering .chart-skeleton { opacity:1 }
+  .chart-canvas.ready     .chart-skeleton { opacity:0; pointer-events:none }
+
+  /* ── Chart layouts ── */
+  .chart-guide-grid { display:grid; grid-template-columns:3fr 2fr;
+                      gap:1.25rem; align-items:start; margin-bottom:1.25rem }
+  .chart-duo { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:1.25rem }
+
+  /* ── Figure cards (Modificaciones) ── */
+  .grid { display:grid; gap:1.25rem }
+  .grid-2 { grid-template-columns:repeat(2,1fr) }
+  .grid-3 { grid-template-columns:repeat(3,1fr) }
+  .card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow-sm);
+          border:1px solid var(--border); overflow:hidden; display:flex; flex-direction:column;
+          transition:transform var(--ease),box-shadow var(--ease); cursor:pointer }
+  .card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md) }
+  .card-thumb { position:relative; aspect-ratio:16/10; overflow:hidden; background:#fafafa }
+  .card-thumb img { width:100%; height:100%; object-fit:cover; object-position:top left;
+                    transition:transform .4s ease }
+  .card:hover .card-thumb img { transform:scale(1.04) }
+  .card-badge { position:absolute; top:.6rem; right:.6rem; font-size:.62rem; font-weight:700;
+                text-transform:uppercase; letter-spacing:.07em; padding:.2rem .55rem; border-radius:20px }
+  .badge-interactive { background:rgba(0,131,143,.15); color:#006064; border:1px solid rgba(0,131,143,.3) }
+  .card-body { padding:.9rem 1rem 1rem; flex:1; display:flex; flex-direction:column }
+  .card-title { font-size:.88rem; font-weight:700; line-height:1.3; margin-bottom:.3rem }
+  .card-desc { font-size:.76rem; color:var(--muted); line-height:1.55; flex:1 }
+  .card-footer { display:flex; align-items:center; justify-content:space-between;
+                 margin-top:.75rem; padding-top:.65rem; border-top:1px solid var(--border) }
+  .card-meta { font-size:.7rem; color:var(--muted); font-family:monospace }
+  .card-btn { font-size:.72rem; font-weight:700; color:var(--red); letter-spacing:.04em;
+              text-transform:uppercase; display:flex; align-items:center; gap:.3rem }
+  .card-btn svg { width:12px; height:12px }
+
+  /* ── Iframe ── */
+  .fig-iframe-wrap { border-radius:var(--radius); overflow:hidden;
+                     border:1px solid var(--border); box-shadow:var(--shadow-sm);
+                     background:#fafafa; margin-bottom:1.25rem }
+  .fig-iframe { display:block; width:100%; height:480px; border:none }
+
+  /* ── Connection callout ── */
+  .connect-box { background:var(--card); border:1px solid var(--border);
+                 border-left:4px solid var(--amber); border-radius:0 8px 8px 0;
+                 padding:1rem 1.25rem; margin:2rem 0 }
+  .connect-box-title { font-size:.82rem; font-weight:700; color:var(--amber); margin-bottom:.5rem }
+  .connect-links { display:flex; gap:.75rem; flex-wrap:wrap; margin-top:.75rem }
+  .connect-link { display:inline-flex; align-items:center; gap:.4rem; font-size:.8rem;
+                  font-weight:600; color:var(--red); padding:.35rem .85rem;
+                  border:1.5px solid var(--red-l); background:var(--red-l);
+                  border-radius:6px; transition:background var(--ease),border-color var(--ease) }
+  .connect-link:hover { background:#fad5d3; border-color:#e0a09c }
+
+  /* ── Scroll animations ── */
+  .animate-in { opacity:0; transform:translateY(20px);
+                transition:opacity .5s ease,transform .5s ease }
+  .animate-in.delay-1 { transition-delay:.1s }
+  .animate-in.delay-2 { transition-delay:.2s }
+  .animate-in.delay-3 { transition-delay:.3s }
+  .animate-in.visible { opacity:1; transform:none }
+
+  /* ── Bottom nav (mobile) ── */
+  .bottom-nav { display:none; position:fixed; bottom:0; left:0; right:0; z-index:200;
+                background:rgba(255,255,255,.96); backdrop-filter:blur(12px);
+                border-top:1px solid var(--border);
+                padding:.3rem .5rem calc(.3rem + env(safe-area-inset-bottom)) }
+  .bottom-nav-inner { display:flex; justify-content:space-around; align-items:center;
+                      max-width:480px; margin:0 auto }
+  .bottom-nav-item { display:flex; flex-direction:column; align-items:center;
+                     gap:2px; padding:.4rem .6rem; border-radius:8px;
+                     font-size:.58rem; font-weight:600; color:var(--muted);
+                     text-transform:uppercase; letter-spacing:.05em;
+                     transition:color var(--ease),background var(--ease); text-decoration:none }
+  .bottom-nav-item:hover,.bottom-nav-item.active { color:var(--red); background:var(--red-l) }
+  .bottom-nav-icon { font-size:1.1rem; line-height:1 }
+
+  /* ── Footer ── */
+  .footer { background:var(--ink); color:rgba(255,255,255,.4);
+            text-align:center; padding:1.5rem 2rem; font-size:.75rem; line-height:1.8 }
+  .footer strong { color:rgba(255,255,255,.75) }
+  .divider { margin:3rem 0 0; border:none; border-top:1px solid var(--border) }
+
+  /* ── Responsive ── */
+  @media(max-width:960px) {
+    .hero-inner { grid-template-columns:1fr }
+    .palette { display:none }
+    .howto-grid { grid-template-columns:1fr }
+    .chart-guide-grid { grid-template-columns:1fr }
+    .chart-duo { grid-template-columns:1fr }
+    .chart-canvas { height:290px }
+    .chart-canvas.lg { height:360px }
+    .chart-canvas.xl { height:420px }
+    .fig-iframe { height:380px }
+    .grid-3 { grid-template-columns:repeat(2,1fr) }
+  }
+  @media(max-width:640px) {
+    .nav { padding:0 1rem; position:fixed; width:100% }
+    .nav-inner { gap:0; position:relative }
+    .nav-hamburger { display:flex }
+    .nav-links { display:none; position:absolute; top:52px; left:-1rem; right:-1rem;
+                 background:rgba(255,255,255,.98); backdrop-filter:blur(16px);
+                 border-bottom:1px solid var(--border); box-shadow:0 8px 24px rgba(0,0,0,.1);
+                 padding:.5rem .75rem .75rem; flex-direction:column; gap:0; margin-left:0 }
+    .nav-links.open { display:flex }
+    .nav-links li { width:100% }
+    .nav-links a { display:block; padding:.75rem 1rem; font-size:.9rem; border-radius:8px }
+    .hero { padding:calc(52px + 2rem) 1.25rem 2rem }
+    .hero h1 { font-size:clamp(1.4rem,6vw,1.9rem) }
+    .hero-sub { font-size:.82rem }
+    .hero-bar { margin:1rem 0 }
+    .stats { display:grid; grid-template-columns:repeat(2,1fr); gap:.4rem }
+    .stat { min-width:0 }
+    .stat-val { font-size:1.6rem }
+    .main { padding:0 1.25rem calc(3rem + 60px) }
+    .section { margin-top:2rem }
+    .section-header h2 { font-size:1.05rem }
+    .grid-3 { grid-template-columns:1fr }
+    .grid-2 { grid-template-columns:1fr }
+    .card:hover { transform:none; box-shadow:var(--shadow-sm) }
+    .chart-canvas { height:200px; padding:.25rem }
+    .chart-canvas.sm  { height:200px }
+    .chart-canvas.md  { height:260px }
+    .chart-canvas.lg  { height:300px }
+    .chart-canvas.xl  { height:310px }
+    .fig-iframe { height:300px }
+    .bottom-nav { display:block }
+    .divider { margin:2rem 0 0 }
+    .howto-card { padding:1rem }
+    .chart-card-header h3 { font-size:.84rem }
+  }
+  @media(max-width:380px) {
+    .chart-canvas { height:230px }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">DCBI · 2026</a>
+    <ul class="nav-links" id="navLinks"><li><a href="index.html" class="" onclick="closeNav()">🏠 Inicio</a></li>
+<li><a href="cat26p.html" class="" onclick="closeNav()">CAT 26P</a></li>
+<li><a href="cat26p_capacidad.html" class="" onclick="closeNav()">↳ Capacidad</a></li>
+<li><a href="metanalisis.html" class="" onclick="closeNav()">Metaanálisis</a></li>
+<li><a href="modificaciones.html" class="" onclick="closeNav()">Modificaciones 2026</a></li></ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menú" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<header class="hero" id="indice-hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-label">Metaanálisis · Infografía 6 · División de Ciencias Básicas e Ingeniería · UAM-Azcapotzalco</p>
+      <h1>¿<strong>Qué mide el índice P</strong> y qué debería medir?</h1>
+      <p class="hero-sub">El <em>índice P</em> vigente recompensa inscribir menos créditos y castiga a quienes más necesitan acceso preferencial. El <em>índice h</em> alternativo elimina ambos efectos mediante un principio de máxima entropía. Ninguno resuelve el bloqueo topológico.</p>
+      <div class="hero-bar"></div>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-val">100%</span>
+          <span class="stat-lbl">de estudiantes con RA&nbsp;&lt;&nbsp;1 estructural (todos los planes, todos los trimestres)</span>
+        </div>
+        <div class="stat">
+          <span class="stat-val">+0.111</span>
+          <span class="stat-lbl">ventaja ΔP de la estrategia conservadora en T&#8202;=&#8202;2, antes del cruce</span>
+        </div>
+        <div class="stat">
+          <span class="stat-val">&#8722;4.8</span>
+          <span class="stat-lbl">trimestres adicionales al egreso por la trampa ACT a largo plazo</span>
+        </div>
+        <div class="stat">
+          <span class="stat-val">Δh&nbsp;&lt;&nbsp;0</span>
+          <span class="stat-lbl">el índice h nunca premia el subregistro: inscribir menos siempre reduce h</span>
+        </div>
+      </div>
+    </div>
+    <div class="palette">
+      <p class="palette-title">Índices y estrategias</p>
+      <div class="palette-chips">
+        <div class="chip">
+          <span class="chip-dot" style="background:#C82D23"></span>
+          <span><em>P</em> vigente (Acuerdo 551.4.4.1&#8209;2015)</span>
+        </div>
+        <div class="chip">
+          <span class="chip-dot" style="background:#00838F"></span>
+          <span><em>h</em> alternativo (máx. entropía)</span>
+        </div>
+        <div class="chip">
+          <span class="chip-dot" style="background:#2E7D32"></span>
+          <span>Estrategia agresiva (38 cr/trim)</span>
+        </div>
+        <div class="chip">
+          <span class="chip-dot" style="background:#B06A00"></span>
+          <span>Estrategia conservadora (24 cr/trim)</span>
+        </div>
+        <div class="chip">
+          <span class="chip-dot" style="background:#1565C0"></span>
+          <span>h&#8209;óptima (38 cr/trim, orden topológico)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+<!-- ── Sección 1: RA crónico ── -->
+<section class="section animate-in" id="indice-p-deficit">
+  <div class="section-header">
+    <h2>RA crónico&#8202;—&#8202;el calibrador imposible del índice P</h2>
+    <span class="section-count">RA &lt; 1 en el 100% de los estudiantes · todos los trimestres · todos los planes</span>
+  </div>
+  <p class="section-desc">El índice <em>P</em> incorpora un componente llamado <strong>RA</strong> (ritmo de avance), definido como la razón entre los créditos aprobados por el estudiante en el trimestre en curso y un valor de referencia fijo de <strong>38 créditos por trimestre</strong>. El componente RA se trunca en 1 cuando el estudiante alcanza o supera ese umbral. El problema estructural es que ningún estudiante lo alcanza: la carga real promedio en los diez planes de la División de Ciencias Básicas e Ingeniería oscila alrededor de 30 créditos por trimestre, no 38. La brecha no proviene de bajo rendimiento académico sino de las <strong>cadenas de seriación</strong> que bloquean la inscripción&#8202;—&#8202;un estudiante que ha reprobado un nodo topológicamente crítico pierde acceso a todas las unidades de enseñanza y aprendizaje (UEA) que dependen de él, y la oferta de UEA sin prerrequisito pendiente es estructuralmente inferior a 38 créditos en la mayoría de los trimestres.</p>
+  <p class="section-desc">La consecuencia es que RA opera, en la práctica, como un componente fijo cercano a 0.79 para la población general, y cerca de cero para los estudiantes bloqueados por seriaciones. El índice P hereda este déficit en su término de mayor peso: la componente RA contribuye con un coeficiente que oscila entre 0.40 y 0.50 según el plan, de modo que el techo real de P para un estudiante no bloqueado es sensiblemente inferior a 1 antes incluso de considerar los demás factores.</p>
+
+  <div class="read-callout">
+    <strong>Cómo leer la gráfica:</strong> el mapa de calor muestra, para cada combinación de plan y trimestre, la fracción de estudiantes con RA&#8202;&lt;&#8202;1. Una celda completamente saturada (fracción&#8202;=&#8202;1.00) significa que ningún estudiante del plan alcanzó el umbral de 38 créditos en ese trimestre. Los planes con mayor densidad de seriaciones&#8202;—&#8202;Electrónica, Electrónica y Computación, Mecatrónica&#8202;—&#8202;muestran las franjas más oscuras a partir del trimestre 4, cuando las cadenas de prerrequisitos comienzan a bloquear la oferta disponible de forma sistemática.
+  </div>
+
+  <div class="chart-card animate-in delay-1">
+    <div class="chart-card-header">
+      <h3>Fracción con RA&lt;1 por plan y trimestre (escenario baseline)</h3>
+      <span class="chart-type-tag">Interactivo</span>
+    </div>
+    <div class="chart-canvas rendering lg" id="chart-ra-deficit"><div class="chart-skeleton"></div></div>
+  </div>
+
+  <div class="howto-card animate-in delay-1">
+    <h3>Cómo interpretar el déficit de RA</h3>
+    <div class="howto-step">
+      <div class="howto-icon">1</div>
+      <div class="howto-text"><strong>Localice las franjas de color uniforme.</strong> Si una columna de trimestre aparece completamente saturada en un plan, el umbral de 38 cr/trim es inalcanzable estructuralmente&#8202;—&#8202;no como excepción sino como norma. Eso no indica que los estudiantes reprobarán más, sino que el calibrador del índice está mal fijado para ese contexto.</div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-icon">2</div>
+      <div class="howto-text"><strong>Compare entre planes.</strong> Metalurgia es el único plan donde una fracción de estudiantes alcanza RA&#8202;=&#8202;1 en algunos trimestres. Esto no refleja mayor esfuerzo sino menor densidad de seriaciones: la oferta desbloqueada supera los 38 créditos en esos tramos. La heterogeneidad entre planes revela que el calibrador beneficia estructuralmente a planes con topologías más simples.</div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-icon">3</div>
+      <div class="howto-text"><strong>Lea el eje temporal.</strong> El déficit se agudiza en los trimestres intermedios (5&#8209;10), que corresponden al núcleo de las cadenas de seriación. En los trimestres finales, los estudiantes que permanecen en el sistema son los que superaron los cuellos de botella críticos, por lo que el déficit se atenúa&#8202;—&#8202;efecto de supervivencia, no de mejora sistémica.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Sección 2: La trampa ACT ── -->
+<section class="section animate-in" id="indice-trampa-act">
+  <div class="section-header">
+    <h2>La trampa ACT&#8202;—&#8202;cuando el índice premia inscribir menos</h2>
+    <span class="section-count">ΔP(T&#8202;=&#8202;2)&#8202;=&#8202;+0.111 → cruce en T&#8202;≈&#8202;2.5 → egreso +4.8 trim</span>
+  </div>
+  <p class="section-desc">La componente <strong>ACT</strong> del índice <em>P</em> mide la razón entre créditos aprobados e inscritos en el trimestre anterior: <em>ACT&#8202;=&#8202;C<sub>A,T&#8722;1</sub>/C<sub>I,T&#8722;1</sub></em>. Su peso es <strong>0.40</strong>, el más alto de todos los componentes del índice. Un estudiante que inscribe 24 créditos y aprueba los 24 obtiene ACT&#8202;=&#8202;1.0; uno que inscribe 38 créditos y aprueba 30 obtiene ACT&#8202;=&#8202;0.79. El índice percibe al primero como más eficiente, aunque el segundo haya aprobado seis créditos más. Este diseño crea un incentivo activo al <strong>subregistro</strong>: inscribir pocos créditos fáciles es la estrategia racional para maximizar P en el corto plazo.</p>
+  <p class="section-desc">La trampa se desarrolla en tres fases. En el trimestre 2, la estrategia conservadora genera una ventaja de <strong>ΔP&#8202;=&#8202;+0.111</strong> sobre la línea base. Esta ventaja desaparece alrededor del trimestre 2.5, cuando el menor ritmo de acumulación de créditos comienza a pesar más que el ACT alto. A partir de ese punto la curva conservadora cae por debajo de la línea base y no la recupera: en el trimestre 8, el diferencial se ha invertido a <strong>ΔP&#8202;=&#8202;&#8722;0.070</strong>. A largo plazo, la estrategia conservadora produce <strong>4.8 trimestres adicionales</strong> al tiempo esperado de egreso y reduce la tasa de graduación en <strong>29 puntos porcentuales</strong>.</p>
+
+  <div class="read-callout">
+    <strong>Cómo leer la gráfica de incentivos (ΔP y Δh):</strong> las dos curvas muestran, trimestre a trimestre, la diferencia entre la estrategia conservadora y la línea base bajo cada índice. Para el índice <em>P</em> (curva roja), el valor es positivo en T&#8202;=&#8202;1&#8209;2 y cruza el cero en T&#8202;≈&#8202;2.5: esa discontinuidad de signo es la trampa. Para el índice <em>h</em> (curva teal), la diferencia es negativa desde T&#8202;=&#8202;1 y se mantiene en esa dirección en todo el horizonte temporal: conservadora nunca es preferible bajo h. El área sombreada entre las dos curvas cuantifica la magnitud del sesgo inducido por la diferencia de diseño.
+  </div>
+
+  <div class="chart-card animate-in delay-1">
+    <div class="chart-card-header">
+      <h3>Incentivo al subregistro: ΔP vs. Δh (conservadora − baseline)</h3>
+      <span class="chart-type-tag">Interactivo</span>
+    </div>
+    <div class="chart-canvas rendering md" id="chart-delta-incentivos"><div class="chart-skeleton"></div></div>
+  </div>
+
+  <div class="read-callout" style="margin-top:1.25rem">
+    <strong>Cómo leer la gráfica de dispersión (trampa ACT):</strong> cada punto representa un estudiante simulado en el trimestre 8, posicionado según su ACT trimestral (eje x) y su P total (eje y). Los puntos conservadores se concentran en la esquina de ACT alto / P bajo: demuestran que ACT elevado no es señal de progreso sino de subregistro. Los puntos agresivos muestran la relación inversa&#8202;—&#8202;ACT moderado pero P alto&#8202;—&#8202;que corresponde a trayectorias de egreso más rápidas. La nube de puntos bloqueados (círculos vacíos) se sitúa sistemáticamente debajo de la nube desbloqueada, anticipando el análisis de la penalización topológica.
+  </div>
+
+  <div class="chart-card animate-in delay-1">
+    <div class="chart-card-header">
+      <h3>La trampa ACT: índice P(T=8) vs. tiempo esperado de egreso</h3>
+      <span class="chart-type-tag">Interactivo</span>
+    </div>
+    <div class="chart-canvas rendering md" id="chart-trampa-scatter"><div class="chart-skeleton"></div></div>
+  </div>
+
+  <div class="howto-card animate-in delay-1">
+    <h3>El mecanismo de la trampa en tres pasos</h3>
+    <div class="howto-step">
+      <div class="howto-icon">1</div>
+      <div class="howto-text"><strong>El incentivo de corto plazo.</strong> En los primeros trimestres, el estudiante observa que inscribir 24 créditos fáciles y aprobarlos todos eleva su P por encima de compañeros con carga mayor. La señal del índice es coherente con lo que el estudiante experimenta: parece avanzar más rápido.</div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-icon">2</div>
+      <div class="howto-text"><strong>El cruce invisible.</strong> Alrededor del trimestre 3, el menor ritmo de acumulación de créditos comienza a superar la ventaja del ACT alto. El cruce ocurre gradualmente y el estudiante no lo percibe: sigue con carga reducida porque la señal del índice aún es favorable o neutral. El daño se acumula de forma subperceptible.</div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-icon">3</div>
+      <div class="howto-text"><strong>El costo diferido.</strong> A partir del trimestre 5, la estrategia conservadora produce un P inferior y una distancia al egreso cuatro trimestres mayor. El estudiante que siguió la señal del índice durante los primeros trimestres llega tarde a este diagnóstico. La trampa no es accidental: es una consecuencia directa de que el mayor peso del índice recompensa la fracción aprobada/inscrita, no los créditos aprobados en valor absoluto.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Sección 3: El índice h ── -->
+<section class="section animate-in" id="indice-h">
+  <div class="section-header">
+    <h2>El índice h&#8202;—&#8202;neutralidad informativa y fin del subregistro</h2>
+    <span class="section-count">h = (η<sub>t</sub> + ⟨η⟩<sub>t</sub>) / 2 · sin calificaciones · sin incentivo al subregistro</span>
+  </div>
+  <p class="section-desc">El <em>índice h</em> se construye a partir del principio de <strong>máxima entropía de Shannon</strong> para la ponderación entre el desempeño instantáneo y el histórico. Define η<sub>t</sub>&#8202;=&#8202;C<sub>A,t&#8722;1</sub>/C<sub>max</sub>, donde <em>C<sub>max</sub>&#8202;=&#8202;45 cr/trim</em> es un máximo fijo e invariante, y ⟨η⟩<sub>t</sub> es la media acumulada de ese cociente hasta el trimestre <em>t</em>. El índice h es la semisuma de ambas cantidades. La diferencia clave respecto al índice <em>P</em> reside en el denominador: C<sub>max</sub>&#8202;=&#8202;45 es un techo fijo, no la carga inscrita en el trimestre en curso. En consecuencia, la <strong>única forma de elevar h es aprobar más créditos en valor absoluto</strong>&#8202;—&#8202;inscribir menos créditos, aunque se aprueben todos, siempre reduce h porque el numerador crece más despacio que lo que el denominador fijo admite.</p>
+  <p class="section-desc">Una segunda propiedad relevante es que h no incorpora calificaciones: opera exclusivamente sobre conteos de créditos aprobados. Esto elimina la componente de heterogeneidad docente que contamina al índice <em>P</em>: la variabilidad del coeficiente de variación de eficacia docente entre grupos de la misma UEA es de <strong>CV&#8202;=&#8202;0.21</strong> en promedio, y en el 34% de las UEA de alto riesgo supera 0.30. Un índice sensible a calificaciones introduce un ruido de origen institucional&#8202;—&#8202;qué tan exigente es el profesor asignado&#8202;—&#8202;que el estudiante no puede controlar. El índice h es ciego a ese ruido por diseño.</p>
+  <p class="section-desc">La <strong>coherencia ordinal</strong> del índice h es monótona: en todos los trimestres, la estrategia conservadora produce el h más bajo, seguida de la línea base, la h&#8209;óptima (38 cr/trim en orden topológico) y la agresiva. Este orden se mantiene sin inversiones desde el trimestre 1 hasta el final del horizonte simulado, lo que significa que h nunca confunde al estudiante sobre qué estrategia es mejor&#8202;—&#8202;una propiedad que el índice <em>P</em> viola sistemáticamente en los primeros tres trimestres.</p>
+
+  <div class="read-callout">
+    <strong>Cómo leer la gráfica de coherencia (h):</strong> el diagrama de dispersión enfrenta, para cada estrategia y trimestre, el valor del índice h (eje y) contra el tiempo esperado de egreso E[T&#8202;|&#8202;tit] (eje x). Una alineación perfectamente monótona&#8202;—&#8202;h más alto implica siempre egreso más rápido&#8202;—&#8202;indicaría coherencia ordinal completa. Compare esta nube con la dispersión análoga del índice <em>P</em>: en el caso de P aparecen inversiones (puntos conservadores por encima de puntos baseline en los trimestres tempranos) que no existen en la nube de h. La ausencia de inversiones en h no es trivial: es la propiedad que convierte al índice en una señal confiable para el estudiante y para el sistema de alerta temprana.
+  </div>
+
+  <div class="chart-card animate-in delay-1">
+    <div class="chart-card-header">
+      <h3>Coherencia del índice h con el egreso — E[T|tit] por estrategia</h3>
+      <span class="chart-type-tag">Interactivo</span>
+    </div>
+    <div class="chart-canvas rendering md" id="chart-h-coherencia"><div class="chart-skeleton"></div></div>
+  </div>
+
+  <div class="howto-card animate-in delay-1">
+    <h3>Qué diferencia la coherencia de h de la dispersión de P</h3>
+    <div class="howto-step">
+      <div class="howto-icon">1</div>
+      <div class="howto-text"><strong>Busque las inversiones de orden.</strong> En la gráfica análoga del índice <em>P</em>, los puntos correspondientes a estrategia conservadora en T&#8202;=&#8202;1&#8209;2 quedan por encima de los puntos baseline, aunque la estrategia conservadora produzca egresos más tardíos. Esas inversiones son la huella visual de la trampa. En la nube de h no hay inversiones: la estrategia con h más alto en cualquier trimestre es siempre la que se titula antes.</div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-icon">2</div>
+      <div class="howto-text"><strong>La distancia entre h&#8209;óptima y agresiva cuantifica el costo topológico.</strong> Ambas estrategias inscriben 38 créditos por trimestre, pero h&#8209;óptima respeta el orden topológico del plan (UEA estructuralmente prioritarias primero), mientras que agresiva prioriza las más fáciles. La diferencia de <strong>2.1 trimestres</strong> en el egreso esperado entre ambas mide exactamente lo que se gana&#8202;—&#8202;o se pierde&#8202;—&#8202;por ignorar la topología al elegir qué inscribir, aun con la misma carga total.</div>
+    </div>
+    <div class="howto-step">
+      <div class="howto-icon">3</div>
+      <div class="howto-text"><strong>El ruido de calificaciones es visible como dispersión vertical.</strong> Si el índice dependiera de calificaciones, los puntos de una misma estrategia mostrarían dispersión vertical mayor, porque distintos profesores asignarían calificaciones distintas a desempeños equivalentes. En h, esa dispersión no existe por construcción: todos los puntos de una misma estrategia se alinean en una banda estrecha.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Sección 4: La penalización topológica ── -->
+<section class="section animate-in" id="indice-penalizacion">
+  <div class="section-header">
+    <h2>La penalización topológica&#8202;—&#8202;lo que ningún índice puede resolver</h2>
+    <span class="section-count">Δ(P bloqueado &#8722; desbloqueado)&#8202;=&#8202;&#8722;0.21 pts en Electrónica · T&#8202;=&#8202;12</span>
+  </div>
+  <p class="section-desc">Tanto el índice <em>P</em> como el índice <em>h</em> comparten una consecuencia inevitable: los estudiantes que son bloqueados por seriaciones aprueban menos créditos por trimestre y, por lo tanto, obtienen valores inferiores en ambos índices. En Electrónica, el plan con mayor profundidad topológica de la División, la brecha entre estudiantes bloqueados y desbloqueados alcanza <strong>0.21 puntos en P</strong> hacia el trimestre 12 (P&#8202;≈&#8202;0.445 para bloqueados frente a P&#8202;≈&#8202;0.655 para desbloqueados). Esta penalización no refleja menor dedicación ni menor capacidad: refleja que el plan de estudios niega acceso a créditos del camino crítico precisamente cuando el estudiante más lo necesita.</p>
+  <p class="section-desc">El problema es doble. Primero, el índice <em>P</em> se utiliza como criterio de prelación: los estudiantes con mayor P tienen prioridad de inscripción en los grupos de demanda alta. Esto significa que los estudiantes bloqueados&#8202;—&#8202;quienes tienen P bajo por causas estructurales&#8202;—&#8202;son penalizados <em>dos veces</em>: una vez por el bloqueo topológico en sí, y una segunda vez porque su índice bajo les impide acceder con prioridad a las mismas UEA que los liberarían del bloqueo. El índice h reproduce la misma penalización primaria, aunque elimina la amplificación introducida por el sesgo ACT. Ningún índice de prelación puramente basado en créditos aprobados puede evitar que el bloqueado tenga menor valor que el desbloqueado, porque esa diferencia es consecuencia directa de una estructura de prerrequisitos que restringe la oferta disponible.</p>
+
+  <div class="read-callout">
+    <strong>Cómo leer la gráfica (trayectorias P y GA en Electrónica):</strong> las cuatro curvas muestran la evolución del índice P (líneas continuas) y del porcentaje de avance de créditos GA (líneas discontinuas) para estudiantes bloqueados y desbloqueados en el plan de Electrónica. La brecha entre la curva de desbloqueados y la de bloqueados se abre a partir del trimestre 4&#8202;—&#8202;cuando las seriaciones de profundidad media comienzan a actuar&#8202;—&#8202;y alcanza su máximo alrededor del trimestre 12. Nótese que la apertura de la brecha coincide con el período en que el sistema de prelación asigna prioridad de acceso: el índice penaliza a los estudiantes que más necesitarían la prioridad de inscripción.
+  </div>
+
+  <div class="chart-card animate-in delay-1">
+    <div class="chart-card-header">
+      <h3>Doble penalización topológica en Electrónica — trayectorias P y GA</h3>
+      <span class="chart-type-tag">Interactivo</span>
+    </div>
+    <div class="chart-canvas rendering md" id="chart-bloqueados"><div class="chart-skeleton"></div></div>
+  </div>
+
+  <div class="recuadro animate-in delay-1">
+    <div class="recuadro-title">h es necesario, pero no suficiente</div>
+    <p>Reemplazar <em>P</em> por <em>h</em> elimina el incentivo al subregistro, suprime el ruido de heterogeneidad docente y produce una señal ordinalmente coherente para el estudiante y para los sistemas de alerta temprana. Esos son avances reales y no triviales.</p>
+    <p>Sin embargo, la penalización topológica persiste bajo h porque su causa es anterior al índice: es la <strong>estructura de seriaciones</strong> la que restringe los créditos disponibles para el estudiante bloqueado, independientemente de cómo se mida el avance. Mientras existan cadenas de prerrequisitos que concentran el acceso a UEA de alto peso crediticio en nodos de alta probabilidad de reprobación, ningún índice de prelación puede compensar el diferencial.</p>
+    <p>La intervención prioritaria sigue siendo la identificada en las infografías anteriores: la eliminación quirúrgica del <strong>26.5% de aristas de seriación</strong> que concentra el 80% del impacto sobre el tiempo esperado de egreso (Pareto topológico). La reforma del índice de prelación es complementaria e independiente: puede y debe hacerse en paralelo, pero no sustituye la reforma estructural del plan.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── Caja de conexión ── -->
+<div class="connect-box animate-in" id="indice-navegacion">
+  <div class="connect-box-title">Navegación del Metaanálisis</div>
+  <p style="font-size:.82rem;color:var(--mid);margin-bottom:.1rem">Esta infografía cierra el análisis comparativo de índices de prelación. La intervención estructural recomendada&#8202;—&#8202;remoción de seriaciones Pareto-prioritarias&#8202;—&#8202;se detalla en la sección de modificaciones al plan de estudios.</p>
+  <div class="connect-links">
+    <a class="connect-link" href="meta_5.html">&#8592; Complejidad multidimensional</a>
+    <a class="connect-link" href="metanalisis.html">Índice del Metaanálisis</a>
+    <a class="connect-link" href="modificaciones.html">Modificaciones 2026 &#8594;</a>
+  </div>
+</div>
+
+</main>
+
+
+<footer class="footer">
+  <strong>División de Ciencias Básicas e Ingeniería · UAM-Azcapotzalco</strong><br>
+  Sistemas de gestión académica institucional · Trimestre 26-P · 2026<br>
+  Dr. César S. López-Monsalvo ·
+  <a href="mailto:cslm@azc.uam.mx" style="color:rgba(255,255,255,.5);text-decoration:underline">cslm@azc.uam.mx</a>
+</footer>
+<nav class="bottom-nav" aria-label="Navegación rápida"><div class="bottom-nav-inner">
+      <a class="bottom-nav-item" href="#indice-p-deficit"><span class="bottom-nav-icon">📊</span>RA crónico</a>
+      <a class="bottom-nav-item" href="#indice-trampa-act"><span class="bottom-nav-icon">⚠️</span>Trampa ACT</a>
+      <a class="bottom-nav-item" href="#indice-h"><span class="bottom-nav-icon">h</span>Índice h</a>
+      <a class="bottom-nav-item" href="#indice-penalizacion"><span class="bottom-nav-icon">🔒</span>Penalización</a>
+    </div></nav>
+<script>
+
+
+/* ── Page transitions ──────────────────────────────────────────────────────── */
+document.querySelectorAll('a[href]').forEach(a => {
+  const href = a.getAttribute('href');
+  if (!href || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('http')) return;
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.body.classList.add('page-exit');
+    setTimeout(() => { window.location.href = href; }, 280);
+  });
+});
+
+/* ── Scroll animations ──────────────────────────────────────────────────────── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.12 });
+document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+
+/* ── Counter animation ──────────────────────────────────────────────────────── */
+function animateCounter(el, target, duration=1100) {
+  const raw = el.dataset.target || target;
+  const num = parseFloat(String(raw).replace(/[^0-9.]/g,''));
+  const isFloat = String(raw).includes('.');
+  const suffix = String(raw).replace(/[0-9.,]/g,'');
+  const start = performance.now();
+  const step = now => {
+    const t = Math.min(1, (now-start)/duration);
+    const eased = 1 - Math.pow(1-t, 3);
+    const val = eased * num;
+    el.textContent = (isFloat ? val.toFixed(1) : Math.round(val).toLocaleString('es-MX')) + suffix;
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter(e.target, e.target.dataset.target);
+      counterObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.kpi-counter').forEach(el => counterObserver.observe(el));
+
+/* ── Nav hamburger ──────────────────────────────────────────────────────────── */
+function toggleNav() {
+  const btn=document.getElementById('hamburger'), menu=document.getElementById('navLinks');
+  const open=btn.classList.toggle('open');
+  menu.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeNav() {
+  document.getElementById('hamburger')?.classList.remove('open');
+  document.getElementById('navLinks')?.classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('click', e => {
+  if (!document.getElementById('mainNav')?.contains(e.target)) closeNav();
+});
+
+/* ── Bottom nav active ──────────────────────────────────────────────────────── */
+(function(){
+  const ids=['cat','meta','mod'], items=document.querySelectorAll('.bottom-nav-item');
+  const els=ids.map(id=>document.getElementById(id)).filter(Boolean);
+  function onScroll(){
+    let ai=0; const y=window.scrollY+window.innerHeight*.35;
+    els.forEach((el,i)=>{ if(el.offsetTop<=y) ai=i; });
+    items.forEach((item,i)=>item.classList.toggle('active',i===ai&&item.getAttribute('href')?.startsWith('#')));
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+
+/* ── Plotly unified config ──────────────────────────────────────────────────── */
+const _mobile = () => window.innerWidth < 640;
+
+const FONT = {
+  family: 'Helvetica Neue,Arial,system-ui,sans-serif',
+  size: _mobile() ? 10 : 11,
+  color: '#444'
+};
+
+const CFG = { responsive:true, displayModeBar:false, scrollZoom:false };
+
+/* Base layout applied to every chart — nowhere_minimal palette */
+const LAYOUT_BASE = {
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: FONT,
+  xaxis: { gridcolor:'#E4E2DF', zerolinecolor:'#E4E2DF', tickfont: FONT },
+  yaxis: { gridcolor:'#E4E2DF', zerolinecolor:'#E4E2DF', tickfont: FONT },
+};
+
+/* Returns margin object — compact on mobile, standard on desktop.
+   `overrides` (optional) are merged in after the base so callers can
+   set specific margins that still get clamped to mobile values on small screens. */
+function getMargins(overrides) {
+  if (_mobile()) return { l:6, r:6, t:6, b:32 };
+  return Object.assign({ l:10, r:12, t:8, b:40 }, overrides || {});
+}
+
+const PROG_COLORS = {
+  'Ambiental':'#2E7D32','Civil':'#BF360C','Computación':'#1565C0','Eléctrica':'#E65100',
+  'Electrónica':'#6A1B9A','Física':'#00838F','Industrial':'#C62828',
+  'Mecánica':'#37474F','Metalurgia':'#78909C','Química':'#558B2F'
+};
+
+/* ── renderChart — lazy viewport-based rendering ───────────────────────────── *
+ *                                                                               *
+ *  containerId  — id of the .chart-canvas div                                  *
+ *  traceFn()    — function returning the traces array                           *
+ *  layoutFn()   — function returning the layout object (no margin key needed)  *
+ *  skeletonEl   — optional: the .chart-skeleton child (auto-detected if absent) *
+ * ─────────────────────────────────────────────────────────────────────────── */
+window.renderChart = function(containerId, traceFn, layoutFn) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  /* Inject skeleton if not present */
+  let skel = container.querySelector('.chart-skeleton');
+  if (!skel) {
+    skel = document.createElement('div');
+    skel.className = 'chart-skeleton';
+    container.insertBefore(skel, container.firstChild);
+  }
+
+  container.classList.add('rendering');
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      io.unobserve(container);
+
+      /* Merge layout: base → caller → mobile margin override */
+      const callerLayout = layoutFn();
+      const margin = _mobile()
+        ? { l:6, r:6, t:6, b:32 }
+        : (callerLayout.margin || { l:10, r:12, t:8, b:40 });
+
+      const layout = Object.assign(
+        {}, LAYOUT_BASE, callerLayout,
+        {
+          font:   FONT,
+          margin: margin,
+          /* Ensure axis font stays consistent regardless of caller */
+          xaxis: Object.assign({}, LAYOUT_BASE.xaxis, callerLayout.xaxis || {}),
+          yaxis: Object.assign({}, LAYOUT_BASE.yaxis, callerLayout.yaxis || {}),
+        }
+      );
+
+      /* On mobile reduce legend font and move it below the chart */
+      if (_mobile() && layout.legend) {
+        layout.legend = Object.assign(
+          { orientation:'h', xanchor:'center', x:.5, y:-.18 },
+          layout.legend,
+          { font: Object.assign({}, layout.legend.font || {}, { size:9 }) }
+        );
+      }
+
+      requestAnimationFrame(() => {
+        Plotly.newPlot(containerId, traceFn(), layout, CFG).then(() => {
+          container.classList.remove('rendering');
+          container.classList.add('ready');
+        });
+      });
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px 80px 0px' });
+
+  io.observe(container);
+};
+
+
+(function(){
+
+renderChart('chart-delta-incentivos',
+  () => {
+    const t = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26];
+    const dP = [0.0223,0.1201,0.0555,-0.0055,-0.0136,-0.0468,-0.0530,-0.0636,-0.0725,-0.0817,-0.0910,-0.0976,-0.1066,-0.1142,-0.1259,-0.1375,-0.1413,-0.1393,-0.1288,-0.1123,-0.0967,-0.0773,-0.0627,-0.0468,-0.0372,-0.0313];
+    const dh = [0.0324,-0.0244,-0.0752,-0.0858,-0.0913,-0.1207,-0.1335,-0.1396,-0.1457,-0.1500,-0.1528,-0.1561,-0.1562,-0.1568,-0.1554,-0.1427,-0.1251,-0.1049,-0.0859,-0.0692,-0.0535,-0.0409,-0.0286,-0.0234,-0.0172,-0.0127];
+    const traceZero = { x:[1,26], y:[0,0], mode:'lines', line:{color:'#9E9E9E',dash:'dash',width:1}, showlegend:false, hoverinfo:'skip' };
+    const shadeZone = { x:[1,3,3,1], y:[-0.17,-0.17,0.14,0.14], fill:'toself', fillcolor:'rgba(200,45,35,0.08)', line:{color:'transparent'}, mode:'lines', showlegend:false, hoverinfo:'skip', type:'scatter' };
+    const traceDeltaP = { x:t, y:dP, mode:'lines', name:'ΔP (conservadora − baseline)', line:{color:'#C82D23',dash:'dash',width:2.5}, hovertemplate:'T=%{x}<br>ΔP=%{y:.4f}<extra></extra>' };
+    const traceDeltaH = { x:t, y:dh, mode:'lines', name:'Δh (conservadora − baseline)', line:{color:'#2E7D32',dash:'solid',width:2.5}, hovertemplate:'T=%{x}<br>Δh=%{y:.4f}<extra></extra>' };
+    return [shadeZone, traceZero, traceDeltaP, traceDeltaH];
+  },
+  () => ({
+    ...LAYOUT_BASE,
+    margin:{l:10,r:10,t:10,b:50},
+    xaxis:{title:{text:'Trimestre T',font:FONT},tickmode:'linear',tick0:1,dtick:2,automargin:true},
+    yaxis:{title:{text:'Δ índice (conservadora − baseline)',font:FONT},zeroline:false,automargin:true},
+    legend:{orientation:'h',xanchor:'center',x:0.5,y:1.08,font:FONT},
+    annotations:[
+      {x:2,y:0.1201,xref:'x',yref:'y',text:'T=2: ΔP≈+0.120',showarrow:true,arrowhead:2,arrowsize:0.8,ax:30,ay:-28,font:{color:'#C82D23',size:11},arrowcolor:'#C82D23'},
+      {x:2,y:-0.0244,xref:'x',yref:'y',text:'T=2: Δh≈−0.024',showarrow:true,arrowhead:2,arrowsize:0.8,ax:40,ay:28,font:{color:'#2E7D32',size:11},arrowcolor:'#2E7D32'},
+      {x:2,y:0.14,xref:'x',yref:'y',text:'Ventaja transitoria de P',showarrow:false,font:{color:'#C82D23',size:10,style:'italic'},xanchor:'center'}
+    ]
+  })
+);
+
+renderChart('chart-bloqueados',
+  () => {
+    const t = [5,6,7,8,9,10,11,12,13,14];
+    const P_bloq  = [0.5305,0.5267,0.5085,0.4742,0.4681,0.4446,0.4334,0.4451,0.3918,0.3754];
+    const P_nobl  = [0.7461,0.7038,0.6665,0.6552,0.6471,0.6470,0.6483,0.6546,0.6583,0.6657];
+    const GA_bloq = [0.1927,0.2281,0.2546,0.2757,0.2933,0.3116,0.3266,0.3500,0.3508,0.3460];
+    const GA_nobl = [0.3088,0.3404,0.3737,0.4092,0.4445,0.4843,0.5276,0.5723,0.6179,0.6664];
+    const trP_bloq = { x:t, y:P_bloq, name:'Bloqueados', mode:'lines+markers', line:{color:'#C82D23',dash:'dash',width:2}, marker:{size:5}, xaxis:'x', yaxis:'y', hovertemplate:'T=%{x}<br>P=%{y:.3f}<extra>Bloqueados</extra>' };
+    const trP_nobl = { x:t, y:P_nobl, name:'Desbloqueados', mode:'lines+markers', line:{color:'#1565C0',dash:'solid',width:2}, marker:{size:5}, xaxis:'x', yaxis:'y', hovertemplate:'T=%{x}<br>P=%{y:.3f}<extra>Desbloqueados</extra>' };
+    const trGA_bloq = { x:t, y:GA_bloq, name:'Bloqueados', mode:'lines+markers', line:{color:'#C82D23',dash:'dash',width:2}, marker:{size:5}, xaxis:'x2', yaxis:'y2', showlegend:false, hovertemplate:'T=%{x}<br>GA=%{y:.3f}<extra>Bloqueados</extra>' };
+    const trGA_nobl = { x:t, y:GA_nobl, name:'Desbloqueados', mode:'lines+markers', line:{color:'#1565C0',dash:'solid',width:2}, marker:{size:5}, xaxis:'x2', yaxis:'y2', showlegend:false, hovertemplate:'T=%{x}<br>GA=%{y:.3f}<extra>Desbloqueados</extra>' };
+    return [trP_bloq, trP_nobl, trGA_bloq, trGA_nobl];
+  },
+  () => ({
+    ...LAYOUT_BASE,
+    margin:{l:10,r:10,t:10,b:50},
+    grid:{rows:1,columns:2,pattern:'independent'},
+    xaxis:{title:{text:'Trimestre T',font:FONT},domain:[0,0.46],automargin:true},
+    yaxis:{title:{text:'Índice P',font:FONT},automargin:true,range:[0.3,0.82]},
+    xaxis2:{title:{text:'Trimestre T',font:FONT},domain:[0.54,1.0],automargin:true},
+    yaxis2:{title:{text:'Grado de Avance (GA)',font:FONT},automargin:true,range:[0.15,0.72]},
+    legend:{orientation:'h',xanchor:'center',x:0.5,y:1.08,font:FONT},
+    annotations:[
+      {x:12,y:0.4451,xref:'x',yref:'y',text:'ΔP≈0.21',showarrow:true,arrowhead:2,arrowsize:0.8,ax:-40,ay:0,font:{color:'#C82D23',size:11},arrowcolor:'#C82D23'},
+      {x:0.23,y:1.03,xref:'paper',yref:'paper',text:'<b>Índice P — Electrónica</b>',showarrow:false,font:{size:11,color:'#1C1C1C'},xanchor:'center'},
+      {x:0.77,y:1.03,xref:'paper',yref:'paper',text:'<b>Grado de Avance — Electrónica</b>',showarrow:false,font:{size:11,color:'#1C1C1C'},xanchor:'center'}
+    ]
+  })
+);
+
+renderChart('chart-trampa-scatter',
+  () => {
+    const data = {
+      agresiva:     { plans:['amb','civ','com','ele','elo','fis','ind','mec','qui'], P8:[0.6949,0.6676,0.6418,0.6424,0.6623,0.6565,0.6979,0.6781,0.6779], ET:[17.55,16.31,16.83,18.23,19.04,16.31,16.06,16.61,17.88] },
+      baseline:     { plans:['amb','civ','com','ele','elo','fis','ind','mec','qui'], P8:[0.6328,0.6295,0.5922,0.6086,0.6116,0.6188,0.6455,0.6065,0.6530], ET:[20.21,19.38,19.85,20.87,21.41,18.80,19.03,20.65,19.43] },
+      conservadora: { plans:['amb','civ','com','ele','elo','fis','ind','mec','qui'], P8:[0.5803,0.5573,0.5413,0.5455,0.5477,0.5298,0.6265,0.5587,0.5577], ET:[24.73,24.26,24.46,24.55,25.21,23.59,24.48,23.99,24.30] }
+    };
+    const lbl = {amb:'Amb',civ:'Civ',com:'Comp',ele:'Ele',elo:'Elo',fis:'Fis',ind:'Ind',mec:'Mec',qui:'Qui'};
+    const mkT = (pl) => pl.map(p=>lbl[p]||p);
+    return [
+      { x:data.agresiva.P8, y:data.agresiva.ET, mode:'markers+text', name:'Agresiva', marker:{color:'#90CAF9',symbol:'triangle-up',size:10,line:{color:'#1565C0',width:1}}, text:mkT(data.agresiva.plans), textposition:'top center', textfont:{size:9,color:'#646464'}, hovertemplate:'%{text}<br>P(T=8)=%{x:.3f}<br>E[T]=%{y:.1f}<extra>Agresiva</extra>' },
+      { x:data.baseline.P8, y:data.baseline.ET, mode:'markers+text', name:'Baseline', marker:{color:'#1C1C1C',symbol:'circle',size:10}, text:mkT(data.baseline.plans), textposition:'top center', textfont:{size:9,color:'#646464'}, hovertemplate:'%{text}<br>P(T=8)=%{x:.3f}<br>E[T]=%{y:.1f}<extra>Baseline</extra>' },
+      { x:data.conservadora.P8, y:data.conservadora.ET, mode:'markers+text', name:'Conservadora', marker:{color:'#C82D23',symbol:'square',size:10}, text:mkT(data.conservadora.plans), textposition:'top center', textfont:{size:9,color:'#646464'}, hovertemplate:'%{text}<br>P(T=8)=%{x:.3f}<br>E[T]=%{y:.1f}<extra>Conservadora</extra>' }
+    ];
+  },
+  () => ({
+    ...LAYOUT_BASE,
+    margin:{l:10,r:10,t:10,b:50},
+    xaxis:{title:{text:'Índice P en T=8',font:FONT},automargin:true,range:[0.50,0.73]},
+    yaxis:{title:{text:'E[T | titulación] — menor es mejor',font:FONT},automargin:true,range:[15.0,27.0]},
+    legend:{orientation:'h',xanchor:'center',x:0.5,y:1.08,font:FONT},
+    annotations:[{x:0.5477,y:25.21,xref:'x',yref:'y',text:'conservadora: E[T]=25.2 trim',showarrow:true,arrowhead:2,arrowsize:0.8,ax:-60,ay:-20,font:{color:'#C82D23',size:10},arrowcolor:'#C82D23'}]
+  })
+);
+
+renderChart('chart-h-coherencia',
+  () => {
+    const plans = ['amb','civ','com','ele','elo','fis','ind','mec','qui'];
+    const lbl = {amb:'Amb',civ:'Civ',com:'Comp',ele:'Ele',elo:'Elo',fis:'Fis',ind:'Ind',mec:'Mec',qui:'Qui'};
+    const d = {
+      agresiva:     { h8:[0.5531,0.5253,0.5079,0.4843,0.5090,0.4982,0.5676,0.5390,0.5391], ET:[17.47,16.38,16.79,18.16,19.08,16.36,16.02,16.55,17.76] },
+      baseline:     { h8:[0.4351,0.4226,0.4083,0.4051,0.4089,0.4054,0.4650,0.3898,0.4822], ET:[20.10,19.53,19.88,20.87,21.58,18.87,18.94,20.68,19.39] },
+      conservadora: { h8:[0.2975,0.2834,0.2887,0.2701,0.2764,0.2529,0.3310,0.2777,0.2880], ET:[24.82,24.22,24.52,24.59,25.26,23.57,24.41,24.02,24.25] },
+      h_optima:     { h8:[0.3914,0.4285,0.4719,0.4015,0.4146,0.3957,0.4912,0.4087,0.4152], ET:[19.38,18.24,18.43,19.92,21.20,19.36,18.98,18.44,19.81] }
+    };
+    const mkT = (pl) => pl.map(p=>lbl[p]||p);
+    const connectors = plans.map((p,i) => ({ x:[d.agresiva.h8[i],d.h_optima.h8[i]], y:[d.agresiva.ET[i],d.h_optima.ET[i]], mode:'lines', line:{color:'rgba(0,131,143,0.4)',width:1.5,dash:'dot'}, showlegend:false, hoverinfo:'skip', type:'scatter' }));
+    return [
+      ...connectors,
+      { x:d.agresiva.h8, y:d.agresiva.ET, mode:'markers+text', name:'Agresiva', marker:{color:'#90CAF9',symbol:'triangle-up',size:11,line:{color:'#1565C0',width:1}}, text:mkT(plans), textposition:'top center', textfont:{size:9,color:'#646464'}, hovertemplate:'%{text}<br>h(T=8)=%{x:.3f}<br>E[T]=%{y:.1f}<extra>Agresiva</extra>' },
+      { x:d.baseline.h8, y:d.baseline.ET, mode:'markers+text', name:'Baseline', marker:{color:'#1C1C1C',symbol:'circle',size:11}, text:mkT(plans), textposition:'top center', textfont:{size:9,color:'#646464'}, hovertemplate:'%{text}<br>h(T=8)=%{x:.3f}<br>E[T]=%{y:.1f}<extra>Baseline</extra>' },
+      { x:d.conservadora.h8, y:d.conservadora.ET, mode:'markers+text', name:'Conservadora', marker:{color:'#C82D23',symbol:'square',size:11}, text:mkT(plans), textposition:'top center', textfont:{size:9,color:'#646464'}, hovertemplate:'%{text}<br>h(T=8)=%{x:.3f}<br>E[T]=%{y:.1f}<extra>Conservadora</extra>' },
+      { x:d.h_optima.h8, y:d.h_optima.ET, mode:'markers+text', name:'h-óptima', marker:{color:'#2E7D32',symbol:'diamond',size:11}, text:mkT(plans), textposition:'top center', textfont:{size:9,color:'#646464'}, hovertemplate:'%{text}<br>h(T=8)=%{x:.3f}<br>E[T]=%{y:.1f}<extra>h-óptima</extra>' }
+    ];
+  },
+  () => ({
+    ...LAYOUT_BASE,
+    margin:{l:10,r:10,t:10,b:50},
+    xaxis:{title:{text:'Índice h en T=8',font:FONT},automargin:true,range:[0.22,0.60]},
+    yaxis:{title:{text:'E[T | titulación] — menor es mejor',font:FONT},automargin:true,range:[15.0,27.0]},
+    legend:{orientation:'h',xanchor:'center',x:0.5,y:1.08,font:FONT},
+    annotations:[{x:0.50,y:0.14,xref:'paper',yref:'paper',text:'Líneas punteadas: agresiva → h-óptima (costo prom. ≈ +2.1 trim)',showarrow:false,font:{color:'#00838F',size:10,style:'italic'},xanchor:'center'}]
+  })
+);
+
+renderChart('chart-ra-deficit',
+  () => {
+    const plans = ['met','com','ele','qui','elo','civ','fis','amb','mec','ind'];
+    const tCols = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+    const matrix = {
+      met:[0.861,0.9433,0.9633,0.98,0.9903,0.9912,0.993,0.9931,0.9996,0.9968,1.0,1.0,1.0,1.0,1.0,1.0],
+      com:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
+      ele:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
+      qui:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
+      elo:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
+      civ:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
+      fis:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
+      amb:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
+      mec:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
+      ind:[1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]
+    };
+    const planLabels = {met:'Met',com:'Comp',ele:'Ele',qui:'Qui',elo:'Elo',civ:'Civ',fis:'Fis',amb:'Amb',mec:'Mec',ind:'Ind'};
+    const z = plans.map(p => matrix[p]);
+    return [{ type:'heatmap', x:tCols.map(String), y:plans.map(p=>planLabels[p]), z:z, colorscale:[[0,'#FFFFFF'],[0.80,'#FFCDD2'],[0.90,'#EF9A9A'],[0.95,'#E57373'],[1.00,'#C82D23']], zmin:0, zmax:1, colorbar:{title:{text:'Frac. RA<1',font:FONT,side:'right'},thickness:14,tickformat:'.0%',len:0.8}, hovertemplate:'Plan: %{y}<br>Trimestre: %{x}<br>Fracción RA<1: %{z:.1%}<extra></extra>', xgap:1, ygap:1 }];
+  },
+  () => ({
+    ...LAYOUT_BASE,
+    margin:{l:10,r:10,t:10,b:50},
+    xaxis:{title:{text:'Trimestre T',font:FONT},automargin:true,type:'category',tickangle:0},
+    yaxis:{title:{text:'Plan de estudios',font:FONT},automargin:true,type:'category'},
+    annotations:[
+      {x:'1',y:'Met',xref:'x',yref:'y',text:'c<sub>s</sub>=41>38',showarrow:true,arrowhead:2,arrowsize:0.8,ax:50,ay:-30,font:{color:'#00838F',size:10},arrowcolor:'#00838F'},
+      {x:0.5,y:-0.12,xref:'paper',yref:'paper',text:'Denominador RA = 38 cr/trim — déficit estructural, no fracaso individual',showarrow:false,font:{color:'#646464',size:10,style:'italic'},xanchor:'center'}
+    ]
+  })
+);
+
+})();
+
+</script>
+</body>
+</html>
