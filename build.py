@@ -1845,10 +1845,10 @@ META_CONTENT = f"""
   <div style="padding:3rem 2rem;max-width:1440px;margin:0 auto" id="content">
     <div class="connect-box animate-in">
       <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
-      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">Los planes con mayor complejidad sistémica son también los que concentran más unidades de enseñanza-aprendizaje (UEA) con contenido duplicado en el análisis de Modificaciones 2026. La simplificación curricular y la reducción de seriaciones son dos caras del mismo problema estructural.</p>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">El análisis de eficiencia terminal documenta el problema; el proyecto de Modificaciones 2026 es, en parte, la respuesta. Evalúa con inteligencia artificial las propuestas de reforma curricular que aún no se han implementado — las mismas seriaciones y UEAs que aquí se identifican como palancas de mejora son las que el análisis de modificaciones examina como candidatas a reestructuración.</p>
       <div class="connect-links">
-        <a class="connect-link" href="cat26p.html">Ver CAT 26P →</a>
         <a class="connect-link" href="modificaciones.html">Ver Modificaciones 2026 →</a>
+        <a class="connect-link" href="cat26p.html">Ver CAT 26P →</a>
       </div>
     </div>
   </div>
