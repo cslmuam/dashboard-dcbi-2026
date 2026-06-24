@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="theme-color" content="#C82D23">
+  <title>Gestión Académica DCBI · DCBI UAM-A</title>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+  :root {
+    --red:#C82D23; --red-d:#9E1E18; --red-l:#FBEEED;
+    --ink:#1A1A1A; --mid:#444; --muted:#888;
+    --border:#E4E2DF; --bg:#F5F4F1; --card:#fff;
+    --teal:#00838F; --teal-light:#E0F4F5;
+    --amber:#B06A00; --green:#2E7D32;
+    --shadow-sm:0 1px 4px rgba(0,0,0,.07),0 4px 12px rgba(0,0,0,.06);
+    --shadow-md:0 4px 16px rgba(0,0,0,.10),0 12px 32px rgba(0,0,0,.08);
+    --radius:10px;
+    --font:'Helvetica Neue',Arial,system-ui,sans-serif;
+    --ease:.22s cubic-bezier(.4,0,.2,1);
+    --c-amb:#2E7D32; --c-civ:#BF360C; --c-com:#1565C0; --c-ele:#E65100;
+    --c-elo:#6A1B9A; --c-fis:#00838F; --c-ind:#C62828;
+    --c-mec:#37474F; --c-met:#78909C; --c-qui:#558B2F;
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0 }
+  html { font-size:16px; scroll-behavior:smooth }
+  body { font-family:var(--font); background:var(--bg); color:var(--ink);
+         line-height:1.6; -webkit-font-smoothing:antialiased;
+         animation:fadeInPage .45s ease both }
+  body.page-exit { opacity:0; transform:translateY(6px);
+                   transition:opacity .28s ease,transform .28s ease; pointer-events:none }
+  @keyframes fadeInPage { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+  a { color:inherit; text-decoration:none }
+  img { display:block; max-width:100% }
+
+  /* ── Nav ── */
+  .nav { position:sticky; top:0; z-index:100;
+         background:rgba(255,255,255,.92); backdrop-filter:blur(12px);
+         border-bottom:1px solid var(--border); padding:0 2rem }
+  .nav-inner { max-width:1440px; margin:0 auto;
+               display:flex; align-items:center; gap:.25rem; height:52px }
+  .nav-brand { font-size:.78rem; font-weight:700; letter-spacing:.08em;
+               text-transform:uppercase; color:var(--red); white-space:nowrap;
+               margin-right:auto; padding:.3rem .6rem .3rem 0 }
+  .nav-links { display:flex; gap:0; list-style:none }
+  .nav-links a { display:block; padding:.3rem .9rem; font-size:.82rem; color:var(--mid);
+                 border-radius:6px; transition:background var(--ease),color var(--ease) }
+  .nav-links a:hover { background:var(--red-l); color:var(--red) }
+  .nav-links a.active { background:var(--red-l); color:var(--red); font-weight:600 }
+  .nav-hamburger { display:none; background:none; border:none; cursor:pointer;
+                   padding:8px; flex-direction:column; justify-content:center; gap:5px;
+                   width:36px; height:36px; border-radius:6px;
+                   transition:background var(--ease) }
+  .nav-hamburger:hover { background:var(--red-l) }
+  .nav-hamburger span { display:block; width:20px; height:2px; background:var(--ink);
+                        border-radius:2px; transition:transform .22s ease,opacity .22s ease }
+  .nav-hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg) }
+  .nav-hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0) }
+  .nav-hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg) }
+
+  /* ── Hero ── */
+  .hero { background:var(--ink); color:#fff; padding:4rem 2rem 3rem }
+  .hero-inner { max-width:1440px; margin:0 auto;
+                display:grid; grid-template-columns:1fr auto; gap:2rem; align-items:end }
+  .hero-label { font-size:.72rem; font-weight:700; letter-spacing:.14em;
+                text-transform:uppercase; color:var(--red); margin-bottom:.6rem }
+  .hero h1 { font-size:clamp(1.6rem,3vw,2.6rem); font-weight:300;
+             line-height:1.2; letter-spacing:-.02em }
+  .hero h1 strong { font-weight:700 }
+  .hero-sub { margin-top:.75rem; font-size:.92rem; color:rgba(255,255,255,.55); max-width:580px }
+  .hero-bar { width:48px; height:3px; background:var(--red); margin:1.5rem 0 }
+  .stats { display:flex; flex-wrap:wrap; gap:.5rem 1.5rem }
+  .stat { display:flex; flex-direction:column; padding:.75rem 1.1rem;
+          background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1);
+          border-radius:8px; min-width:90px }
+  .stat-val { font-size:2rem; font-weight:700; color:#fff; line-height:1 }
+  .stat-lbl { font-size:.68rem; color:rgba(255,255,255,.45); margin-top:.25rem; letter-spacing:.04em }
+  .palette { display:flex; flex-direction:column; gap:.4rem }
+  .palette-title { font-size:.66rem; color:rgba(255,255,255,.4);
+                   text-transform:uppercase; letter-spacing:.1em; margin-bottom:.2rem }
+  .palette-chips { display:flex; flex-direction:column; gap:.28rem }
+  .chip { display:flex; align-items:center; gap:.5rem; font-size:.72rem; color:rgba(255,255,255,.65) }
+  .chip-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0 }
+
+  /* ── Main / Sections ── */
+  .main { max-width:1440px; margin:0 auto; padding:0 2rem 4rem }
+  .section { margin-top:3.5rem }
+  .section-header { display:flex; align-items:baseline; gap:1rem;
+                    padding-bottom:.75rem; border-bottom:2px solid var(--border); margin-bottom:1.5rem }
+  .section-header h2 { font-size:1.2rem; font-weight:700; letter-spacing:-.01em }
+  .section-count { font-size:.78rem; color:var(--muted); background:var(--bg);
+                   border:1px solid var(--border); padding:.15rem .55rem; border-radius:20px }
+  .section-desc { font-size:.87rem; color:var(--mid); margin-bottom:1.5rem;
+                  max-width:740px; line-height:1.7 }
+
+  /* ── Callout / Recuadro ── */
+  .read-callout { background:var(--teal-light); border-left:4px solid var(--teal);
+                  border-radius:0 8px 8px 0; padding:.9rem 1.1rem;
+                  margin-bottom:1.4rem; font-size:.84rem; line-height:1.65 }
+  .read-callout strong { color:var(--teal) }
+  .recuadro { background:var(--card); border:1px solid var(--border);
+              border-left:4px solid var(--red); border-radius:0 8px 8px 0;
+              padding:1.1rem 1.3rem; margin:1.5rem 0 }
+  .recuadro-title { font-size:.85rem; font-weight:700; color:var(--red); margin-bottom:.6rem }
+  .recuadro p { font-size:.84rem; color:var(--mid); line-height:1.7; margin-bottom:.5rem }
+  .recuadro p:last-child { margin-bottom:0 }
+
+  /* ── Howto ── */
+  .howto-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem }
+  .howto-card { background:var(--card); border:1px solid var(--border);
+                border-radius:10px; padding:1.25rem }
+  .howto-card h3 { font-size:.95rem; font-weight:700; margin-bottom:.75rem;
+                   padding-bottom:.5rem; border-bottom:1px solid var(--border) }
+  .howto-step { display:flex; gap:.6rem; margin-bottom:.6rem; align-items:flex-start }
+  .howto-icon { width:22px; height:22px; border-radius:50%;
+                background:var(--red-l); color:var(--red);
+                font-size:.72rem; font-weight:700;
+                display:flex; align-items:center; justify-content:center;
+                flex-shrink:0; margin-top:.1rem }
+  .howto-text { font-size:.82rem; color:var(--mid); line-height:1.55 }
+
+  /* ── Chart cards ── */
+  .chart-card { background:var(--card); border-radius:var(--radius);
+                box-shadow:var(--shadow-sm); border:1px solid var(--border);
+                overflow:hidden; display:flex; flex-direction:column }
+  .chart-card-header { display:flex; align-items:center; justify-content:space-between;
+                       padding:.85rem 1rem .7rem; border-bottom:1px solid var(--border); gap:.75rem }
+  .chart-card-header h3 { font-size:.88rem; font-weight:700; color:var(--ink); line-height:1.3; flex:1; margin:0 }
+  .chart-type-tag { font-size:.62rem; font-weight:700; text-transform:uppercase;
+                    letter-spacing:.07em; padding:.2rem .55rem; border-radius:20px; flex-shrink:0;
+                    background:rgba(0,131,143,.15); color:#006064; border:1px solid rgba(0,131,143,.3) }
+  .chart-canvas { position:relative; width:100%; height:320px; padding:.5rem }
+  .chart-canvas.sm  { height:260px }
+  .chart-canvas.md  { height:340px }
+  .chart-canvas.lg  { height:420px }
+  .chart-canvas.xl  { height:500px }
+
+  /* ── Skeleton shimmer ── */
+  @keyframes shimmer {
+    0%   { background-position: -600px 0 }
+    100% { background-position:  600px 0 }
+  }
+  .chart-skeleton {
+    position:absolute; inset:0; border-radius:4px; z-index:2;
+    background: linear-gradient(
+      90deg,
+      var(--bg) 0%, var(--bg) 30%,
+      var(--border) 50%,
+      var(--bg) 70%, var(--bg) 100%
+    );
+    background-size:600px 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+    pointer-events:none;
+    transition: opacity .3s ease;
+  }
+  .chart-canvas.rendering .chart-skeleton { opacity:1 }
+  .chart-canvas.ready     .chart-skeleton { opacity:0; pointer-events:none }
+
+  /* ── Chart layouts ── */
+  .chart-guide-grid { display:grid; grid-template-columns:3fr 2fr;
+                      gap:1.25rem; align-items:start; margin-bottom:1.25rem }
+  .chart-duo { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:1.25rem }
+
+  /* ── Figure cards (Modificaciones) ── */
+  .grid { display:grid; gap:1.25rem }
+  .grid-2 { grid-template-columns:repeat(2,1fr) }
+  .grid-3 { grid-template-columns:repeat(3,1fr) }
+  .card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow-sm);
+          border:1px solid var(--border); overflow:hidden; display:flex; flex-direction:column;
+          transition:transform var(--ease),box-shadow var(--ease); cursor:pointer }
+  .card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md) }
+  .card-thumb { position:relative; aspect-ratio:16/10; overflow:hidden; background:#fafafa }
+  .card-thumb img { width:100%; height:100%; object-fit:cover; object-position:top left;
+                    transition:transform .4s ease }
+  .card:hover .card-thumb img { transform:scale(1.04) }
+  .card-badge { position:absolute; top:.6rem; right:.6rem; font-size:.62rem; font-weight:700;
+                text-transform:uppercase; letter-spacing:.07em; padding:.2rem .55rem; border-radius:20px }
+  .badge-interactive { background:rgba(0,131,143,.15); color:#006064; border:1px solid rgba(0,131,143,.3) }
+  .card-body { padding:.9rem 1rem 1rem; flex:1; display:flex; flex-direction:column }
+  .card-title { font-size:.88rem; font-weight:700; line-height:1.3; margin-bottom:.3rem }
+  .card-desc { font-size:.76rem; color:var(--muted); line-height:1.55; flex:1 }
+  .card-footer { display:flex; align-items:center; justify-content:space-between;
+                 margin-top:.75rem; padding-top:.65rem; border-top:1px solid var(--border) }
+  .card-meta { font-size:.7rem; color:var(--muted); font-family:monospace }
+  .card-btn { font-size:.72rem; font-weight:700; color:var(--red); letter-spacing:.04em;
+              text-transform:uppercase; display:flex; align-items:center; gap:.3rem }
+  .card-btn svg { width:12px; height:12px }
+
+  /* ── Iframe ── */
+  .fig-iframe-wrap { border-radius:var(--radius); overflow:hidden;
+                     border:1px solid var(--border); box-shadow:var(--shadow-sm);
+                     background:#fafafa; margin-bottom:1.25rem }
+  .fig-iframe { display:block; width:100%; height:480px; border:none }
+
+  /* ── Connection callout ── */
+  .connect-box { background:var(--card); border:1px solid var(--border);
+                 border-left:4px solid var(--amber); border-radius:0 8px 8px 0;
+                 padding:1rem 1.25rem; margin:2rem 0 }
+  .connect-box-title { font-size:.82rem; font-weight:700; color:var(--amber); margin-bottom:.5rem }
+  .connect-links { display:flex; gap:.75rem; flex-wrap:wrap; margin-top:.75rem }
+  .connect-link { display:inline-flex; align-items:center; gap:.4rem; font-size:.8rem;
+                  font-weight:600; color:var(--red); padding:.35rem .85rem;
+                  border:1.5px solid var(--red-l); background:var(--red-l);
+                  border-radius:6px; transition:background var(--ease),border-color var(--ease) }
+  .connect-link:hover { background:#fad5d3; border-color:#e0a09c }
+
+  /* ── Scroll animations ── */
+  .animate-in { opacity:0; transform:translateY(20px);
+                transition:opacity .5s ease,transform .5s ease }
+  .animate-in.delay-1 { transition-delay:.1s }
+  .animate-in.delay-2 { transition-delay:.2s }
+  .animate-in.delay-3 { transition-delay:.3s }
+  .animate-in.visible { opacity:1; transform:none }
+
+  /* ── Bottom nav (mobile) ── */
+  .bottom-nav { display:none; position:fixed; bottom:0; left:0; right:0; z-index:200;
+                background:rgba(255,255,255,.96); backdrop-filter:blur(12px);
+                border-top:1px solid var(--border);
+                padding:.3rem .5rem calc(.3rem + env(safe-area-inset-bottom)) }
+  .bottom-nav-inner { display:flex; justify-content:space-around; align-items:center;
+                      max-width:480px; margin:0 auto }
+  .bottom-nav-item { display:flex; flex-direction:column; align-items:center;
+                     gap:2px; padding:.4rem .6rem; border-radius:8px;
+                     font-size:.58rem; font-weight:600; color:var(--muted);
+                     text-transform:uppercase; letter-spacing:.05em;
+                     transition:color var(--ease),background var(--ease); text-decoration:none }
+  .bottom-nav-item:hover,.bottom-nav-item.active { color:var(--red); background:var(--red-l) }
+  .bottom-nav-icon { font-size:1.1rem; line-height:1 }
+
+  /* ── Footer ── */
+  .footer { background:var(--ink); color:rgba(255,255,255,.4);
+            text-align:center; padding:1.5rem 2rem; font-size:.75rem; line-height:1.8 }
+  .footer strong { color:rgba(255,255,255,.75) }
+  .divider { margin:3rem 0 0; border:none; border-top:1px solid var(--border) }
+
+  /* ── Responsive ── */
+  @media(max-width:960px) {
+    .hero-inner { grid-template-columns:1fr }
+    .palette { display:none }
+    .howto-grid { grid-template-columns:1fr }
+    .chart-guide-grid { grid-template-columns:1fr }
+    .chart-duo { grid-template-columns:1fr }
+    .chart-canvas { height:290px }
+    .chart-canvas.lg { height:360px }
+    .chart-canvas.xl { height:420px }
+    .fig-iframe { height:380px }
+    .grid-3 { grid-template-columns:repeat(2,1fr) }
+  }
+  @media(max-width:640px) {
+    .nav { padding:0 1rem; position:fixed; width:100% }
+    .nav-inner { gap:0; position:relative }
+    .nav-hamburger { display:flex }
+    .nav-links { display:none; position:absolute; top:52px; left:-1rem; right:-1rem;
+                 background:rgba(255,255,255,.98); backdrop-filter:blur(16px);
+                 border-bottom:1px solid var(--border); box-shadow:0 8px 24px rgba(0,0,0,.1);
+                 padding:.5rem .75rem .75rem; flex-direction:column; gap:0; margin-left:0 }
+    .nav-links.open { display:flex }
+    .nav-links li { width:100% }
+    .nav-links a { display:block; padding:.75rem 1rem; font-size:.9rem; border-radius:8px }
+    .hero { padding:calc(52px + 2rem) 1.25rem 2rem }
+    .hero h1 { font-size:clamp(1.4rem,6vw,1.9rem) }
+    .hero-sub { font-size:.82rem }
+    .hero-bar { margin:1rem 0 }
+    .stats { display:grid; grid-template-columns:repeat(2,1fr); gap:.4rem }
+    .stat { min-width:0 }
+    .stat-val { font-size:1.6rem }
+    .main { padding:0 1.25rem calc(3rem + 60px) }
+    .section { margin-top:2rem }
+    .section-header h2 { font-size:1.05rem }
+    .grid-3 { grid-template-columns:1fr }
+    .grid-2 { grid-template-columns:1fr }
+    .card:hover { transform:none; box-shadow:var(--shadow-sm) }
+    .chart-canvas { height:200px; padding:.25rem }
+    .chart-canvas.sm  { height:200px }
+    .chart-canvas.md  { height:260px }
+    .chart-canvas.lg  { height:300px }
+    .chart-canvas.xl  { height:310px }
+    .fig-iframe { height:300px }
+    .bottom-nav { display:block }
+    .divider { margin:2rem 0 0 }
+    .howto-card { padding:1rem }
+    .chart-card-header h3 { font-size:.84rem }
+  }
+  @media(max-width:380px) {
+    .chart-canvas { height:230px }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">DCBI · 2026</a>
+    <ul class="nav-links" id="navLinks"><li><a href="index.html" class="active" onclick="closeNav()">🏠 Inicio</a></li>
+<li><a href="cat26p.html" class="" onclick="closeNav()">CAT 26P</a></li>
+<li><a href="cat26p_capacidad.html" class="" onclick="closeNav()">↳ Capacidad</a></li>
+<li><a href="metanalisis.html" class="" onclick="closeNav()">Metaanálisis</a></li>
+<li><a href="modificaciones.html" class="" onclick="closeNav()">Modificaciones 2026</a></li></ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menú" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<style>
+  .landing-hero { min-height:100svh; background:var(--ink); color:#fff;
+                  display:flex; flex-direction:column; justify-content:center;
+                  padding:3rem 2rem; position:relative; overflow:hidden }
+  .landing-hero::before { content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 80% 60% at 60% 40%, rgba(200,45,35,.12) 0%, transparent 70%);
+    pointer-events:none }
+  .landing-hero-inner { max-width:1440px; margin:0 auto; width:100%;
+                        display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center }
+  .landing-tag { font-size:.72rem; font-weight:700; letter-spacing:.16em;
+                 text-transform:uppercase; color:var(--red); margin-bottom:1rem }
+  .landing-h1 { font-size:clamp(2rem,5vw,4rem); font-weight:200; line-height:1.1;
+                letter-spacing:-.03em }
+  .landing-h1 strong { font-weight:800; display:block }
+  .landing-sub { margin-top:1.2rem; font-size:1rem; color:rgba(255,255,255,.5);
+                 max-width:520px; line-height:1.7 }
+  .landing-bar { width:56px; height:3px; background:var(--red); margin:1.8rem 0 }
+  .landing-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:.75rem; max-width:520px }
+  .lkpi { padding:.9rem; background:rgba(255,255,255,.06);
+          border:1px solid rgba(255,255,255,.1); border-radius:8px; text-align:center }
+  .lkpi-val { font-size:1.8rem; font-weight:700; color:#fff; line-height:1 }
+  .lkpi-lbl { font-size:.65rem; color:rgba(255,255,255,.4); margin-top:.3rem; letter-spacing:.04em }
+  .flow-diagram { display:flex; flex-direction:column; gap:1.5rem; padding:.5rem }
+  .flow-node { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+               border-radius:12px; padding:1.4rem 1.6rem; cursor:pointer;
+               transition:background var(--ease),border-color var(--ease),transform var(--ease) }
+  .flow-node:hover { background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5);
+                     transform:translateX(6px) }
+  .flow-node-tag { font-size:.62rem; font-weight:700; letter-spacing:.12em;
+                   text-transform:uppercase; color:var(--red); margin-bottom:.4rem }
+  .flow-node-title { font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:.3rem }
+  .flow-node-desc { font-size:.8rem; color:rgba(255,255,255,.45); line-height:1.5 }
+  .flow-node-stat { font-size:1.6rem; font-weight:800; color:#fff; margin-top:.6rem }
+  .flow-node-stat-lbl { font-size:.68rem; color:rgba(255,255,255,.35) }
+  .flow-arrow { text-align:center; color:var(--red); font-size:1.4rem; opacity:.6 }
+  .scroll-hint { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+                 font-size:.7rem; color:rgba(255,255,255,.3); text-align:center;
+                 animation:bobble 2s ease-in-out infinite }
+  @keyframes bobble { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(5px)} }
+  @media(max-width:960px) {
+    .landing-hero-inner { grid-template-columns:1fr; gap:2.5rem }
+    .landing-kpis { grid-template-columns:repeat(2,1fr); max-width:none }
+    .flow-diagram { flex-direction:row; gap:1rem }
+    .flow-arrow { writing-mode:horizontal-tb; align-self:center; transform:rotate(0deg) }
+    .flow-node { flex:1 }
+  }
+  @media(max-width:640px) {
+    .landing-hero { min-height:auto; padding:calc(52px + 2rem) 1.25rem 2rem }
+    .landing-h1 { font-size:clamp(1.8rem,8vw,2.8rem) }
+    .flow-diagram { flex-direction:column }
+    .flow-node:hover { transform:none }
+  }
+</style>
+<main>
+  <div class="landing-hero">
+    <div class="landing-hero-inner">
+      <div>
+        <p class="landing-tag animate-in">UAM Azcapotzalco · División de Ciencias Básicas e Ingeniería</p>
+        <h1 class="landing-h1 animate-in delay-1">
+          Gestión académica
+          <strong>con datos</strong>
+        </h1>
+        <p class="landing-sub animate-in delay-2">
+          Tres sistemas computacionales que analizan, optimizan y revisan la operación
+          académica de las diez licenciaturas de la DCBI — desde la asignación de grupos
+          hasta la revisión curricular con inteligencia artificial.
+        </p>
+        <div class="landing-bar animate-in delay-2"></div>
+        <div class="landing-kpis animate-in delay-3">
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="674">0</div>
+            <div class="lkpi-lbl">Estudiantes asignados</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="1859">0</div>
+            <div class="lkpi-lbl">UEAs analizadas</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="10">0</div>
+            <div class="lkpi-lbl">Planes revisados</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="1505">0</div>
+            <div class="lkpi-lbl">UEAs con IA</div>
+          </div>
+        </div>
+      </div>
+      <div class="flow-diagram animate-in delay-2">
+        <div class="flow-node" onclick="window.location.href='cat26p.html'">
+          <div class="flow-node-tag">Proyecto 1</div>
+          <div class="flow-node-title">CAT 26P</div>
+          <div class="flow-node-desc">Asignación automatizada de grupos para nuevo ingreso sin traslapes horarios</div>
+          <div class="flow-node-stat kpi-counter" data-target="674">0</div>
+          <div class="flow-node-stat-lbl">estudiantes procesados</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node" onclick="window.location.href='metanalisis.html'">
+          <div class="flow-node-tag">Proyecto 2</div>
+          <div class="flow-node-title">Metaanálisis</div>
+          <div class="flow-node-desc">Redes de prerrequisitos, complejidad estructural y eficiencia terminal</div>
+          <div class="flow-node-stat kpi-counter" data-target="1859">0</div>
+          <div class="flow-node-stat-lbl">UEAs en 10 planes</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node" onclick="window.location.href='modificaciones.html'">
+          <div class="flow-node-tag">Proyecto 3</div>
+          <div class="flow-node-title">Modificaciones 2026</div>
+          <div class="flow-node-desc">Revisión curricular automatizada con agentes de inteligencia artificial</div>
+          <div class="flow-node-stat kpi-counter" data-target="1505">0</div>
+          <div class="flow-node-stat-lbl">UEAs evaluadas con IA</div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">▾ desplázate para explorar</div>
+  </div>
+</main>
+
+
+<footer class="footer">
+  <strong>División de Ciencias Básicas e Ingeniería · UAM-Azcapotzalco</strong><br>
+  Sistemas de gestión académica institucional · Trimestre 26-P · 2026<br>
+  Dr. César S. López-Monsalvo ·
+  <a href="mailto:cslm@azc.uam.mx" style="color:rgba(255,255,255,.5);text-decoration:underline">cslm@azc.uam.mx</a>
+</footer>
+<nav class="bottom-nav" aria-label="Navegación rápida"><div class="bottom-nav-inner">
+      <a class="bottom-nav-item" href="cat26p.html"><span class="bottom-nav-icon">🗓</span>CAT</a>
+      <a class="bottom-nav-item" href="metanalisis.html"><span class="bottom-nav-icon">📊</span>Meta</a>
+      <a class="bottom-nav-item" href="modificaciones.html"><span class="bottom-nav-icon">📋</span>Modif.</a>
+    </div></nav>
+<script>
+
+
+/* ── Page transitions ──────────────────────────────────────────────────────── */
+document.querySelectorAll('a[href]').forEach(a => {
+  const href = a.getAttribute('href');
+  if (!href || href.startsWith('#') || href.startsWith('mailto') || href.startsWith('http')) return;
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.body.classList.add('page-exit');
+    setTimeout(() => { window.location.href = href; }, 280);
+  });
+});
+
+/* ── Scroll animations ──────────────────────────────────────────────────────── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.12 });
+document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+
+/* ── Counter animation ──────────────────────────────────────────────────────── */
+function animateCounter(el, target, duration=1100) {
+  const raw = el.dataset.target || target;
+  const num = parseFloat(String(raw).replace(/[^0-9.]/g,''));
+  const isFloat = String(raw).includes('.');
+  const suffix = String(raw).replace(/[0-9.,]/g,'');
+  const start = performance.now();
+  const step = now => {
+    const t = Math.min(1, (now-start)/duration);
+    const eased = 1 - Math.pow(1-t, 3);
+    const val = eased * num;
+    el.textContent = (isFloat ? val.toFixed(1) : Math.round(val).toLocaleString('es-MX')) + suffix;
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter(e.target, e.target.dataset.target);
+      counterObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.kpi-counter').forEach(el => counterObserver.observe(el));
+
+/* ── Nav hamburger ──────────────────────────────────────────────────────────── */
+function toggleNav() {
+  const btn=document.getElementById('hamburger'), menu=document.getElementById('navLinks');
+  const open=btn.classList.toggle('open');
+  menu.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeNav() {
+  document.getElementById('hamburger')?.classList.remove('open');
+  document.getElementById('navLinks')?.classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('click', e => {
+  if (!document.getElementById('mainNav')?.contains(e.target)) closeNav();
+});
+
+/* ── Bottom nav active ──────────────────────────────────────────────────────── */
+(function(){
+  const ids=['cat','meta','mod'], items=document.querySelectorAll('.bottom-nav-item');
+  const els=ids.map(id=>document.getElementById(id)).filter(Boolean);
+  function onScroll(){
+    let ai=0; const y=window.scrollY+window.innerHeight*.35;
+    els.forEach((el,i)=>{ if(el.offsetTop<=y) ai=i; });
+    items.forEach((item,i)=>item.classList.toggle('active',i===ai&&item.getAttribute('href')?.startsWith('#')));
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+
+/* ── Plotly unified config ──────────────────────────────────────────────────── */
+const _mobile = () => window.innerWidth < 640;
+
+const FONT = {
+  family: 'Helvetica Neue,Arial,system-ui,sans-serif',
+  size: _mobile() ? 10 : 11,
+  color: '#444'
+};
+
+const CFG = { responsive:true, displayModeBar:false, scrollZoom:false };
+
+/* Base layout applied to every chart — nowhere_minimal palette */
+const LAYOUT_BASE = {
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor:  'rgba(0,0,0,0)',
+  font: FONT,
+  xaxis: { gridcolor:'#E4E2DF', zerolinecolor:'#E4E2DF', tickfont: FONT },
+  yaxis: { gridcolor:'#E4E2DF', zerolinecolor:'#E4E2DF', tickfont: FONT },
+};
+
+/* Returns margin object — compact on mobile, standard on desktop.
+   `overrides` (optional) are merged in after the base so callers can
+   set specific margins that still get clamped to mobile values on small screens. */
+function getMargins(overrides) {
+  if (_mobile()) return { l:6, r:6, t:6, b:32 };
+  return Object.assign({ l:10, r:12, t:8, b:40 }, overrides || {});
+}
+
+const PROG_COLORS = {
+  'Ambiental':'#2E7D32','Civil':'#BF360C','Computación':'#1565C0','Eléctrica':'#E65100',
+  'Electrónica':'#6A1B9A','Física':'#00838F','Industrial':'#C62828',
+  'Mecánica':'#37474F','Metalurgia':'#78909C','Química':'#558B2F'
+};
+
+/* ── renderChart — lazy viewport-based rendering ───────────────────────────── *
+ *                                                                               *
+ *  containerId  — id of the .chart-canvas div                                  *
+ *  traceFn()    — function returning the traces array                           *
+ *  layoutFn()   — function returning the layout object (no margin key needed)  *
+ *  skeletonEl   — optional: the .chart-skeleton child (auto-detected if absent) *
+ * ─────────────────────────────────────────────────────────────────────────── */
+window.renderChart = function(containerId, traceFn, layoutFn) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  /* Inject skeleton if not present */
+  let skel = container.querySelector('.chart-skeleton');
+  if (!skel) {
+    skel = document.createElement('div');
+    skel.className = 'chart-skeleton';
+    container.insertBefore(skel, container.firstChild);
+  }
+
+  container.classList.add('rendering');
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      io.unobserve(container);
+
+      /* Merge layout: base → caller → mobile margin override */
+      const callerLayout = layoutFn();
+      const margin = _mobile()
+        ? { l:6, r:6, t:6, b:32 }
+        : (callerLayout.margin || { l:10, r:12, t:8, b:40 });
+
+      const layout = Object.assign(
+        {}, LAYOUT_BASE, callerLayout,
+        {
+          font:   FONT,
+          margin: margin,
+          /* Ensure axis font stays consistent regardless of caller */
+          xaxis: Object.assign({}, LAYOUT_BASE.xaxis, callerLayout.xaxis || {}),
+          yaxis: Object.assign({}, LAYOUT_BASE.yaxis, callerLayout.yaxis || {}),
+        }
+      );
+
+      /* On mobile reduce legend font and move it below the chart */
+      if (_mobile() && layout.legend) {
+        layout.legend = Object.assign(
+          { orientation:'h', xanchor:'center', x:.5, y:-.18 },
+          layout.legend,
+          { font: Object.assign({}, layout.legend.font || {}, { size:9 }) }
+        );
+      }
+
+      requestAnimationFrame(() => {
+        Plotly.newPlot(containerId, traceFn(), layout, CFG).then(() => {
+          container.classList.remove('rendering');
+          container.classList.add('ready');
+        });
+      });
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px 80px 0px' });
+
+  io.observe(container);
+};
+
+
+</script>
+</body>
+</html>
