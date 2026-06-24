@@ -1808,12 +1808,20 @@ META_CONTENT = f"""
         <div style="margin-top:.9rem;font-size:.8rem;color:var(--red);font-weight:600">Ver análisis →</div>
       </a>
 
-      <a href="meta_4.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;text-decoration:none;transition:box-shadow var(--ease),transform var(--ease)" onmouseover="this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">Infografía 4</div>
-        <div style="font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">El índice P</div>
-        <div style="font-size:.84rem;color:var(--mid);line-height:1.5">Un sesgo de diseño que retrasa el egreso hasta 4.7 trimestres y reduce la tasa de titulación tres veces.</div>
-        <div style="margin-top:.9rem;font-size:.8rem;color:var(--red);font-weight:600">Ver análisis →</div>
-      </a>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem">
+        <a href="meta_4.html" style="display:block;text-decoration:none" onmouseover="this.querySelector('.card-arrow').style.marginLeft='.4rem'" onmouseout="this.querySelector('.card-arrow').style.marginLeft='0'">
+          <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">Infografía 4</div>
+          <div style="font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">El índice P</div>
+          <div style="font-size:.84rem;color:var(--mid);line-height:1.5">Un sesgo de diseño que retrasa el egreso hasta 4.7 trimestres y reduce la tasa de titulación tres veces.</div>
+          <div style="margin-top:.9rem;font-size:.8rem;color:var(--red);font-weight:600">Ver análisis <span class="card-arrow" style="display:inline-block;transition:margin .15s">→</span></div>
+        </a>
+        <div style="margin-top:.85rem;padding-top:.75rem;border-top:1px solid var(--border)">
+          <a href="meta_6.html" style="display:flex;align-items:center;gap:.45rem;text-decoration:none;font-size:.8rem;color:var(--mid)">
+            <span style="display:inline-block;background:rgba(200,45,35,.08);color:var(--red);border-radius:4px;padding:.1rem .45rem;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;flex-shrink:0">Subpágina</span>
+            <span style="color:var(--ink);font-weight:600">Respuesta divisional: índices P y h →</span>
+          </a>
+        </div>
+      </div>
 
       <a href="meta_5.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;text-decoration:none;transition:box-shadow var(--ease),transform var(--ease)" onmouseover="this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
         <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">Infografía 5</div>
@@ -1822,12 +1830,6 @@ META_CONTENT = f"""
         <div style="margin-top:.9rem;font-size:.8rem;color:var(--red);font-weight:600">Ver análisis →</div>
       </a>
 
-      <a href="meta_6.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;text-decoration:none;transition:box-shadow var(--ease),transform var(--ease)" onmouseover="this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">Infografía 6</div>
-        <div style="font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">Índices de prelación P y h</div>
-        <div style="font-size:.84rem;color:var(--mid);line-height:1.5">Incentivos, trampa ACT e índice entrópico h como alternativa sin subregistro.</div>
-        <div style="margin-top:.9rem;font-size:.8rem;color:var(--red);font-weight:600">Ver análisis →</div>
-      </a>
 
     </div>
   </section>
@@ -2539,6 +2541,14 @@ META4_CONTENT = """
 
   <hr class="divider">
 
+  <div class="recuadro animate-in">
+    <div class="recuadro-title">Respuesta divisional: ¿puede el criterio de prelación mejorar?</div>
+    <p>El índice de desempeño <em>P</em> vigente castiga estructuralmente a los estudiantes bloqueados por seriaciones&#8202;—&#8202;precisamente cuando más necesitan acceso preferente a los grupos del cuello de botella. La subpágina siguiente analiza el diseño del índice alternativo&#8202;&#8202;<em>h</em>, compara sus incentivos con los de <em>P</em> y muestra por qué ningún índice puede eliminar la penalización topológica mientras las seriaciones permanezcan en el plan.</p>
+    <div class="connect-links" style="margin-top:.75rem">
+      <a class="connect-link" href="meta_6.html">Índices P y h — análisis comparativo →</a>
+    </div>
+  </div>
+
   <div class="connect-box animate-in">
     <div class="connect-box-title">Navegación</div>
     <div class="connect-links">
@@ -2866,7 +2876,7 @@ META6_CONTENT = """
 <header class="hero" id="indice-hero">
   <div class="hero-inner">
     <div>
-      <p class="hero-label">Metaanálisis · Infografía 6 · División de Ciencias Básicas e Ingeniería · UAM-Azcapotzalco</p>
+      <p class="hero-label">Metaanálisis · Infografía 4 · Respuesta divisional · División de Ciencias Básicas e Ingeniería · UAM-Azcapotzalco</p>
       <h1>¿<strong>Qué mide el índice P</strong> y qué debería medir?</h1>
       <p class="hero-sub">El <em>índice P</em> vigente recompensa inscribir menos créditos y castiga a quienes más necesitan acceso preferencial. El <em>índice h</em> alternativo elimina ambos efectos mediante un principio de máxima entropía. Ninguno resuelve el bloqueo topológico.</p>
       <div class="hero-bar"></div>
@@ -3082,9 +3092,9 @@ META6_CONTENT = """
   <div class="connect-box-title">Navegación del Metaanálisis</div>
   <p style="font-size:.82rem;color:var(--mid);margin-bottom:.1rem">Esta infografía cierra el análisis comparativo de índices de prelación. La intervención estructural recomendada&#8202;—&#8202;remoción de seriaciones Pareto-prioritarias&#8202;—&#8202;se detalla en la sección de modificaciones al plan de estudios.</p>
   <div class="connect-links">
-    <a class="connect-link" href="meta_5.html">&#8592; Complejidad multidimensional</a>
+    <a class="connect-link" href="meta_4.html">&#8592; Infografía 4 — El índice P</a>
     <a class="connect-link" href="metanalisis.html">Índice del Metaanálisis</a>
-    <a class="connect-link" href="modificaciones.html">Modificaciones 2026 &#8594;</a>
+    <a class="connect-link" href="meta_5.html">Complejidad multidimensional &#8594;</a>
   </div>
 </div>
 
