@@ -990,8 +990,8 @@ INDEX_CONTENT = f"""
         <div class="flow-arrow">↓</div>
         <div class="flow-node" onclick="window.location.href='metanalisis.html'">
           <div class="flow-node-tag">Proyecto 2</div>
-          <div class="flow-node-title">Metaanálisis</div>
-          <div class="flow-node-desc">Redes de prerrequisitos, complejidad estructural y eficiencia terminal</div>
+          <div class="flow-node-title">Eficiencia terminal</div>
+          <div class="flow-node-desc">Redes de prerrequisitos, complejidad estructural y análisis de eficiencia terminal</div>
           <div class="flow-node-stat kpi-counter" data-target="1859">0</div>
           <div class="flow-node-stat-lbl">UEAs en 10 planes</div>
         </div>
@@ -1760,97 +1760,105 @@ cat_html = page_shell(
 # METANALISIS.HTML  — índice (landing)
 # ══════════════════════════════════════════════════════════════════════════════
 META_CONTENT = f"""
-<header class="hero">
-  <div class="hero-inner">
-    <div>
-      <p class="hero-label">Metaanálisis · División CBI · UAM-Azcapotzalco · Datos 2018–2025</p>
-      <h1><strong>Seriaciones, complejidad</strong><br>y eficiencia terminal</h1>
-      <p class="hero-sub">Cinco infografías interactivas que documentan el diagnóstico de los diez programas de ingeniería del Plan 2020: causas estructurales del rezago, palancas de mejora y mapa de complejidad sistémica.</p>
-      <div class="hero-bar"></div>
-      <div class="stats">
-        <div class="stat"><span class="stat-val">10</span><span class="stat-lbl">Licenciaturas</span></div>
-        <div class="stat"><span class="stat-val">6,562</span><span class="stat-lbl">Estudiantes activos</span></div>
-        <div class="stat"><span class="stat-val">499</span><span class="stat-lbl">Seriaciones analizadas</span></div>
-        <div class="stat"><span class="stat-val">MC</span><span class="stat-lbl">Monte Carlo</span></div>
-      </div>
-    </div>
-    {palette_chips()}
-  </div>
-</header>
-
-<main class="main">
-
-  <section class="section animate-in">
-    <div class="section-header">
-      <h2>Cinco infografías del análisis</h2>
-      <span class="section-count">Seleccione una para explorar</span>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1rem">
-
-      <a href="meta_1.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;text-decoration:none;transition:box-shadow var(--ease),transform var(--ease)" onmouseover="this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">Infografía 1</div>
-        <div style="font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">El diagnóstico</div>
-        <div style="font-size:.84rem;color:var(--mid);line-height:1.5">Curvas de eficiencia terminal por plan. Los diez programas tardan el doble del plazo nominal en titular a su cohorte.</div>
-        <div style="margin-top:.9rem;font-size:.8rem;color:var(--red);font-weight:600">Ver análisis →</div>
-      </a>
-
-      <a href="meta_2.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;text-decoration:none;transition:box-shadow var(--ease),transform var(--ease)" onmouseover="this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">Infografía 2</div>
-        <div style="font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">Las causas</div>
-        <div style="font-size:.84rem;color:var(--mid);line-height:1.5">Dos mecanismos estructurales imponen cotas mínimas de permanencia superiores al plazo del plan en los diez programas.</div>
-        <div style="margin-top:.9rem;font-size:.8rem;color:var(--red);font-weight:600">Ver análisis →</div>
-      </a>
-
-      <a href="meta_3.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;text-decoration:none;transition:box-shadow var(--ease),transform var(--ease)" onmouseover="this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">Infografía 3</div>
-        <div style="font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">La palanca</div>
-        <div style="font-size:.84rem;color:var(--mid);line-height:1.5">El 26.5% de las seriaciones concentra el 80% del beneficio alcanzable. La reforma puede ser quirúrgica.</div>
-        <div style="margin-top:.9rem;font-size:.8rem;color:var(--red);font-weight:600">Ver análisis →</div>
-      </a>
-
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem">
-        <a href="meta_4.html" style="display:block;text-decoration:none" onmouseover="this.querySelector('.card-arrow').style.marginLeft='.4rem'" onmouseout="this.querySelector('.card-arrow').style.marginLeft='0'">
-          <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">Infografía 4</div>
-          <div style="font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">El índice P</div>
-          <div style="font-size:.84rem;color:var(--mid);line-height:1.5">Un sesgo de diseño que retrasa el egreso hasta 4.7 trimestres y reduce la tasa de titulación tres veces.</div>
-          <div style="margin-top:.9rem;font-size:.8rem;color:var(--red);font-weight:600">Ver análisis <span class="card-arrow" style="display:inline-block;transition:margin .15s">→</span></div>
-        </a>
-        <div style="margin-top:.85rem;padding-top:.75rem;border-top:1px solid var(--border)">
-          <a href="meta_6.html" style="display:flex;align-items:center;gap:.45rem;text-decoration:none;font-size:.8rem;color:var(--mid)">
-            <span style="display:inline-block;background:rgba(200,45,35,.08);color:var(--red);border-radius:4px;padding:.1rem .45rem;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;flex-shrink:0">Subpágina</span>
-            <span style="color:var(--ink);font-weight:600">Respuesta divisional: índices P y h →</span>
-          </a>
+<style>{INDEX_CSS}
+  .meta-nodes {{ display:grid; grid-template-columns:1fr 1fr; gap:.7rem }}
+  .meta-node {{ background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+               border-radius:12px; padding:1rem 1.1rem; cursor:pointer;
+               transition:background var(--ease),border-color var(--ease);
+               text-decoration:none; display:block }}
+  .meta-node:hover {{ background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5) }}
+  .meta-node-tag {{ font-size:.6rem; font-weight:700; letter-spacing:.12em;
+                   text-transform:uppercase; color:var(--red); margin-bottom:.3rem }}
+  .meta-node-title {{ font-size:.95rem; font-weight:700; color:#fff; margin-bottom:.25rem }}
+  .meta-node-desc {{ font-size:.75rem; color:rgba(255,255,255,.4); line-height:1.45 }}
+  .meta-node-sub {{ margin-top:.55rem; padding-top:.5rem;
+                   border-top:1px solid rgba(255,255,255,.1);
+                   font-size:.72rem; color:rgba(200,45,35,.8); font-weight:600 }}
+  .meta-node-wide {{ grid-column:1/-1 }}
+  @media(max-width:960px) {{ .meta-nodes {{ grid-template-columns:1fr }} }}
+</style>
+<main>
+  <div class="landing-hero">
+    <div class="landing-hero-inner">
+      <div>
+        <p class="landing-tag animate-in">UAM Azcapotzalco · División de Ciencias Básicas e Ingeniería</p>
+        <h1 class="landing-h1 animate-in delay-1">
+          Análisis de
+          <strong>eficiencia terminal</strong>
+        </h1>
+        <p class="landing-sub animate-in delay-2">
+          Cinco infografías interactivas que diagnostican el rezago en los diez programas
+          del Plan 2020: causas estructurales, palancas de mejora, índices de prelación
+          y complejidad sistémica — con datos de 2018 a 2025.
+        </p>
+        <div class="landing-bar animate-in delay-2"></div>
+        <div class="landing-kpis animate-in delay-3">
+          <div class="lkpi">
+            <div class="lkpi-val">10</div>
+            <div class="lkpi-lbl">Licenciaturas</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="6562">0</div>
+            <div class="lkpi-lbl">Estudiantes activos</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="499">0</div>
+            <div class="lkpi-lbl">Seriaciones</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="1859">0</div>
+            <div class="lkpi-lbl">UEAs analizadas</div>
+          </div>
         </div>
       </div>
-
-      <a href="meta_5.html" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;text-decoration:none;transition:box-shadow var(--ease),transform var(--ease)" onmouseover="this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem">Infografía 5</div>
-        <div style="font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">Complejidad multidimensional</div>
-        <div style="font-size:.84rem;color:var(--mid);line-height:1.5">El índice C mapea la naturaleza de la disfunción en cinco dimensiones y orienta la intervención.</div>
-        <div style="margin-top:.9rem;font-size:.8rem;color:var(--red);font-weight:600">Ver análisis →</div>
-      </a>
-
-
+      <div class="meta-nodes animate-in delay-2">
+        <a class="meta-node" href="meta_1.html">
+          <div class="meta-node-tag">Infografía 1</div>
+          <div class="meta-node-title">El diagnóstico</div>
+          <div class="meta-node-desc">Los 10 programas tardan el doble del plazo nominal en titular su cohorte.</div>
+        </a>
+        <a class="meta-node" href="meta_2.html">
+          <div class="meta-node-tag">Infografía 2</div>
+          <div class="meta-node-title">Las causas</div>
+          <div class="meta-node-desc">Dos mecanismos estructurales imponen cotas mínimas de permanencia.</div>
+        </a>
+        <a class="meta-node" href="meta_3.html">
+          <div class="meta-node-tag">Infografía 3</div>
+          <div class="meta-node-title">La palanca</div>
+          <div class="meta-node-desc">El 26.5 % de seriaciones concentra el 80 % del beneficio alcanzable.</div>
+        </a>
+        <a class="meta-node" href="meta_4.html">
+          <div class="meta-node-tag">Infografía 4</div>
+          <div class="meta-node-title">El índice P</div>
+          <div class="meta-node-desc">Sesgo de diseño que retrasa el egreso hasta 4.7 trimestres.</div>
+          <div class="meta-node-sub">↳ Respuesta divisional: índices P y h →</div>
+        </a>
+        <a class="meta-node meta-node-wide" href="meta_5.html">
+          <div class="meta-node-tag">Infografía 5</div>
+          <div class="meta-node-title">Complejidad multidimensional</div>
+          <div class="meta-node-desc">El índice C mapea la disfunción en cinco dimensiones y orienta la intervención.</div>
+        </a>
+      </div>
     </div>
-  </section>
-
-  <hr class="divider">
-  <div class="connect-box animate-in">
-    <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
-    <p style="font-size:.84rem;color:var(--mid);line-height:1.6">Los planes con mayor complejidad sistémica son también los que concentran más programas de unidad de enseñanza-aprendizaje (UEA) con contenido duplicado en el análisis de Modificaciones 2026. La simplificación curricular y la reducción de seriaciones son dos caras del mismo problema estructural.</p>
-    <div class="connect-links">
-      <a class="connect-link" href="cat26p.html">Ver CAT 26P →</a>
-      <a class="connect-link" href="modificaciones.html">Ver Modificaciones 2026 →</a>
+    <div class="scroll-hint">▾ desplázate para explorar</div>
+  </div>
+  <div style="padding:3rem 2rem;max-width:1440px;margin:0 auto" id="content">
+    <div class="connect-box animate-in">
+      <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">Los planes con mayor complejidad sistémica son también los que concentran más unidades de enseñanza-aprendizaje (UEA) con contenido duplicado en el análisis de Modificaciones 2026. La simplificación curricular y la reducción de seriaciones son dos caras del mismo problema estructural.</p>
+      <div class="connect-links">
+        <a class="connect-link" href="cat26p.html">Ver CAT 26P →</a>
+        <a class="connect-link" href="modificaciones.html">Ver Modificaciones 2026 →</a>
+      </div>
     </div>
   </div>
-
 </main>
 """
 
 META_JS = ""
 
 meta_html = page_shell(
-    title='Metaanálisis — Seriaciones y Eficiencia Terminal',
+    title='Análisis de Eficiencia Terminal — DCBI',
     active='metanalisis.html',
     content=META_CONTENT,
     data_vars='',
