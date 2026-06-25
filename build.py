@@ -1860,6 +1860,19 @@ META_CONTENT = f"""
         <a class="connect-link" href="cat26p.html">Ver CAT 26P →</a>
       </div>
     </div>
+    <div class="connect-box animate-in" style="margin-top:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+      <div>
+        <div class="connect-box-title">Reporte técnico completo</div>
+        <p style="font-size:.84rem;color:var(--mid);line-height:1.6;margin:0">Documento integral con metodología, modelos y resultados completos · 94 pp. · PDF</p>
+      </div>
+      <a href="eficiencia_terminal.pdf" download
+         style="display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;
+                text-decoration:none;padding:.7rem 1.4rem;border-radius:8px;font-size:.85rem;
+                font-weight:700;white-space:nowrap;transition:opacity .15s"
+         onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        ↓ Descargar PDF
+      </a>
+    </div>
   </div>
 </main>
 """
