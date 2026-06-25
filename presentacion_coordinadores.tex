@@ -1,0 +1,583 @@
+% ============================================================
+% presentacion_coordinadores.tex
+% Sistema de Análisis Institucional DCBI 2026
+% Presentación ejecutiva para coordinadores de licenciatura
+% UAM-Azcapotzalco · División de Ciencias Básicas e Ingeniería
+% Dr. César Simón López-Monsalvo · junio 2026
+% ============================================================
+\documentclass[aspectratio=169,12pt]{beamer}
+
+% ── Codificación y lengua ────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,mexico]{babel}
+
+% ── Tipografía: Helvetica / sans-serif ───────────────────────
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% ── Paquetes de apoyo ────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{array}
+
+% ── Tema base: metropolis ────────────────────────────────────
+\usetheme{metropolis}
+
+% ── Paleta nowhere_minimal / dashboard DCBI ─────────────────
+\definecolor{ink}{HTML}{1A1A1A}
+\definecolor{bg}{HTML}{F5F4F1}
+\definecolor{uamred}{HTML}{C82D23}
+\definecolor{graymid}{HTML}{6B6B6B}
+\definecolor{cardwhite}{HTML}{FFFFFF}
+\definecolor{cardborder}{HTML}{E4E2DF}
+
+% ── Configuración de colores Beamer ──────────────────────────
+\setbeamercolor{normal text}{fg=ink, bg=bg}
+\setbeamercolor{frametitle}{fg=bg, bg=ink}
+\setbeamercolor{title separator}{fg=uamred}
+\setbeamercolor{progress bar}{fg=uamred, bg=cardborder}
+\setbeamercolor{structure}{fg=uamred}
+\setbeamercolor{alerted text}{fg=uamred}
+\setbeamercolor{block title}{fg=cardwhite, bg=uamred}
+\setbeamercolor{block body}{fg=ink, bg=uamred!8}
+\setbeamercolor{section in toc}{fg=ink}
+\setbeamercolor{subsection in toc}{fg=graymid}
+
+% ── Supresión de barras de navegación ────────────────────────
+\setbeamertemplate{navigation symbols}{}
+\metroset{numbering=none, progressbar=none, block=fill}
+
+% ── Fuentes Beamer ────────────────────────────────────────────
+\setbeamerfont{title}{size=\LARGE, series=\bfseries}
+\setbeamerfont{subtitle}{size=\large, series=\normalfont}
+\setbeamerfont{frametitle}{size=\large, series=\bfseries}
+\setbeamerfont{author}{size=\small}
+\setbeamerfont{date}{size=\small}
+\setbeamerfont{institute}{size=\footnotesize}
+
+% ── Comando KPI ───────────────────────────────────────────────
+% Uso: \kpi{número}{etiqueta}
+% Nota: no usar \\ en los argumentos — se separan en dos líneas
+% por el salto de línea del nodo con align=center.
+\newcommand{\kpi}[2]{%
+  \begin{tikzpicture}[baseline]
+    \node[
+      fill=uamred,
+      text=cardwhite,
+      inner xsep=8pt,
+      inner ysep=5pt,
+      rounded corners=2pt,
+      align=center,
+      font=\sffamily\footnotesize\bfseries
+    ] {#1\\[1pt]{\tiny\mdseries #2}};
+  \end{tikzpicture}%
+}
+
+% =============================================================
+\begin{document}
+% =============================================================
+
+%──────────────────────────────────────────────────────────────
+% SLIDE 1 — PORTADA (fondo oscuro)
+%──────────────────────────────────────────────────────────────
+{
+\setbeamercolor{background canvas}{bg=ink}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[ink] (current page.south west) rectangle (current page.north east);
+
+    % Logo UAM-A — esquina superior izquierda
+    \node[anchor=north west, inner sep=0pt]
+      at ($(current page.north west)+(0.6cm,-0.5cm)$) {
+        \includegraphics[
+          width=4.2cm,
+          trim={48bp 64bp 473bp 35bp},
+          clip
+        ]{/Users/nowhere/Claude_Projects/Personal/logo_UAM.png}
+    };
+
+    % Línea de acento roja — separador horizontal
+    \draw[uamred, line width=1.2pt]
+      ($(current page.north west)+(0.6cm,-2.1cm)$) --
+      ($(current page.north east)+(-0.6cm,-2.1cm)$);
+
+    % Título principal
+    \node[anchor=north west, text=cardwhite,
+          font=\sffamily\bfseries\LARGE, text width=13.5cm,
+          inner sep=0pt]
+      at ($(current page.north west)+(0.7cm,-2.6cm)$) {
+        \hyphenpenalty=10000\exhyphenpenalty=10000
+        Sistema de Análisis Institucional
+    };
+
+    % Subtítulo
+    \node[anchor=north west, text=cardborder,
+          font=\sffamily\large, text width=13.5cm,
+          inner sep=0pt]
+      at ($(current page.north west)+(0.7cm,-3.5cm)$) {
+        División de Ciencias Básicas e Ingeniería · 2026
+    };
+
+    % Descriptor menor
+    \node[anchor=north west, text=graymid,
+          font=\sffamily\footnotesize, text width=13.5cm,
+          inner sep=0pt]
+      at ($(current page.north west)+(0.7cm,-4.3cm)$) {
+        Cuatro proyectos de análisis curricular con inteligencia artificial
+    };
+
+    % Línea inferior
+    \draw[uamred, line width=0.6pt]
+      ($(current page.south west)+(0.6cm,2.5cm)$) --
+      ($(current page.south east)+(-0.6cm,2.5cm)$);
+
+    % Autor y fecha
+    \node[anchor=south west, text=cardborder,
+          font=\sffamily\footnotesize, text width=12cm, inner sep=0pt]
+      at ($(current page.south west)+(0.7cm,1.5cm)$) {
+        Dr.\ César Simón López-Monsalvo · Depto.\ de Ciencias Básicas · junio 2026
+    };
+
+    % QR — esquina inferior derecha
+    \node[anchor=south east, inner sep=0pt]
+      at ($(current page.south east)+(-0.7cm,0.6cm)$) {
+        \includegraphics[width=2.5cm]{%
+          /Users/nowhere/Claude_Projects/Admin_duties/dashboard/figuras/qr_dashboard_dcbi.png}
+    };
+
+    % URL bajo QR
+    \node[anchor=north east, text=graymid,
+          font=\sffamily\tiny, inner sep=0pt]
+      at ($(current page.south east)+(-0.7cm,0.5cm)$) {
+        cslmuam.github.io/dashboard-dcbi-2026
+    };
+
+  \end{tikzpicture}
+\end{frame}
+}
+
+%──────────────────────────────────────────────────────────────
+% SLIDE 2 — PANORAMA GENERAL (fondo claro)
+%──────────────────────────────────────────────────────────────
+{
+\setbeamercolor{background canvas}{bg=bg}
+\begin{frame}{Cuatro proyectos, una visión integrada}
+  \vspace{0.15cm}
+
+  % Diagrama de flujo — escala reducida para caber en 16:9
+  \begin{center}
+  \begin{tikzpicture}[
+    scale=0.88, transform shape,
+    box/.style={
+      rectangle, fill=uamred, text=cardwhite,
+      rounded corners=3pt, inner sep=7pt,
+      font=\sffamily\small\bfseries,
+      text width=2.9cm, align=center,
+      minimum height=1.3cm
+    },
+    arr/.style={-{Stealth[length=5pt]}, line width=1.2pt, color=graymid}
+  ]
+    \node[box] (p1) at (0,0)   {CAT 26P\\[2pt]{\tiny Asignación de grupos}};
+    \node[box] (p2) at (3.6,0) {Eficiencia\\terminal\\[2pt]{\tiny Diagnóstico de rezago}};
+    \node[box] (p3) at (7.2,0) {Distribución\\docente\\[2pt]{\tiny Concentración y riesgo}};
+    \node[box] (p4) at (10.8,0){Modificaciones\\2026\\[2pt]{\tiny Respuesta curricular}};
+
+    \draw[arr] (p1.east) -- (p2.west);
+    \draw[arr] (p2.east) -- (p3.west);
+    \draw[arr] (p3.east) -- (p4.west);
+  \end{tikzpicture}
+  \end{center}
+
+  \vspace{0.35cm}
+  \begin{center}
+  \begin{tikzpicture}
+    \node[
+      fill=cardwhite, draw=cardborder, line width=0.6pt,
+      rounded corners=2pt, inner sep=9pt,
+      text width=13cm, align=center,
+      font=\sffamily\small\color{graymid}
+    ] {
+      Los cuatro proyectos se retroalimentan: el diagnóstico de los proyectos~2
+      y~3 informa las decisiones del proyecto~1 y las propuestas del proyecto~4.
+    };
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+}
+
+%──────────────────────────────────────────────────────────────
+% SLIDE 3 — DIVISOR SECCIÓN 01 (fondo oscuro)
+%──────────────────────────────────────────────────────────────
+{
+\setbeamercolor{background canvas}{bg=ink}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[ink] (current page.south west) rectangle (current page.north east);
+
+    % Número grande semitransparente
+    \node[anchor=west, text=uamred, opacity=0.18,
+          font=\sffamily\bfseries\fontsize{160}{160}\selectfont,
+          inner sep=0pt]
+      at ($(current page.west)+(-1.0cm,0.0cm)$) {01};
+
+    % Línea vertical de acento
+    \draw[uamred, line width=2pt]
+      ($(current page.center)+(-3.0cm,1.2cm)$) --
+      ($(current page.center)+(-3.0cm,-1.2cm)$);
+
+    % Título de sección
+    \node[anchor=west, text=cardwhite,
+          font=\sffamily\bfseries\LARGE, inner sep=0pt]
+      at ($(current page.center)+(-2.6cm,0.38cm)$) {CAT 26P};
+
+    % Subtítulo
+    \node[anchor=west, text=cardborder,
+          font=\sffamily\normalsize, inner sep=0pt]
+      at ($(current page.center)+(-2.6cm,-0.38cm)$) {Asignación de grupos con inteligencia artificial};
+  \end{tikzpicture}
+\end{frame}
+}
+
+%──────────────────────────────────────────────────────────────
+% SLIDE 4 — CAT 26P: PROBLEMA Y SOLUCIÓN (fondo claro)
+%──────────────────────────────────────────────────────────────
+{
+\setbeamercolor{background canvas}{bg=bg}
+\begin{frame}{CAT 26P: el problema y la solución}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tikzpicture}
+        \node[
+          fill=cardwhite, draw=cardborder, line width=0.6pt,
+          rounded corners=2pt, inner sep=9pt,
+          text width=6.2cm, align=flush left,
+          font=\sffamily\footnotesize\color{ink}
+        ] {
+          \textbf{\small\color{uamred}El problema}\\[3pt]
+          674 estudiantes de nuevo ingreso deben quedar
+          asignados a grupos del Tronco General (TG) antes
+          del inicio del trimestre, respetando: seriación,
+          disponibilidad de cupo, franjas horarias sin
+          traslape, y prioridad matutina para alumnas.
+        };
+      \end{tikzpicture}
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+      \begin{tikzpicture}
+        \node[
+          fill=cardwhite, draw=cardborder, line width=0.6pt,
+          rounded corners=2pt, inner sep=9pt,
+          text width=6.2cm, align=flush left,
+          font=\sffamily\footnotesize\color{ink}
+        ] {
+          \textbf{\small\color{uamred}La solución}\\[3pt]
+          Sistema multi-agente con solver de optimización
+          combinatoria.\\[3pt]
+          Resultado:\\[1pt]
+          \textbf{0 conflictos de horario}\\
+          \textbf{0 cupos excedidos}\\
+          \textbf{3 instancias del solver}
+        };
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.25cm}
+  \begin{center}
+    \kpi{674}{inscritos}%
+    \hspace{5pt}%
+    \kpi{10}{licenciaturas}%
+    \hspace{5pt}%
+    \kpi{102}{grupos del TG}%
+    \hspace{5pt}%
+    \kpi{186 alumnas}{prioridad matutina}%
+  \end{center}
+\end{frame}
+}
+
+%──────────────────────────────────────────────────────────────
+% SLIDE 5 — DIVISOR SECCIÓN 02 (fondo oscuro)
+%──────────────────────────────────────────────────────────────
+{
+\setbeamercolor{background canvas}{bg=ink}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[ink] (current page.south west) rectangle (current page.north east);
+
+    \node[anchor=west, text=uamred, opacity=0.18,
+          font=\sffamily\bfseries\fontsize{160}{160}\selectfont,
+          inner sep=0pt]
+      at ($(current page.west)+(-1.0cm,0.0cm)$) {02};
+
+    \draw[uamred, line width=2pt]
+      ($(current page.center)+(-3.0cm,1.2cm)$) --
+      ($(current page.center)+(-3.0cm,-1.2cm)$);
+
+    \node[anchor=west, text=cardwhite,
+          font=\sffamily\bfseries\LARGE, inner sep=0pt]
+      at ($(current page.center)+(-2.6cm,0.38cm)$) {Eficiencia terminal};
+
+    \node[anchor=west, text=cardborder,
+          font=\sffamily\normalsize, inner sep=0pt]
+      at ($(current page.center)+(-2.6cm,-0.38cm)$)
+      {Diagnóstico estructural del rezago en los diez planes};
+  \end{tikzpicture}
+\end{frame}
+}
+
+%──────────────────────────────────────────────────────────────
+% SLIDE 6 — EFICIENCIA TERMINAL: HALLAZGOS (fondo claro)
+%──────────────────────────────────────────────────────────────
+{
+\setbeamercolor{background canvas}{bg=bg}
+\begin{frame}{Eficiencia terminal: hallazgos estructurales}
+  \begin{tikzpicture}
+    \node[
+      fill=cardwhite, draw=cardborder, line width=0.6pt,
+      rounded corners=2pt, inner sep=9pt,
+      text width=13.0cm, align=flush left,
+      font=\sffamily\footnotesize\color{ink}
+    ] {
+      \textbf{\small\color{uamred}Pareto curricular.}\enspace
+      El 26.5\,\% de las seriaciones explica el 80\,\% del beneficio
+      potencial de egreso.\\[4pt]
+      \textbf{\small\color{uamred}Índices P y h.}\enspace
+      Miden la progresión real del estudiante: la brecha promedio entre
+      créditos inscritos y la referencia de 38\,cr/trim proviene de las
+      cadenas de seriación, no del rendimiento académico.\\[4pt]
+      \textbf{\small\color{uamred}Nodos topológicamente críticos.}\enspace
+      Un estudiante que reprueba un nodo de este tipo pierde acceso a
+      todas las Unidades de Enseñanza-Aprendizaje (UEAs) que dependen de él.
+    };
+  \end{tikzpicture}
+
+  \vspace{0.3cm}
+  \begin{center}
+    \kpi{10}{planes analizados}%
+    \hspace{5pt}%
+    \kpi{5}{infografías interactivas}%
+    \hspace{5pt}%
+    \kpi{P y h}{índices de progresión}%
+  \end{center}
+\end{frame}
+}
+
+%──────────────────────────────────────────────────────────────
+% SLIDE 7 — DIVISOR SECCIÓN 03 (fondo oscuro)
+%──────────────────────────────────────────────────────────────
+{
+\setbeamercolor{background canvas}{bg=ink}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[ink] (current page.south west) rectangle (current page.north east);
+
+    \node[anchor=west, text=uamred, opacity=0.18,
+          font=\sffamily\bfseries\fontsize{160}{160}\selectfont,
+          inner sep=0pt]
+      at ($(current page.west)+(-1.0cm,0.0cm)$) {03};
+
+    \draw[uamred, line width=2pt]
+      ($(current page.center)+(-3.0cm,1.2cm)$) --
+      ($(current page.center)+(-3.0cm,-1.2cm)$);
+
+    \node[anchor=west, text=cardwhite,
+          font=\sffamily\bfseries\LARGE, inner sep=0pt]
+      at ($(current page.center)+(-2.6cm,0.38cm)$) {Distribución docente};
+
+    \node[anchor=west, text=cardborder,
+          font=\sffamily\normalsize, inner sep=0pt]
+      at ($(current page.center)+(-2.6cm,-0.38cm)$)
+      {Concentración y riesgo curricular 2016--2025};
+  \end{tikzpicture}
+\end{frame}
+}
+
+%──────────────────────────────────────────────────────────────
+% SLIDE 8 — DISTRIBUCIÓN DOCENTE: HALLAZGOS (fondo claro)
+%──────────────────────────────────────────────────────────────
+{
+\setbeamercolor{background canvas}{bg=bg}
+\begin{frame}[t]{Distribución docente: cuatro hallazgos}
+  \begin{tikzpicture}
+    \node[
+      fill=cardwhite, draw=cardborder, line width=0.6pt,
+      rounded corners=2pt, inner sep=6pt,
+      text width=13.0cm, align=flush left,
+      font=\sffamily\footnotesize\color{ink}
+    ] {
+      \textbf{\small\color{uamred}Monopolios de impartición.}\enspace
+      187 UEAs (23.1\,\%) tienen HHI = 1:
+      un único profesor ha impartido esa UEA durante toda su historia registrada.\\[2pt]
+      \textbf{\small\color{uamred}Riesgo crítico.}\enspace
+      61 UEAs en riesgo crítico (RC $\geq$ percentil~90): alta concentración
+      en posición estructuralmente relevante de la cadena de seriación.\\[2pt]
+      \textbf{\small\color{uamred}Fragilidad sistémica.}\enspace
+      11 de 22 vecindades curriculares detectadas presentan fragilidad
+      sistémica, no puntual.\\[2pt]
+      \textbf{\small\color{uamred}Paradoja de la concentración.}\enspace
+      El cluster de mayor HHI agregado tiene cero UEAs críticas;
+      el de menor HHI tiene 19:
+      la posición en la cadena importa más que la concentración.
+    };
+  \end{tikzpicture}
+
+  \vspace{0.1cm}
+  \begin{center}
+    \kpi{809}{UEAs activas}%
+    \hspace{5pt}%
+    \kpi{791}{profesores}%
+    \hspace{5pt}%
+    \kpi{5{,}391 grupos}{2016--2025}%
+  \end{center}
+\end{frame}
+}
+
+%──────────────────────────────────────────────────────────────
+% SLIDE 9 — DIVISOR SECCIÓN 04 (fondo oscuro)
+%──────────────────────────────────────────────────────────────
+{
+\setbeamercolor{background canvas}{bg=ink}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[ink] (current page.south west) rectangle (current page.north east);
+
+    \node[anchor=west, text=uamred, opacity=0.18,
+          font=\sffamily\bfseries\fontsize{160}{160}\selectfont,
+          inner sep=0pt]
+      at ($(current page.west)+(-1.0cm,0.0cm)$) {04};
+
+    \draw[uamred, line width=2pt]
+      ($(current page.center)+(-3.0cm,1.2cm)$) --
+      ($(current page.center)+(-3.0cm,-1.2cm)$);
+
+    \node[anchor=west, text=cardwhite,
+          font=\sffamily\bfseries\LARGE, inner sep=0pt]
+      at ($(current page.center)+(-2.6cm,0.38cm)$) {Modificaciones 2026};
+
+    \node[anchor=west, text=cardborder,
+          font=\sffamily\normalsize, inner sep=0pt]
+      at ($(current page.center)+(-2.6cm,-0.38cm)$)
+      {Similitud semántica y revisión legislativa automatizada};
+  \end{tikzpicture}
+\end{frame}
+}
+
+%──────────────────────────────────────────────────────────────
+% SLIDE 10 — MODIFICACIONES 2026: DOS SISTEMAS (fondo claro)
+%──────────────────────────────────────────────────────────────
+{
+\setbeamercolor{background canvas}{bg=bg}
+\begin{frame}[t]{Modificaciones 2026: dos sistemas de apoyo}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \begin{tikzpicture}
+        \node[
+          fill=cardwhite, draw=cardborder, line width=0.6pt,
+          rounded corners=2pt, inner sep=7pt,
+          text width=6.2cm, align=flush left,
+          font=\sffamily\footnotesize\color{ink}
+        ] {
+          \textbf{\small\color{uamred}Análisis de similitud}\\[2pt]
+          1{,}505 pares de UEAs comparados con inteligencia
+          artificial entre los diez planes.\\[1pt]
+          203 pares idénticos o casi idénticos.\\[1pt]
+          El par Industrial--Mecánica tiene 38 programas
+          equivalentes: candidatos a UEAs transversales
+          compartidas.
+        };
+      \end{tikzpicture}
+    \end{column}
+    \hfill
+    \begin{column}{0.48\textwidth}
+      \begin{tikzpicture}
+        \node[
+          fill=cardwhite, draw=cardborder, line width=0.6pt,
+          rounded corners=2pt, inner sep=7pt,
+          text width=6.2cm, align=flush left,
+          font=\sffamily\footnotesize\color{ink}
+        ] {
+          \textbf{\small\color{uamred}Revisión legislativa}\\[2pt]
+          5 agentes encadenados verifican cada propuesta contra
+          el Reglamento de Estudios Superiores (RES):
+          10~fracciones del Art.~34, 16 del Art.~44, más
+          Art.~45 y~56.\\[1pt]
+          Salida: 2~reportes Excel con veredicto
+          (Sí\,/\,Parcial\,/\,No\,/\,N\!A)
+          por fracción.\\[1pt]
+          10 oficios generados.
+        };
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.1cm}
+  \begin{center}
+    \kpi{1{,}505 pares}{de UEAs}%
+    \hspace{5pt}%
+    \kpi{626}{programas}%
+    \hspace{5pt}%
+    \kpi{26 fracciones}{del RES}%
+    \hspace{5pt}%
+    \kpi{10 oficios}{generados}%
+  \end{center}
+\end{frame}
+}
+
+%──────────────────────────────────────────────────────────────
+% SLIDE 11 — CIERRE / ACCESO (fondo oscuro)
+%──────────────────────────────────────────────────────────────
+{
+\setbeamercolor{background canvas}{bg=ink}
+\begin{frame}[plain]
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[ink] (current page.south west) rectangle (current page.north east);
+
+    % Texto principal
+    \node[anchor=north, text=cardwhite,
+          font=\sffamily\bfseries\Large,
+          inner sep=0pt]
+      at ($(current page.north)+(0cm,-1.2cm)$) {
+        El dashboard está disponible en línea
+    };
+
+    % QR grande centrado
+    \node[anchor=north, inner sep=0pt]
+      at ($(current page.north)+(0cm,-2.2cm)$) {
+        \includegraphics[width=4.0cm]{%
+          /Users/nowhere/Claude_Projects/Admin_duties/dashboard/figuras/qr_dashboard_dcbi.png}
+    };
+
+    % URL — debajo del QR
+    \node[anchor=north, text=uamred,
+          font=\sffamily\normalsize\bfseries, inner sep=0pt]
+      at ($(current page.north)+(0cm,-6.5cm)$) {
+        cslmuam.github.io/dashboard-dcbi-2026
+    };
+
+    % Línea separadora
+    \draw[uamred, line width=0.6pt]
+      ($(current page.south west)+(0.6cm,2.0cm)$) --
+      ($(current page.south east)+(-0.6cm,2.0cm)$);
+
+    % Contacto — debajo de la línea
+    \node[anchor=south, text=cardborder,
+          font=\sffamily\footnotesize, inner sep=0pt]
+      at ($(current page.south)+(0cm,1.1cm)$) {
+        Dr.\ César Simón López-Monsalvo
+        \enspace\textbf{\color{uamred}·}\enspace
+        cslm@azc.uam.mx
+        \enspace\textbf{\color{uamred}·}\enspace
+        Departamento de Ciencias Básicas
+    };
+
+  \end{tikzpicture}
+\end{frame}
+}
+
+\end{document}
