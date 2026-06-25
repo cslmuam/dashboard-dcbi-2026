@@ -956,9 +956,9 @@ INDEX_CONTENT = f"""
           <strong>con datos</strong>
         </h1>
         <p class="landing-sub animate-in delay-2">
-          Tres sistemas computacionales que analizan, optimizan y revisan la operación
-          académica de las diez licenciaturas de la DCBI — desde la asignación de grupos
-          hasta la revisión curricular con inteligencia artificial.
+          Cuatro proyectos de análisis institucional que documentan, optimizan y proponen
+          mejoras a la operación académica de las diez licenciaturas de la DCBI — desde
+          la asignación de grupos hasta la revisión curricular con inteligencia artificial.
         </p>
         <div class="landing-bar animate-in delay-2"></div>
         <div class="landing-kpis animate-in delay-3">
