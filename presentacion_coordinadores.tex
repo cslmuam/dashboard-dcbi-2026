@@ -91,26 +91,26 @@
   \begin{tikzpicture}[remember picture, overlay]
     \fill[ink] (current page.south west) rectangle (current page.north east);
 
-    % Logo UAM-A — esquina superior izquierda
-    \node[anchor=north west, inner sep=0pt]
-      at ($(current page.north west)+(0.6cm,-0.5cm)$) {
-        \includegraphics[
-          width=4.2cm,
-          trim={48bp 64bp 473bp 35bp},
-          clip
-        ]{/Users/nowhere/Claude_Projects/Personal/logo_UAM.png}
-    };
+%    % Logo UAM-A — esquina superior izquierda
+%    \node[anchor=north west, inner sep=0pt]
+%      at ($(current page.north west)+(0.6cm,-0.5cm)$) {
+%        \includegraphics[
+%          width=4.2cm,
+%          trim={48bp 64bp 473bp 35bp},
+%          clip
+%        ]{/Users/nowhere/Claude_Projects/Personal/logo_UAM.png}
+%    };
 
     % Línea de acento roja — separador horizontal
     \draw[uamred, line width=1.2pt]
-      ($(current page.north west)+(0.6cm,-2.1cm)$) --
-      ($(current page.north east)+(-0.6cm,-2.1cm)$);
+      ($(current page.north west)+(0.6cm,-1.2cm)$) --
+      ($(current page.north east)+(-0.6cm,-1.2cm)$);
 
     % Título principal
     \node[anchor=north west, text=cardwhite,
           font=\sffamily\bfseries\LARGE, text width=13.5cm,
           inner sep=0pt]
-      at ($(current page.north west)+(0.7cm,-2.6cm)$) {
+      at ($(current page.north west)+(0.7cm,-1.7cm)$) {
         \hyphenpenalty=10000\exhyphenpenalty=10000
         Sistema de Análisis Institucional
     };
@@ -119,7 +119,7 @@
     \node[anchor=north west, text=cardborder,
           font=\sffamily\large, text width=13.5cm,
           inner sep=0pt]
-      at ($(current page.north west)+(0.7cm,-3.5cm)$) {
+      at ($(current page.north west)+(0.7cm,-2.6cm)$) {
         División de Ciencias Básicas e Ingeniería · 2026
     };
 
@@ -127,7 +127,7 @@
     \node[anchor=north west, text=graymid,
           font=\sffamily\footnotesize, text width=13.5cm,
           inner sep=0pt]
-      at ($(current page.north west)+(0.7cm,-4.3cm)$) {
+      at ($(current page.north west)+(0.7cm,-3.4cm)$) {
         Cuatro proyectos de análisis curricular con inteligencia artificial
     };
 
@@ -140,7 +140,7 @@
     \node[anchor=south west, text=cardborder,
           font=\sffamily\footnotesize, text width=12cm, inner sep=0pt]
       at ($(current page.south west)+(0.7cm,1.5cm)$) {
-        Dr.\ César Simón López-Monsalvo · Depto.\ de Ciencias Básicas · junio 2026
+        Dr.\ César Simón López-Monsalvo 
     };
 
     % QR — esquina inferior derecha
@@ -193,20 +193,20 @@
   \end{tikzpicture}
   \end{center}
 
-  \vspace{0.35cm}
-  \begin{center}
-  \begin{tikzpicture}
-    \node[
-      fill=cardwhite, draw=cardborder, line width=0.6pt,
-      rounded corners=2pt, inner sep=9pt,
-      text width=13cm, align=center,
-      font=\sffamily\small\color{graymid}
-    ] {
-      Los cuatro proyectos se retroalimentan: el diagnóstico de los proyectos~2
-      y~3 informa las decisiones del proyecto~1 y las propuestas del proyecto~4.
-    };
-  \end{tikzpicture}
-  \end{center}
+%  \vspace{0.35cm}
+%  \begin{center}
+%  \begin{tikzpicture}
+%    \node[
+%      fill=cardwhite, draw=cardborder, line width=0.6pt,
+%      rounded corners=2pt, inner sep=9pt,
+%      text width=13cm, align=center,
+%      font=\sffamily\small\color{graymid}
+%    ] {
+%      Los cuatro proyectos se retroalimentan: el diagnóstico de los proyectos~2
+%      y~3 informa las decisiones del proyecto~1 y las propuestas del proyecto~4.
+%    };
+%  \end{tikzpicture}
+%  \end{center}
 \end{frame}
 }
 
@@ -572,8 +572,8 @@
         Dr.\ César Simón López-Monsalvo
         \enspace\textbf{\color{uamred}·}\enspace
         cslm@azc.uam.mx
-        \enspace\textbf{\color{uamred}·}\enspace
-        Departamento de Ciencias Básicas
+%        \enspace\textbf{\color{uamred}·}\enspace
+%        Departamento de Ciencias Básicas
     };
 
   \end{tikzpicture}
