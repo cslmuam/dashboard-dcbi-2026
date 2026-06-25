@@ -3504,7 +3504,21 @@ MOD_CONTENT = f"""
 
   <hr class="divider">
 
-  <div class="connect-box animate-in">
+  <div class="connect-box animate-in" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+    <div>
+      <div class="connect-box-title">Reporte de similitud completo</div>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6;margin:0">Análisis de duplicación y similitud semántica entre UEAs · 35 pp. · PDF</p>
+    </div>
+    <a href="Reporte_Similitud_DCBI_2026.pdf" download
+       style="display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;
+              text-decoration:none;padding:.7rem 1.4rem;border-radius:8px;font-size:.85rem;
+              font-weight:700;white-space:nowrap;transition:opacity .15s"
+       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      ↓ Descargar PDF
+    </a>
+  </div>
+
+  <div class="connect-box animate-in" style="margin-top:1rem">
     <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
     <p style="font-size:.84rem;color:var(--mid);line-height:1.6">
       Las UEAs identificadas como idénticas o muy similares entre planes son exactamente las
