@@ -1722,7 +1722,7 @@ CAT_ASIGNACION_JS = """
       marker:{colors:['#C82D23','#1565C0'], line:{color:'#fff',width:2}},
       textinfo:'label+percent',
       hovertemplate:'<b>%{label}</b><br>%{value} estudiantes (%{percent})<extra></extra>',
-      textfont:{...FONT,size:11}, direction:'clockwise',
+      textfont:{...FONT,size:11,color:'#fff'}, direction:'clockwise',
       pull:[0.04, 0],
     }],
     () => ({
