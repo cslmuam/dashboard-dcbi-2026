@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="theme-color" content="#C82D23">
-  <title>Infografía 3 — La palanca · DCBI UAM-A</title>
+  <title>Modificaciones 2026 — Revisión de planes y programas · DCBI UAM-A</title>
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <style>
   :root {
@@ -295,9 +295,9 @@
 <li><a href="cat26p.html" class="" onclick="closeNav()">CAT 26P</a></li>
 <li><a href="cat26p_asignacion.html" class="" onclick="closeNav()">↳ Asignación</a></li>
 <li><a href="cat26p_capacidad.html" class="" onclick="closeNav()">↳ Capacidad</a></li>
-<li><a href="metanalisis.html" class="active" onclick="closeNav()">Eficiencia terminal</a></li>
+<li><a href="metanalisis.html" class="" onclick="closeNav()">Eficiencia terminal</a></li>
 <li><a href="concentracion.html" class="" onclick="closeNav()">Distribución docente</a></li>
-<li><a href="modificaciones.html" class="" onclick="closeNav()">Modificaciones 2026</a></li>
+<li><a href="modificaciones.html" class="active" onclick="closeNav()">Modificaciones 2026</a></li>
 <li><a href="mod_similitud.html" class="" onclick="closeNav()">↳ Similitud</a></li>
 <li><a href="mod_revision.html" class="" onclick="closeNav()">↳ Revisión RES</a></li></ul>
     <button class="nav-hamburger" id="hamburger" aria-label="Menú" onclick="toggleNav()">
@@ -309,71 +309,247 @@
 <header class="hero">
   <div class="hero-inner">
     <div>
-      <p class="hero-label">Metaanálisis · Infografía 3 · División de Ciencias Básicas e Ingeniería · UAM-Azcapotzalco</p>
-      <h1><strong>La palanca</strong></h1>
-      <p class="hero-sub">El 26.5% de las seriaciones concentra el 80% del beneficio alcanzable: la reforma puede ser quirúrgica, no curricular.</p>
+      <p class="hero-label">Modificaciones 2026 · Revisión legislativa automatizada</p>
+      <h1><strong>Revisión de planes</strong><br>y programas propuestos</h1>
+      <p class="hero-sub">Sistema de cinco agentes encadenados que verifica el cumplimiento
+        del Reglamento de Estudios Superiores en cada propuesta curricular 2026 — pertinencia,
+        plan de estudios, programas de Unidad de Enseñanza-Aprendizaje (UEA) y correspondencia
+        entre ambos documentos.</p>
       <div class="hero-bar"></div>
+      <div class="stats">
+        <div class="stat"><span class="stat-val kpi-counter" data-target="10">0</span><span class="stat-lbl">Licenciaturas revisadas</span></div>
+        <div class="stat"><span class="stat-val kpi-counter" data-target="626">0</span><span class="stat-lbl">Programas de UEA procesados</span></div>
+        <div class="stat"><span class="stat-val kpi-counter" data-target="26">0</span><span class="stat-lbl">Fracciones del RES verificadas</span></div>
+        <div class="stat"><span class="stat-val kpi-counter" data-target="2">0</span><span class="stat-lbl">Reportes Excel de salida</span></div>
+      </div>
     </div>
   </div>
 </header>
-
 <main class="main">
 
-  <section class="section animate-in">
-    <p style="font-size:.92rem;line-height:1.75;color:var(--mid)">De las 499 seriaciones activas en los diez planes de ingeniería, <strong>132 concentran el 80% del beneficio total</strong> alcanzable si se eliminaran todas. Identificar y revisar esas 132 relaciones de prerrequisito —el 26.5% del total— permitiría obtener la mayor parte de la ganancia en eficiencia terminal con una intervención acotada.</p>
-    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:.9rem">La curva de Lorenz del impacto muestra que la distribución del beneficio entre seriaciones es altamente concentrada: las primeras 20 seriaciones (4% del total) acumulan cerca del 35% del beneficio total. Esta concentración es estructural —no depende del plan específico— y se reproduce en los diez programas.</p>
-    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:.9rem">Las curvas de dosis-respuesta confirman el mismo patrón a nivel de plan: la ganancia marginal decrece rápidamente. En Electrónica, las primeras 5 seriaciones eliminadas producen más de la mitad de la ganancia máxima simulada. En Metalurgia, el plan con menor número de seriaciones, el efecto se agota antes del umbral de N=15.</p>
-  </section>
-
-  <section class="section animate-in" id="chart-section-lorenz">
+  <!-- ── Sección: El sistema de revisión ── -->
+  <section class="section animate-in" id="mod-rev-sistema">
     <div class="section-header">
-      <h2>Curva de Lorenz del impacto de seriaciones</h2>
-      <span class="section-count">499 seriaciones · N80 = 132 (26.5%)</span>
+      <h2>El sistema de revisión</h2>
+      <span class="section-count">10 licenciaturas · 26 fracciones verificadas</span>
     </div>
-    <p class="section-desc">La curva de Lorenz muestra qué fracción del beneficio total acumulado se obtiene al eliminar las N seriaciones más impactantes (ordenadas de mayor a menor ganancia en eficiencia terminal). La diagonal representaría una distribución uniforme del impacto: cuanto más abombada la curva, más concentrado el beneficio.</p>
-    <div class="read-callout"><strong>Qué buscar:</strong> el punto N80 —marcado con línea discontinua— donde la curva alcanza 0.80 en el eje vertical. Ese punto indica cuántas seriaciones bastan para obtener el 80% del beneficio. La distancia entre la curva y la diagonal mide el grado de concentración.</div>
-    <div class="chart-card animate-in delay-1">
-      <div class="chart-card-header">
-        <h3>Lorenz del impacto: fracción del beneficio vs número de seriaciones eliminadas</h3>
-        <span class="chart-type-tag">Interactivo</span>
-      </div>
-      <div class="chart-canvas rendering md" id="chart-meta3-lorenz">
-        <div class="chart-skeleton"></div>
-      </div>
+    <p class="section-desc">
+      El sistema automatiza la verificación de cumplimiento legislativo de las propuestas
+      de modificación a planes y programas de estudio de las diez licenciaturas de la División,
+      correspondientes al proceso de actualización curricular 2026.
+      Cada propuesta se contrasta sistemáticamente contra el Reglamento de Estudios Superiores
+      (RES): el documento de pertinencia se revisa frente a las diez fracciones del artículo 34,
+      el plan de estudios frente a las dieciséis fracciones del artículo 44, y cada programa
+      de Unidad de Enseñanza-Aprendizaje (UEA) frente a los requisitos de los artículos 45 y 56.
+    </p>
+    <div class="read-callout">
+      <strong>Qué muestra esta sección:</strong> el propósito y alcance del sistema de revisión
+      legislativa automatizada. Los artículos 34, 44, 45 y 56 del Reglamento de Estudios
+      Superiores (RES) establecen los criterios que toda propuesta curricular debe cumplir antes
+      de su presentación ante el Consejo Divisional. Este sistema verifica ese cumplimiento de
+      forma sistemática y reproducible para las diez licenciaturas de la División de Ciencias
+      Básicas e Ingeniería (DCBI).
     </div>
   </section>
 
-  <section class="section animate-in" id="chart-section-remocion">
+  <!-- ── Sección: La cadena de agentes ── -->
+  <section class="section animate-in" id="mod-rev-agentes">
     <div class="section-header">
-      <h2>Curvas dosis-respuesta por plan</h2>
-      <span class="section-count">Ganancia en ET al eliminar N seriaciones · intervalo de confianza del 95%</span>
+      <h2>La cadena de agentes</h2>
+      <span class="section-count">5 agentes especializados</span>
     </div>
-    <p class="section-desc">Cada curva muestra la ganancia esperada en eficiencia terminal (en trimestres) al eliminar las N seriaciones más críticas del plan correspondiente. Las bandas sombreadas son los intervalos de confianza del 95% de la simulación Monte Carlo. La pendiente inicial mide la palanca del primer prerrequisito crítico.</p>
-    <div class="read-callout"><strong>Qué buscar:</strong> qué plan tiene la curva más empinada al inicio (mayor palanca de la primera seriación crítica), dónde se aplanan las curvas (rendimiento marginal decreciente) y qué planes muestran mayor incertidumbre (bandas más anchas).</div>
-    <div class="chart-card animate-in delay-1">
-      <div class="chart-card-header">
-        <h3>Ganancia en ET al eliminar las N seriaciones más críticas · por plan</h3>
-        <span class="chart-type-tag">Interactivo</span>
+    <p class="section-desc">
+      El sistema opera como una cadena de cinco agentes de inteligencia artificial (IA)
+      que se ejecutan en secuencia: cada uno recibe el resultado del anterior y produce
+      una salida estructurada que alimenta al siguiente.
+      El proceso va del inventario documental a la verificación legislativa, y culmina
+      en dos reportes Excel listos para su uso por la coordinación de cada licenciatura.
+    </p>
+    <div class="read-callout">
+      <strong>Qué muestra esta sección:</strong> el flujo completo de procesamiento, desde
+      la carpeta de archivos entregada por cada licenciatura hasta los reportes de salida.
+      Cada agente realiza una tarea específica y delimitada; ninguno toma decisiones fuera
+      de su ámbito. El resultado de cada etapa es auditable de forma independiente.
+    </div>
+    <div class="howto-grid animate-in delay-1">
+      <div class="howto-card">
+        <h3>Flujo de procesamiento</h3>
+        <div class="howto-step">
+          <div class="howto-icon">1</div>
+          <div class="howto-text"><strong>Inventario:</strong> recorre la carpeta de cada
+            licenciatura, identifica y clasifica todos los documentos entregados (pertinencia,
+            plan de estudios, programas de UEA, tablas de equivalencias, oficios).</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">2</div>
+          <div class="howto-text"><strong>Extracción del plan:</strong> extrae el texto completo
+            y la tabla de UEAs del documento de plan de estudios, en formato .docx o .pdf.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">3</div>
+          <div class="howto-text"><strong>Revisión legislativa:</strong> contrasta el documento
+            de pertinencia contra las diez fracciones del artículo 34 del RES, y el plan de
+            estudios contra las dieciséis fracciones del artículo 44. Emite un veredicto
+            (Sí / Parcial / No / N/A) con evidencia y observación para cada fracción.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">4</div>
+          <div class="howto-text"><strong>Análisis de programas de UEA:</strong> para cada
+            programa, extrae el encabezado, verifica la presencia de las cinco secciones
+            requeridas por el artículo 45, y valida los créditos mediante la fórmula del
+            artículo 56: créditos = 2 × horas teoría + horas práctica.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">5</div>
+          <div class="howto-text"><strong>Correspondencia plan–programas:</strong> cruza la
+            lista de UEAs del plan con los archivos de programa entregados. Detecta UEAs
+            sin archivo correspondiente, archivos sin UEA en el plan y discrepancias en
+            campos de encabezado.</div>
+        </div>
       </div>
-      <div class="chart-canvas rendering lg" id="chart-meta3-remocion">
-        <div class="chart-skeleton"></div>
+      <div class="howto-card">
+        <h3>Cobertura por licenciatura</h3>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">●</div>
+          <div class="howto-text"><strong>10 fracciones del Art. 34</strong> — pertinencia del
+            plan: justificación social, demanda, campo laboral, perfil de egreso, entre otras.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">●</div>
+          <div class="howto-text"><strong>16 fracciones del Art. 44</strong> — estructura del
+            plan de estudios: seriación, créditos totales, Tronco General (TG), distribución de
+            áreas, entre otros aspectos formales.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">●</div>
+          <div class="howto-text"><strong>5 secciones del Art. 45</strong> — estructura de
+            cada programa de UEA: presentación, objetivos, contenidos, metodología y
+            evaluación.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">●</div>
+          <div class="howto-text"><strong>Fórmula del Art. 56</strong> — validación automática
+            de créditos para cada UEA: créditos = 2 × horas de teoría + horas de práctica.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">●</div>
+          <div class="howto-text"><strong>~626 programas procesados</strong> en total, a razón
+            de entre 40 y 80 programas por licenciatura dependiendo del plan propuesto.</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="recuadro animate-in">
-    <div class="recuadro-title">Conclusión</div>
-    <p>La reforma curricular no requiere revisión total: <strong>132 de 499 seriaciones</strong> bastan para obtener el 80% del beneficio simulado. La intervención puede ser quirúrgica y graduada. Las curvas dosis-respuesta por plan permiten priorizar qué prerrequisitos revisar primero en cada licenciatura según su relación beneficio-costo de implementación.</p>
-  </div>
+  <!-- ── Sección: Los reportes de salida ── -->
+  <section class="section animate-in" id="mod-rev-reportes">
+    <div class="section-header">
+      <h2>Los reportes de salida</h2>
+      <span class="section-count">2 reportes Excel</span>
+    </div>
+    <p class="section-desc">
+      El sistema genera dos archivos Excel por ejecución: uno para la revisión legislativa
+      del documento de pertinencia y del plan de estudios, y otro para el análisis de los
+      programas de UEA y su correspondencia con el plan.
+      Cada archivo incluye una hoja de resumen ejecutivo y diez hojas individuales,
+      una por licenciatura.
+    </p>
+    <div class="read-callout">
+      <strong>Qué muestra esta sección:</strong> la estructura y el contenido de los dos
+      reportes de salida. Cada celda de veredicto sigue un código de color uniforme:
+      verde para cumplimiento, naranja para cumplimiento parcial, rojo para incumplimiento
+      y gris para fracciones no aplicables al plan revisado. Este código permite identificar
+      de un vistazo las áreas que requieren atención antes de la presentación al Consejo
+      Divisional.
+    </div>
+    <div class="howto-grid animate-in delay-1">
+      <div class="howto-card">
+        <h3>Reporte 1 — Pertinencia y plan de estudios</h3>
+        <div class="howto-step">
+          <div class="howto-icon">I</div>
+          <div class="howto-text"><strong>Sección I · Pertinencia (Art. 34):</strong> una fila
+            por fracción, con veredicto, evidencia textual extraída del documento y observación
+            del agente.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">II</div>
+          <div class="howto-text"><strong>Sección II · Plan de estudios (Art. 44):</strong> una
+            fila por fracción, con la misma estructura de veredicto, evidencia y observación.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">Σ</div>
+          <div class="howto-text"><strong>Hoja RESUMEN:</strong> conteo de veredictos por
+            licenciatura para las 26 fracciones combinadas. Permite comparar el estado de
+            cumplimiento de los diez planes en una sola vista.</div>
+        </div>
+      </div>
+      <div class="howto-card">
+        <h3>Reporte 2 — Programas de UEA y correspondencia</h3>
+        <div class="howto-step">
+          <div class="howto-icon">III</div>
+          <div class="howto-text"><strong>Sección III · Programas (Art. 45 y 56):</strong> una
+            fila por UEA con verificación de las cinco secciones requeridas y resultado de la
+            validación de créditos.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">IV</div>
+          <div class="howto-text"><strong>Sección IV · Correspondencia:</strong> tabla cruzada
+            entre la lista del plan y los archivos entregados. Las discrepancias se marcan
+            en rojo: UEAs faltantes, archivos sin UEA y campos de encabezado inconsistentes.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">Σ</div>
+          <div class="howto-text"><strong>Hoja RESUMEN:</strong> estadísticas de cobertura por
+            licenciatura: total de UEAs en plan, programas entregados, programas con estructura
+            completa y UEAs con créditos correctos.</div>
+        </div>
+        <div class="howto-step" style="margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--border)">
+          <div class="howto-icon" style="background:#e8f5e9;color:#2E7D32">Sí</div>
+          <div class="howto-text" style="color:#2E7D32;font-weight:600">Cumple</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fff8e1;color:#B06A00">Par</div>
+          <div class="howto-text" style="color:#B06A00;font-weight:600">Cumplimiento parcial</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#ffebee;color:#C62828">No</div>
+          <div class="howto-text" style="color:#C62828;font-weight:600">No cumple</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#f5f5f5;color:#888">N/A</div>
+          <div class="howto-text" style="color:#888;font-weight:600">No aplica</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <hr class="divider">
 
-  <div class="connect-box animate-in">
-    <div class="connect-box-title">Navegación</div>
+  <div class="connect-box animate-in" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+    <div>
+      <div class="connect-box-title">Documentación técnica del sistema</div>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6;margin:0">Descripción de agentes, documentos de salida y referencia legislativa · 11 pp. · PDF</p>
+    </div>
+    <a href="documentacion_sistema.pdf" download
+       style="display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;
+              text-decoration:none;padding:.7rem 1.4rem;border-radius:8px;font-size:.85rem;
+              font-weight:700;white-space:nowrap;transition:opacity .15s"
+       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      ↓ Descargar PDF
+    </a>
+  </div>
+
+  <div class="connect-box animate-in" style="margin-top:1rem">
+    <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
+    <p style="font-size:.84rem;color:var(--mid);line-height:1.6">
+      La revisión legislativa es la respuesta prescriptiva a los diagnósticos: las seriaciones identificadas
+      como palancas en el Análisis de eficiencia terminal son exactamente las que se evalúan aquí como candidatas
+      a reestructuración. La distribución docente concentrada que documenta el análisis de Distribución docente
+      es también insumo directo para las decisiones de asignación que las modificaciones deben contemplar.
+    </p>
     <div class="connect-links">
-      <a class="connect-link" href="meta_2.html">← Las causas</a>
-      <a class="connect-link" href="metanalisis.html">Índice</a>
-      <a class="connect-link" href="meta_4.html">El índice P →</a>
+      <a class="connect-link" href="metanalisis.html">📊 Ver Eficiencia terminal →</a>
+      <a class="connect-link" href="concentracion.html">👥 Ver Distribución docente →</a>
+      <a class="connect-link" href="mod_similitud.html">← Ver Similitud de UEAs</a>
     </div>
   </div>
 
@@ -387,12 +563,13 @@
   <a href="mailto:cslm@azc.uam.mx" style="color:rgba(255,255,255,.5);text-decoration:underline">cslm@azc.uam.mx</a>
 </footer>
 <nav class="bottom-nav" aria-label="Navegación rápida"><div class="bottom-nav-inner">
-      <a class="bottom-nav-item" href="meta_2.html"><span class="bottom-nav-icon">&#8592;</span>Causas</a>
-      <a class="bottom-nav-item" href="metanalisis.html"><span class="bottom-nav-icon">&#127968;</span>Índice</a>
-      <a class="bottom-nav-item" href="meta_4.html"><span class="bottom-nav-icon">&#8594;</span>Índice P</a>
+      <a class="bottom-nav-item" href="modificaciones.html"><span class="bottom-nav-icon">←</span>Índice</a>
+      <a class="bottom-nav-item" href="#mod-rev-sistema"><span class="bottom-nav-icon">⚖</span>Sistema</a>
+      <a class="bottom-nav-item" href="#mod-rev-agentes"><span class="bottom-nav-icon">🤖</span>Agentes</a>
+      <a class="bottom-nav-item" href="#mod-rev-reportes"><span class="bottom-nav-icon">📊</span>Reportes</a>
     </div></nav>
 <script>
-window.__META3__ = {"planNames": {"amb": "Ambiental", "civ": "Civil", "com": "Computación", "ele": "Eléctrica", "elo": "Electrónica", "fis": "Física", "ind": "Industrial", "mec": "Mecánica", "met": "Metalurgia", "qui": "Química"}, "plansOrder": ["amb", "civ", "com", "ele", "elo", "fis", "ind", "mec", "met", "qui"], "lorenz": {"n": [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0, 27.0, 28.0, 29.0, 30.0, 31.0, 32.0, 33.0, 34.0, 35.0, 36.0, 37.0, 38.0, 39.0, 40.0, 41.0, 42.0, 43.0, 44.0, 45.0, 46.0, 47.0, 48.0, 49.0, 50.0, 51.0, 56.0, 61.0, 66.0, 71.0, 76.0, 81.0, 86.0, 91.0, 96.0, 101.0, 106.0, 111.0, 116.0, 121.0, 126.0, 131.0, 136.0, 141.0, 146.0, 151.0, 156.0, 161.0, 166.0, 171.0, 176.0, 181.0, 186.0, 191.0, 196.0, 201.0, 206.0, 211.0, 216.0, 221.0, 226.0, 231.0, 236.0, 241.0, 246.0, 251.0, 256.0, 261.0, 266.0, 271.0, 276.0, 281.0, 286.0, 291.0, 296.0, 301.0, 306.0, 311.0, 316.0, 321.0, 326.0, 331.0, 336.0, 341.0, 346.0, 351.0, 356.0, 361.0, 366.0, 371.0, 376.0, 381.0, 386.0, 391.0, 396.0, 401.0, 406.0, 411.0, 416.0, 421.0, 426.0, 431.0, 436.0, 441.0, 446.0, 451.0, 456.0, 461.0, 466.0, 471.0, 476.0, 481.0, 486.0, 491.0, 496.0], "fracCum": [0.02803, 0.04794, 0.06709, 0.08559, 0.10379, 0.12099, 0.13669, 0.15161, 0.16637, 0.18017, 0.19358, 0.20615, 0.21856, 0.23057, 0.24242, 0.25404, 0.26517, 0.27596, 0.28667, 0.297, 0.3072, 0.31728, 0.32735, 0.3373, 0.34686, 0.35636, 0.36581, 0.37506, 0.38376, 0.39215, 0.40037, 0.40835, 0.41563, 0.42288, 0.43001, 0.43707, 0.44411, 0.45112, 0.45795, 0.46448, 0.4709, 0.47722, 0.48353, 0.48981, 0.49607, 0.50231, 0.50842, 0.51436, 0.52024, 0.52608, 0.53186, 0.55989, 0.58633, 0.61057, 0.63329, 0.65437, 0.67276, 0.68927, 0.70418, 0.71806, 0.73122, 0.74392, 0.75602, 0.76766, 0.77879, 0.78954, 0.79993, 0.80986, 0.81919, 0.82802, 0.83658, 0.84496, 0.85287, 0.8605, 0.86792, 0.87491, 0.88163, 0.8882, 0.89439, 0.90019, 0.90566, 0.91082, 0.91581, 0.92057, 0.92518, 0.92969, 0.93399, 0.93812, 0.94207, 0.94583, 0.94946, 0.95283, 0.95606, 0.95915, 0.96211, 0.96493, 0.96752, 0.96995, 0.9722, 0.97434, 0.97635, 0.97826, 0.98006, 0.98168, 0.98326, 0.98471, 0.98608, 0.98734, 0.98854, 0.98963, 0.99066, 0.99162, 0.9925, 0.9933, 0.99406, 0.99477, 0.99543, 0.99603, 0.99658, 0.99709, 0.99756, 0.998, 0.99842, 0.99875, 0.99906, 0.99932, 0.99952, 0.99968, 0.99979, 0.99988, 0.99994, 0.99998, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0], "N80": 132, "totalSer": 499}, "remocion": {"amb": {"N": [0, 1, 2, 3, 5, 7, 10, 15, 20, 24, 32, 39, 49], "mean": [-0.0, 0.4752, 0.7252, 0.734, 0.4851, 0.355, 0.3652, 0.243, 0.824, 1.1273, 0.9287, 0.8987, 0.7813], "lo": [-0.0282, 0.4459, 0.703, 0.7121, 0.4685, 0.3388, 0.3458, 0.2219, 0.8065, 1.1035, 0.8977, 0.875, 0.7556], "hi": [0.0282, 0.5045, 0.7473, 0.756, 0.5017, 0.3712, 0.3846, 0.2641, 0.8415, 1.1511, 0.9598, 0.9224, 0.807]}, "civ": {"N": [0, 1, 2, 3, 5, 7, 9, 14, 19, 24, 31, 38, 47], "mean": [-0.0, 0.1848, 0.2966, 0.3214, 0.2896, 0.3354, 0.4362, 0.3176, 0.2931, 0.1877, -0.0362, 0.3313, 0.3613], "lo": [-0.0292, 0.1505, 0.2738, 0.2926, 0.2538, 0.31, 0.3871, 0.298, 0.2675, 0.1533, -0.0705, 0.3004, 0.3358], "hi": [0.0292, 0.2192, 0.3195, 0.3502, 0.3254, 0.3607, 0.4852, 0.3373, 0.3187, 0.222, -0.0019, 0.3622, 0.3868]}, "com": {"N": [0, 1, 2, 3, 5, 8, 10, 15, 20, 26, 33, 41, 51], "mean": [-0.0, 0.1978, 0.2989, 0.2874, 0.2774, 0.163, 0.1087, 0.1636, 0.1932, 0.043, -0.5144, -1.3793, 0.0915], "lo": [-0.0238, 0.1613, 0.2679, 0.2559, 0.2442, 0.1346, 0.0835, 0.1278, 0.1619, 0.0244, -0.5463, -1.4096, 0.0606], "hi": [0.0238, 0.2343, 0.3298, 0.3189, 0.3107, 0.1914, 0.1339, 0.1993, 0.2245, 0.0615, -0.4826, -1.349, 0.1223]}, "ele": {"N": [0, 1, 2, 3, 5, 7, 10, 15, 20, 24, 32, 39, 49], "mean": [-0.0, 0.6568, 0.6469, 0.7761, 0.6949, 0.6228, 0.9947, 0.9861, 1.0433, 0.9951, 0.8842, 0.5407, 0.8942], "lo": [-0.0263, 0.615, 0.6096, 0.7469, 0.6663, 0.5861, 0.9732, 0.9631, 1.0186, 0.9768, 0.8535, 0.5151, 0.8612], "hi": [0.0263, 0.6987, 0.6842, 0.8053, 0.7234, 0.6595, 1.0162, 1.009, 1.068, 1.0135, 0.915, 0.5663, 0.9273]}, "elo": {"N": [0, 1, 2, 3, 5, 8, 11, 16, 21, 26, 34, 42, 53], "mean": [-0.0, 1.075, 1.1969, 1.6169, 1.705, 1.9308, 2.1268, 2.1031, 2.1108, 2.1819, 2.0904, 1.9982, 2.0137], "lo": [-0.0278, 1.0569, 1.167, 1.601, 1.6731, 1.8989, 2.0847, 2.081, 2.0734, 2.1554, 2.0598, 1.974, 1.9915], "hi": [0.0278, 1.0932, 1.2269, 1.6328, 1.7368, 1.9628, 2.1688, 2.1253, 2.1482, 2.2083, 2.121, 2.0223, 2.0358]}, "fis": {"N": [0, 1, 2, 3, 5, 7, 9, 14, 18, 23, 30, 37, 46], "mean": [-0.0, 0.181, 0.405, 0.3693, 0.2441, 0.2097, 0.1914, 0.1191, 0.0038, -0.5588, -0.0599, -0.7475, 0.5798], "lo": [-0.0269, 0.151, 0.3824, 0.3316, 0.2144, 0.1822, 0.1724, 0.0893, -0.0303, -0.5867, -0.0996, -0.7881, 0.5524], "hi": [0.0269, 0.2109, 0.4275, 0.4071, 0.2738, 0.237, 0.2104, 0.1489, 0.038, -0.5308, -0.0201, -0.7069, 0.6072]}, "ind": {"N": [0, 1, 2, 3, 5, 8, 10, 15, 20, 26, 33, 41, 51], "mean": [-0.0, 0.3442, 0.241, 0.2827, 0.2938, 0.4096, 0.3171, 0.3404, 0.3192, 0.5009, 0.456, 0.2737, 0.2099], "lo": [-0.0281, 0.32, 0.2213, 0.261, 0.271, 0.3835, 0.2894, 0.3146, 0.2978, 0.4727, 0.4261, 0.2483, 0.1871], "hi": [0.0281, 0.3684, 0.2607, 0.3044, 0.3167, 0.4357, 0.3448, 0.3662, 0.3406, 0.5292, 0.4858, 0.299, 0.2327]}, "mec": {"N": [0, 1, 2, 3, 5, 7, 10, 15, 20, 24, 32, 39, 49], "mean": [-0.0, 0.3993, 0.3643, 0.2047, 0.2311, 0.2415, 0.1617, 0.584, 0.5123, 0.3792, -0.0979, -0.4568, 0.6284], "lo": [-0.0326, 0.3587, 0.3427, 0.1878, 0.1969, 0.209, 0.1373, 0.5492, 0.4894, 0.3529, -0.1266, -0.4887, 0.5982], "hi": [0.0326, 0.4399, 0.386, 0.2217, 0.2653, 0.274, 0.1861, 0.6188, 0.5352, 0.4054, -0.0693, -0.4249, 0.6587]}, "met": {"N": [0, 1, 2, 3, 5, 8, 10, 15, 20, 25, 32, 40, 50], "mean": [-0.0, 0.2452, 0.1832, 0.1942, 0.0922, 0.2889, 0.2575, 0.6546, 0.8884, 0.9128, 0.8647, 0.8756, 1.5605], "lo": [-0.0273, 0.2134, 0.1566, 0.1771, 0.0711, 0.2667, 0.2316, 0.6345, 0.8754, 0.8981, 0.8458, 0.8603, 1.5415], "hi": [0.0273, 0.277, 0.2099, 0.2114, 0.1133, 0.3112, 0.2834, 0.6747, 0.9014, 0.9275, 0.8836, 0.891, 1.5795]}, "qui": {"N": [0, 1, 2, 3, 5, 8, 11, 16, 22, 27, 35, 43, 54], "mean": [-0.0, 0.7672, 0.8753, 0.8865, 1.2504, 1.3159, 1.095, 1.0766, 0.6372, 0.5595, 0.2531, 0.2525, 1.4908], "lo": [-0.0457, 0.7391, 0.8497, 0.8659, 1.2274, 1.2887, 1.0718, 1.052, 0.6063, 0.5421, 0.2309, 0.2131, 1.4591], "hi": [0.0457, 0.7954, 0.9009, 0.907, 1.2734, 1.343, 1.1182, 1.1012, 0.668, 0.5769, 0.2753, 0.2919, 1.5225]}}};
+
 
 /* ── Page transitions ──────────────────────────────────────────────────────── */
 document.querySelectorAll('a[href]').forEach(a => {
@@ -563,121 +740,6 @@ window.renderChart = function(containerId, traceFn, layoutFn) {
   io.observe(container);
 };
 
-
-(function(){
-
-  renderChart('chart-meta3-lorenz',
-    function() {
-      var d = window.__META3__;
-      var lor = d.lorenz;
-      var diag = [0, lor.totalSer];
-      return [
-        {
-          type: 'scatter', mode: 'lines',
-          name: 'Curva de Lorenz del impacto',
-          x: lor.n, y: lor.fracCum,
-          line: {color: '#C82D23', width: 2},
-          fill: 'tozeroy', fillcolor: 'rgba(200,45,35,0.08)',
-          hovertemplate: 'N = %{x}<br>Fraccion acumulada = %{y:.1%}<extra></extra>'
-        },
-        {
-          type: 'scatter', mode: 'lines',
-          name: 'Distribucion uniforme (diagonal)',
-          x: [0, lor.totalSer], y: [0, 1],
-          line: {color: '#8890A8', width: 1, dash: 'dot'},
-          showlegend: true
-        }
-      ];
-    },
-    function() {
-      var d = window.__META3__;
-      var lor = d.lorenz;
-      return Object.assign({}, LAYOUT_BASE, {
-        margin: {l:46, r:20, t:12, b:40},
-        xaxis: Object.assign({}, LAYOUT_BASE.xaxis, {
-          title: {text: 'Numero de seriaciones eliminadas (N)', font: FONT},
-          range: [0, lor.totalSer], gridcolor: '#E4E2DF'
-        }),
-        yaxis: Object.assign({}, LAYOUT_BASE.yaxis, {
-          title: {text: 'Fraccion del beneficio acumulado', font: FONT},
-          tickformat: '.0%', range: [0, 1.05], gridcolor: '#E4E2DF'
-        }),
-        shapes: [
-          {type:'line', x0:lor.N80, x1:lor.N80, y0:0, y1:0.80,
-           line:{color:'#B06A00', width:1.2, dash:'dot'}},
-          {type:'line', x0:0, x1:lor.N80, y0:0.80, y1:0.80,
-           line:{color:'#B06A00', width:1.2, dash:'dot'}}
-        ],
-        annotations: [
-          {x:lor.N80, y:0.83,
-           text:'N80 = ' + lor.N80 + ' (' + (lor.N80/lor.totalSer*100).toFixed(1) + '%)',
-           showarrow:false, font:{size:9, color:'#B06A00'}, xanchor:'center'}
-        ],
-        legend: {
-          orientation: 'h', x: 0, y: -0.18, font: Object.assign({}, FONT, {size: 9})
-        }
-      });
-    }
-  );
-
-  renderChart('chart-meta3-remocion',
-    function() {
-      var d = window.__META3__;
-      var planColors = {
-        amb:'#2E7D32', civ:'#BF360C', com:'#1565C0', ele:'#E65100',
-        elo:'#C82D23', fis:'#00838F', ind:'#C62828', mec:'#37474F',
-        met:'#78909C', qui:'#558B2F'
-      };
-      var bandColors = {
-        elo:'rgba(200,45,35,0.12)', qui:'rgba(176,106,0,0.12)',
-        met:'rgba(21,101,192,0.12)', amb:'rgba(88,152,232,0.12)',
-        ele:'rgba(158,30,24,0.12)',  mec:'rgba(46,125,50,0.12)',
-        fis:'rgba(184,120,232,0.12)',ind:'rgba(76,203,114,0.12)',
-        civ:'rgba(136,144,168,0.12)',com:'rgba(100,100,100,0.12)'
-      };
-      var traces = [];
-      d.plansOrder.forEach(function(plan) {
-        var rd = d.remocion[plan];
-        var col = planColors[plan] || '#888';
-        var bcol = bandColors[plan] || 'rgba(136,144,168,0.10)';
-        traces.push({
-          type: 'scatter', mode: 'lines',
-          name: d.planNames[plan],
-          x: rd.N, y: rd.mean,
-          line: {color: col, width: 2},
-          hovertemplate: '<b>' + d.planNames[plan] + '</b><br>N=%{x}<br>Ganancia: +%{y:.4f} trim<extra></extra>'
-        });
-        traces.push({
-          type: 'scatter', mode: 'lines',
-          showlegend: false,
-          x: rd.N.concat(rd.N.slice().reverse()),
-          y: rd.hi.concat(rd.lo.slice().reverse()),
-          fill: 'toself', fillcolor: bcol,
-          line: {width: 0},
-          hoverinfo: 'skip'
-        });
-      });
-      return traces;
-    },
-    function() {
-      return Object.assign({}, LAYOUT_BASE, {
-        margin: {l:52, r:12, t:12, b:40},
-        xaxis: Object.assign({}, LAYOUT_BASE.xaxis, {
-          title: {text: 'Seriaciones eliminadas (N)', font: FONT},
-          gridcolor: '#E4E2DF', zeroline: false
-        }),
-        yaxis: Object.assign({}, LAYOUT_BASE.yaxis, {
-          title: {text: 'Ganancia en ET (trimestres)', font: FONT},
-          gridcolor: '#E4E2DF'
-        }),
-        legend: {
-          orientation: 'h', x: 0, y: -0.18,
-          font: Object.assign({}, FONT, {size: 9})
-        }
-      });
-    }
-  );
-})();
 
 </script>
 </body>

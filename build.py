@@ -811,9 +811,11 @@ def nav(active=''):
         ('cat26p.html', 'CAT 26P'),
         ('cat26p_asignacion.html', '↳ Asignación'),
         ('cat26p_capacidad.html', '↳ Capacidad'),
-        ('metanalisis.html', 'Metaanálisis'),
+        ('metanalisis.html', 'Eficiencia terminal'),
         ('concentracion.html', 'Distribución docente'),
         ('modificaciones.html', 'Modificaciones 2026'),
+        ('mod_similitud.html',  '↳ Similitud'),
+        ('mod_revision.html',   '↳ Revisión RES'),
     ]
     items = '\n'.join(
         f'<li><a href="{href}" class="{"active" if active==href else ""}" onclick="closeNav()">{label}</a></li>'
@@ -1025,7 +1027,7 @@ index_html = page_shell(
     content=INDEX_CONTENT,
     bottom_nav_items="""
       <a class="bottom-nav-item" href="cat26p.html"><span class="bottom-nav-icon">🗓</span>CAT</a>
-      <a class="bottom-nav-item" href="metanalisis.html"><span class="bottom-nav-icon">📊</span>Meta</a>
+      <a class="bottom-nav-item" href="metanalisis.html"><span class="bottom-nav-icon">📊</span>Eficiencia</a>
       <a class="bottom-nav-item" href="modificaciones.html"><span class="bottom-nav-icon">📋</span>Modif.</a>
     """,
 )
@@ -3421,13 +3423,116 @@ meta6_html = page_shell(
 )
 
 # ══════════════════════════════════════════════════════════════════════════════
-# MODIFICACIONES.HTML
+# MODIFICACIONES.HTML  — landing (dark hero, 2 meta-nodes)
 # ══════════════════════════════════════════════════════════════════════════════
 MOD_CONTENT = f"""
+<style>{INDEX_CSS}
+  .meta-nodes {{ display:grid; grid-template-columns:1fr 1fr; gap:.7rem }}
+  .meta-node {{ background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+               border-radius:12px; padding:1rem 1.1rem; cursor:pointer;
+               transition:background var(--ease),border-color var(--ease);
+               text-decoration:none; display:block }}
+  .meta-node:hover {{ background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5) }}
+  .meta-node-tag {{ font-size:.6rem; font-weight:700; letter-spacing:.12em;
+                   text-transform:uppercase; color:var(--red); margin-bottom:.3rem }}
+  .meta-node-title {{ font-size:.95rem; font-weight:700; color:#fff; margin-bottom:.25rem }}
+  .meta-node-desc {{ font-size:.75rem; color:rgba(255,255,255,.4); line-height:1.45 }}
+  .meta-node-sub {{ margin-top:.55rem; padding-top:.5rem;
+                   border-top:1px solid rgba(255,255,255,.1);
+                   font-size:.72rem; color:rgba(200,45,35,.8); font-weight:600 }}
+  .meta-node-wide {{ grid-column:1/-1 }}
+  @media(max-width:960px) {{ .meta-nodes {{ grid-template-columns:1fr }} }}
+</style>
+<main>
+  <div class="landing-hero">
+    <div class="landing-hero-inner">
+      <div>
+        <p class="landing-tag animate-in">UAM Azcapotzalco · División de Ciencias Básicas e Ingeniería</p>
+        <h1 class="landing-h1 animate-in delay-1">
+          Modificaciones
+          <strong>2026</strong>
+        </h1>
+        <p class="landing-sub animate-in delay-2">
+          Dos sistemas de análisis curricular con inteligencia artificial: similitud semántica
+          entre los 1,505 pares de programas de Unidad de Enseñanza-Aprendizaje (UEA) de las
+          diez licenciaturas, y verificación legislativa automatizada de los planes y programas
+          propuestos frente al Reglamento de Estudios Superiores.
+        </p>
+        <div class="landing-bar animate-in delay-2"></div>
+        <div class="landing-kpis animate-in delay-3">
+          <div class="lkpi">
+            <div class="lkpi-val">10</div>
+            <div class="lkpi-lbl">Licenciaturas</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="1505">0</div>
+            <div class="lkpi-lbl">Pares evaluados</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="626">0</div>
+            <div class="lkpi-lbl">Programas de UEA</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val">26</div>
+            <div class="lkpi-lbl">Fracciones del RES</div>
+          </div>
+        </div>
+      </div>
+      <div class="meta-nodes animate-in delay-2">
+        <a class="meta-node" href="mod_similitud.html">
+          <div class="meta-node-tag">Análisis 1</div>
+          <div class="meta-node-title">Análisis de similitud</div>
+          <div class="meta-node-desc">1,505 pares de UEAs evaluados · similitud semántica entre planes</div>
+          <div class="meta-node-sub">391 pares similares · 626 programas →</div>
+        </a>
+        <a class="meta-node" href="mod_revision.html">
+          <div class="meta-node-tag">Análisis 2</div>
+          <div class="meta-node-title">Revisión de planes y programas</div>
+          <div class="meta-node-desc">Verificación legislativa automatizada contra el Reglamento de Estudios Superiores</div>
+          <div class="meta-node-sub">26 fracciones · 2 reportes Excel →</div>
+        </a>
+      </div>
+    </div>
+    <div class="scroll-hint">▾ desplázate para explorar</div>
+  </div>
+  <div style="padding:3rem 2rem;max-width:1440px;margin:0 auto" id="content">
+    <div class="connect-box animate-in">
+      <div class="connect-box-title">Documentos de salida</div>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">Reporte de similitud completo (análisis de duplicación y similitud semántica entre UEAs, 35 pp.) y documentación técnica del sistema de revisión legislativa (descripción de agentes, documentos de salida y referencia legislativa, 11 pp.).</p>
+      <div class="connect-links">
+        <a class="connect-link" href="Reporte_Similitud_DCBI_2026.pdf" download>↓ Reporte similitud (PDF)</a>
+        <a class="connect-link" href="documentacion_sistema.pdf" download>↓ Documentación técnica (PDF)</a>
+      </div>
+    </div>
+    <div class="connect-box animate-in" style="margin-top:1rem">
+      <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">Las modificaciones curriculares 2026 son la respuesta a dos diagnósticos: las seriaciones identificadas como palancas en el Análisis de eficiencia terminal son exactamente las candidatas a reestructuración aquí evaluadas; la concentración docente documentada en el análisis de Distribución docente es insumo directo para las decisiones de asignación que los planes modificados deben contemplar.</p>
+      <div class="connect-links">
+        <a class="connect-link" href="metanalisis.html">📊 Ver Eficiencia terminal →</a>
+        <a class="connect-link" href="concentracion.html">👥 Ver Distribución docente →</a>
+        <a class="connect-link" href="cat26p.html">🗓 Ver CAT 26P →</a>
+      </div>
+    </div>
+  </div>
+</main>
+"""
+
+mod_html = page_shell(
+    title='Modificaciones 2026 — Revisión Curricular con IA',
+    active='modificaciones.html',
+    content=MOD_CONTENT,
+    data_vars='',
+    extra_js='',
+)
+
+# ══════════════════════════════════════════════════════════════════════════════
+# MOD_SIMILITUD.HTML  — Análisis de similitud (contenido anterior de modificaciones.html)
+# ══════════════════════════════════════════════════════════════════════════════
+MOD_SIM_CONTENT = f"""
 <header class="hero">
   <div class="hero-inner">
     <div>
-      <p class="hero-label">Modificaciones 2026 · Revisión curricular con IA</p>
+      <p class="hero-label">Modificaciones 2026 · Análisis de similitud semántica</p>
       <h1><strong>Análisis de similitud</strong><br>de programas de UEA 2026</h1>
       <p class="hero-sub">Sistema multi-agente que revisó las modificaciones curriculares 2026,
         comparó automáticamente los 1,505 pares candidatos de UEAs y generó los diez oficios
@@ -3615,13 +3720,14 @@ MOD_CONTENT = f"""
     <div class="connect-links">
       <a class="connect-link" href="cat26p.html">🗓 Ver CAT 26P →</a>
       <a class="connect-link" href="metanalisis.html">📊 Ver Metaanálisis →</a>
+      <a class="connect-link" href="mod_revision.html">Ver Revisión de planes →</a>
     </div>
   </div>
 
 </main>
 """
 
-MOD_JS = """
+MOD_SIM_JS = """
 (function(){
   const D = window.__MOD__;
 
@@ -3645,17 +3751,286 @@ MOD_JS = """
 })();
 """
 
-mod_html = page_shell(
-    title='Modificaciones 2026 — Revisión Curricular con IA',
+mod_sim_html = page_shell(
+    title='Modificaciones 2026 — Análisis de similitud',
     active='modificaciones.html',
-    content=MOD_CONTENT,
+    content=MOD_SIM_CONTENT,
     bottom_nav_items="""
+      <a class="bottom-nav-item" href="modificaciones.html"><span class="bottom-nav-icon">←</span>Índice</a>
       <a class="bottom-nav-item" href="#mod-inter"><span class="bottom-nav-icon">⊞</span>Inter-plan</a>
       <a class="bottom-nav-item" href="#mod-niveles"><span class="bottom-nav-icon">🎨</span>Niveles</a>
       <a class="bottom-nav-item" href="#mod-figuras"><span class="bottom-nav-icon">🗺</span>Figuras</a>
     """,
     data_vars=f'window.__MOD__ = {DATA_MOD};',
-    extra_js=MOD_JS,
+    extra_js=MOD_SIM_JS,
+)
+
+# ══════════════════════════════════════════════════════════════════════════════
+# MOD_REVISION.HTML  — Revisión de planes y programas (plain string)
+# ══════════════════════════════════════════════════════════════════════════════
+MOD_REV_CONTENT = """
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-label">Modificaciones 2026 · Revisión legislativa automatizada</p>
+      <h1><strong>Revisión de planes</strong><br>y programas propuestos</h1>
+      <p class="hero-sub">Sistema de cinco agentes encadenados que verifica el cumplimiento
+        del Reglamento de Estudios Superiores en cada propuesta curricular 2026 — pertinencia,
+        plan de estudios, programas de Unidad de Enseñanza-Aprendizaje (UEA) y correspondencia
+        entre ambos documentos.</p>
+      <div class="hero-bar"></div>
+      <div class="stats">
+        <div class="stat"><span class="stat-val kpi-counter" data-target="10">0</span><span class="stat-lbl">Licenciaturas revisadas</span></div>
+        <div class="stat"><span class="stat-val kpi-counter" data-target="626">0</span><span class="stat-lbl">Programas de UEA procesados</span></div>
+        <div class="stat"><span class="stat-val kpi-counter" data-target="26">0</span><span class="stat-lbl">Fracciones del RES verificadas</span></div>
+        <div class="stat"><span class="stat-val kpi-counter" data-target="2">0</span><span class="stat-lbl">Reportes Excel de salida</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="main">
+
+  <!-- ── Sección: El sistema de revisión ── -->
+  <section class="section animate-in" id="mod-rev-sistema">
+    <div class="section-header">
+      <h2>El sistema de revisión</h2>
+      <span class="section-count">10 licenciaturas · 26 fracciones verificadas</span>
+    </div>
+    <p class="section-desc">
+      El sistema automatiza la verificación de cumplimiento legislativo de las propuestas
+      de modificación a planes y programas de estudio de las diez licenciaturas de la División,
+      correspondientes al proceso de actualización curricular 2026.
+      Cada propuesta se contrasta sistemáticamente contra el Reglamento de Estudios Superiores
+      (RES): el documento de pertinencia se revisa frente a las diez fracciones del artículo 34,
+      el plan de estudios frente a las dieciséis fracciones del artículo 44, y cada programa
+      de Unidad de Enseñanza-Aprendizaje (UEA) frente a los requisitos de los artículos 45 y 56.
+    </p>
+    <div class="read-callout">
+      <strong>Qué muestra esta sección:</strong> el propósito y alcance del sistema de revisión
+      legislativa automatizada. Los artículos 34, 44, 45 y 56 del Reglamento de Estudios
+      Superiores (RES) establecen los criterios que toda propuesta curricular debe cumplir antes
+      de su presentación ante el Consejo Divisional. Este sistema verifica ese cumplimiento de
+      forma sistemática y reproducible para las diez licenciaturas de la División de Ciencias
+      Básicas e Ingeniería (DCBI).
+    </div>
+  </section>
+
+  <!-- ── Sección: La cadena de agentes ── -->
+  <section class="section animate-in" id="mod-rev-agentes">
+    <div class="section-header">
+      <h2>La cadena de agentes</h2>
+      <span class="section-count">5 agentes especializados</span>
+    </div>
+    <p class="section-desc">
+      El sistema opera como una cadena de cinco agentes de inteligencia artificial (IA)
+      que se ejecutan en secuencia: cada uno recibe el resultado del anterior y produce
+      una salida estructurada que alimenta al siguiente.
+      El proceso va del inventario documental a la verificación legislativa, y culmina
+      en dos reportes Excel listos para su uso por la coordinación de cada licenciatura.
+    </p>
+    <div class="read-callout">
+      <strong>Qué muestra esta sección:</strong> el flujo completo de procesamiento, desde
+      la carpeta de archivos entregada por cada licenciatura hasta los reportes de salida.
+      Cada agente realiza una tarea específica y delimitada; ninguno toma decisiones fuera
+      de su ámbito. El resultado de cada etapa es auditable de forma independiente.
+    </div>
+    <div class="howto-grid animate-in delay-1">
+      <div class="howto-card">
+        <h3>Flujo de procesamiento</h3>
+        <div class="howto-step">
+          <div class="howto-icon">1</div>
+          <div class="howto-text"><strong>Inventario:</strong> recorre la carpeta de cada
+            licenciatura, identifica y clasifica todos los documentos entregados (pertinencia,
+            plan de estudios, programas de UEA, tablas de equivalencias, oficios).</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">2</div>
+          <div class="howto-text"><strong>Extracción del plan:</strong> extrae el texto completo
+            y la tabla de UEAs del documento de plan de estudios, en formato .docx o .pdf.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">3</div>
+          <div class="howto-text"><strong>Revisión legislativa:</strong> contrasta el documento
+            de pertinencia contra las diez fracciones del artículo 34 del RES, y el plan de
+            estudios contra las dieciséis fracciones del artículo 44. Emite un veredicto
+            (Sí / Parcial / No / N/A) con evidencia y observación para cada fracción.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">4</div>
+          <div class="howto-text"><strong>Análisis de programas de UEA:</strong> para cada
+            programa, extrae el encabezado, verifica la presencia de las cinco secciones
+            requeridas por el artículo 45, y valida los créditos mediante la fórmula del
+            artículo 56: créditos = 2 × horas teoría + horas práctica.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">5</div>
+          <div class="howto-text"><strong>Correspondencia plan–programas:</strong> cruza la
+            lista de UEAs del plan con los archivos de programa entregados. Detecta UEAs
+            sin archivo correspondiente, archivos sin UEA en el plan y discrepancias en
+            campos de encabezado.</div>
+        </div>
+      </div>
+      <div class="howto-card">
+        <h3>Cobertura por licenciatura</h3>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">●</div>
+          <div class="howto-text"><strong>10 fracciones del Art. 34</strong> — pertinencia del
+            plan: justificación social, demanda, campo laboral, perfil de egreso, entre otras.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">●</div>
+          <div class="howto-text"><strong>16 fracciones del Art. 44</strong> — estructura del
+            plan de estudios: seriación, créditos totales, Tronco General (TG), distribución de
+            áreas, entre otros aspectos formales.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">●</div>
+          <div class="howto-text"><strong>5 secciones del Art. 45</strong> — estructura de
+            cada programa de UEA: presentación, objetivos, contenidos, metodología y
+            evaluación.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">●</div>
+          <div class="howto-text"><strong>Fórmula del Art. 56</strong> — validación automática
+            de créditos para cada UEA: créditos = 2 × horas de teoría + horas de práctica.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">●</div>
+          <div class="howto-text"><strong>~626 programas procesados</strong> en total, a razón
+            de entre 40 y 80 programas por licenciatura dependiendo del plan propuesto.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Sección: Los reportes de salida ── -->
+  <section class="section animate-in" id="mod-rev-reportes">
+    <div class="section-header">
+      <h2>Los reportes de salida</h2>
+      <span class="section-count">2 reportes Excel</span>
+    </div>
+    <p class="section-desc">
+      El sistema genera dos archivos Excel por ejecución: uno para la revisión legislativa
+      del documento de pertinencia y del plan de estudios, y otro para el análisis de los
+      programas de UEA y su correspondencia con el plan.
+      Cada archivo incluye una hoja de resumen ejecutivo y diez hojas individuales,
+      una por licenciatura.
+    </p>
+    <div class="read-callout">
+      <strong>Qué muestra esta sección:</strong> la estructura y el contenido de los dos
+      reportes de salida. Cada celda de veredicto sigue un código de color uniforme:
+      verde para cumplimiento, naranja para cumplimiento parcial, rojo para incumplimiento
+      y gris para fracciones no aplicables al plan revisado. Este código permite identificar
+      de un vistazo las áreas que requieren atención antes de la presentación al Consejo
+      Divisional.
+    </div>
+    <div class="howto-grid animate-in delay-1">
+      <div class="howto-card">
+        <h3>Reporte 1 — Pertinencia y plan de estudios</h3>
+        <div class="howto-step">
+          <div class="howto-icon">I</div>
+          <div class="howto-text"><strong>Sección I · Pertinencia (Art. 34):</strong> una fila
+            por fracción, con veredicto, evidencia textual extraída del documento y observación
+            del agente.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">II</div>
+          <div class="howto-text"><strong>Sección II · Plan de estudios (Art. 44):</strong> una
+            fila por fracción, con la misma estructura de veredicto, evidencia y observación.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">Σ</div>
+          <div class="howto-text"><strong>Hoja RESUMEN:</strong> conteo de veredictos por
+            licenciatura para las 26 fracciones combinadas. Permite comparar el estado de
+            cumplimiento de los diez planes en una sola vista.</div>
+        </div>
+      </div>
+      <div class="howto-card">
+        <h3>Reporte 2 — Programas de UEA y correspondencia</h3>
+        <div class="howto-step">
+          <div class="howto-icon">III</div>
+          <div class="howto-text"><strong>Sección III · Programas (Art. 45 y 56):</strong> una
+            fila por UEA con verificación de las cinco secciones requeridas y resultado de la
+            validación de créditos.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon">IV</div>
+          <div class="howto-text"><strong>Sección IV · Correspondencia:</strong> tabla cruzada
+            entre la lista del plan y los archivos entregados. Las discrepancias se marcan
+            en rojo: UEAs faltantes, archivos sin UEA y campos de encabezado inconsistentes.</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fce4ec;color:#b71c1c">Σ</div>
+          <div class="howto-text"><strong>Hoja RESUMEN:</strong> estadísticas de cobertura por
+            licenciatura: total de UEAs en plan, programas entregados, programas con estructura
+            completa y UEAs con créditos correctos.</div>
+        </div>
+        <div class="howto-step" style="margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--border)">
+          <div class="howto-icon" style="background:#e8f5e9;color:#2E7D32">Sí</div>
+          <div class="howto-text" style="color:#2E7D32;font-weight:600">Cumple</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#fff8e1;color:#B06A00">Par</div>
+          <div class="howto-text" style="color:#B06A00;font-weight:600">Cumplimiento parcial</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#ffebee;color:#C62828">No</div>
+          <div class="howto-text" style="color:#C62828;font-weight:600">No cumple</div>
+        </div>
+        <div class="howto-step">
+          <div class="howto-icon" style="background:#f5f5f5;color:#888">N/A</div>
+          <div class="howto-text" style="color:#888;font-weight:600">No aplica</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <div class="connect-box animate-in" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+    <div>
+      <div class="connect-box-title">Documentación técnica del sistema</div>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6;margin:0">Descripción de agentes, documentos de salida y referencia legislativa · 11 pp. · PDF</p>
+    </div>
+    <a href="documentacion_sistema.pdf" download
+       style="display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;
+              text-decoration:none;padding:.7rem 1.4rem;border-radius:8px;font-size:.85rem;
+              font-weight:700;white-space:nowrap;transition:opacity .15s"
+       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      ↓ Descargar PDF
+    </a>
+  </div>
+
+  <div class="connect-box animate-in" style="margin-top:1rem">
+    <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
+    <p style="font-size:.84rem;color:var(--mid);line-height:1.6">
+      La revisión legislativa es la respuesta prescriptiva a los diagnósticos: las seriaciones identificadas
+      como palancas en el Análisis de eficiencia terminal son exactamente las que se evalúan aquí como candidatas
+      a reestructuración. La distribución docente concentrada que documenta el análisis de Distribución docente
+      es también insumo directo para las decisiones de asignación que las modificaciones deben contemplar.
+    </p>
+    <div class="connect-links">
+      <a class="connect-link" href="metanalisis.html">📊 Ver Eficiencia terminal →</a>
+      <a class="connect-link" href="concentracion.html">👥 Ver Distribución docente →</a>
+      <a class="connect-link" href="mod_similitud.html">← Ver Similitud de UEAs</a>
+    </div>
+  </div>
+
+</main>
+"""
+
+mod_rev_html = page_shell(
+    title='Modificaciones 2026 — Revisión de planes y programas',
+    active='modificaciones.html',
+    content=MOD_REV_CONTENT,
+    bottom_nav_items="""
+      <a class="bottom-nav-item" href="modificaciones.html"><span class="bottom-nav-icon">←</span>Índice</a>
+      <a class="bottom-nav-item" href="#mod-rev-sistema"><span class="bottom-nav-icon">⚖</span>Sistema</a>
+      <a class="bottom-nav-item" href="#mod-rev-agentes"><span class="bottom-nav-icon">🤖</span>Agentes</a>
+      <a class="bottom-nav-item" href="#mod-rev-reportes"><span class="bottom-nav-icon">📊</span>Reportes</a>
+    """,
+    data_vars='',
+    extra_js='',
 )
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -5083,6 +5458,8 @@ for fname, content in [
     ('meta_5.html',          meta5_html),
     ('meta_6.html',          meta6_html),
     ('modificaciones.html',  mod_html),
+    ('mod_similitud.html',   mod_sim_html),
+    ('mod_revision.html',    mod_rev_html),
     ('concentracion.html',   conc_html),
     ('conc_1.html',          conc1_html),
     ('conc_2.html',          conc2_html),

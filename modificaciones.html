@@ -295,218 +295,157 @@
 <li><a href="cat26p.html" class="" onclick="closeNav()">CAT 26P</a></li>
 <li><a href="cat26p_asignacion.html" class="" onclick="closeNav()">↳ Asignación</a></li>
 <li><a href="cat26p_capacidad.html" class="" onclick="closeNav()">↳ Capacidad</a></li>
-<li><a href="metanalisis.html" class="" onclick="closeNav()">Metaanálisis</a></li>
+<li><a href="metanalisis.html" class="" onclick="closeNav()">Eficiencia terminal</a></li>
 <li><a href="concentracion.html" class="" onclick="closeNav()">Distribución docente</a></li>
-<li><a href="modificaciones.html" class="active" onclick="closeNav()">Modificaciones 2026</a></li></ul>
+<li><a href="modificaciones.html" class="active" onclick="closeNav()">Modificaciones 2026</a></li>
+<li><a href="mod_similitud.html" class="" onclick="closeNav()">↳ Similitud</a></li>
+<li><a href="mod_revision.html" class="" onclick="closeNav()">↳ Revisión RES</a></li></ul>
     <button class="nav-hamburger" id="hamburger" aria-label="Menú" onclick="toggleNav()">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
-<header class="hero">
-  <div class="hero-inner">
-    <div>
-      <p class="hero-label">Modificaciones 2026 · Revisión curricular con IA</p>
-      <h1><strong>Análisis de similitud</strong><br>de programas de UEA 2026</h1>
-      <p class="hero-sub">Sistema multi-agente que revisó las modificaciones curriculares 2026,
-        comparó automáticamente los 1,505 pares candidatos de UEAs y generó los diez oficios
-        de revisión institucional.</p>
-      <div class="hero-bar"></div>
-      <div class="stats">
-        <div class="stat"><span class="stat-val kpi-counter" data-target="10">0</span><span class="stat-lbl">Licenciaturas revisadas</span></div>
-        <div class="stat"><span class="stat-val kpi-counter" data-target="626">0</span><span class="stat-lbl">Programas analizados</span></div>
-        <div class="stat"><span class="stat-val kpi-counter" data-target="391">0</span><span class="stat-lbl">Pares similares inter-plan</span></div>
-        <div class="stat"><span class="stat-val kpi-counter" data-target="10">0</span><span class="stat-lbl">Oficios generados</span></div>
+<style>
+  .landing-hero { min-height:100svh; background:var(--ink); color:#fff;
+                  display:flex; flex-direction:column; justify-content:center;
+                  padding:3rem 2rem; position:relative; overflow:hidden }
+  .landing-hero::before { content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 80% 60% at 60% 40%, rgba(200,45,35,.12) 0%, transparent 70%);
+    pointer-events:none }
+  .landing-hero-inner { max-width:1440px; margin:0 auto; width:100%;
+                        display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center }
+  .landing-tag { font-size:.72rem; font-weight:700; letter-spacing:.16em;
+                 text-transform:uppercase; color:var(--red); margin-bottom:1rem }
+  .landing-h1 { font-size:clamp(2rem,5vw,4rem); font-weight:200; line-height:1.1;
+                letter-spacing:-.03em }
+  .landing-h1 strong { font-weight:800; display:block }
+  .landing-sub { margin-top:1.2rem; font-size:1rem; color:rgba(255,255,255,.5);
+                 max-width:520px; line-height:1.7 }
+  .landing-bar { width:56px; height:3px; background:var(--red); margin:1.8rem 0 }
+  .landing-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:.75rem; max-width:520px }
+  .lkpi { padding:.9rem; background:rgba(255,255,255,.06);
+          border:1px solid rgba(255,255,255,.1); border-radius:8px; text-align:center }
+  .lkpi-val { font-size:1.8rem; font-weight:700; color:#fff; line-height:1 }
+  .lkpi-lbl { font-size:.65rem; color:rgba(255,255,255,.4); margin-top:.3rem; letter-spacing:.04em }
+  .flow-diagram { display:flex; flex-direction:column; gap:1.5rem; padding:.5rem }
+  .flow-node { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+               border-radius:12px; padding:1.4rem 1.6rem; cursor:pointer;
+               transition:background var(--ease),border-color var(--ease),transform var(--ease) }
+  .flow-node:hover { background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5);
+                     transform:translateX(6px) }
+  .flow-node-tag { font-size:.62rem; font-weight:700; letter-spacing:.12em;
+                   text-transform:uppercase; color:var(--red); margin-bottom:.4rem }
+  .flow-node-title { font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:.3rem }
+  .flow-node-desc { font-size:.8rem; color:rgba(255,255,255,.45); line-height:1.5 }
+  .flow-node-stat { font-size:1.6rem; font-weight:800; color:#fff; margin-top:.6rem }
+  .flow-node-stat-lbl { font-size:.68rem; color:rgba(255,255,255,.35) }
+  .flow-arrow { text-align:center; color:var(--red); font-size:1.4rem; opacity:.6 }
+  .scroll-hint { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+                 font-size:.7rem; color:rgba(255,255,255,.3); text-align:center;
+                 animation:bobble 2s ease-in-out infinite }
+  @keyframes bobble { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(5px)} }
+  @media(max-width:960px) {
+    .landing-hero-inner { grid-template-columns:1fr; gap:2.5rem }
+    .landing-kpis { grid-template-columns:repeat(2,1fr); max-width:none }
+    .flow-diagram { flex-direction:row; gap:1rem }
+    .flow-arrow { writing-mode:horizontal-tb; align-self:center; transform:rotate(0deg) }
+    .flow-node { flex:1 }
+  }
+  @media(max-width:640px) {
+    .landing-hero { min-height:auto; padding:calc(52px + 2rem) 1.25rem 2rem }
+    .landing-h1 { font-size:clamp(1.8rem,8vw,2.8rem) }
+    .flow-diagram { flex-direction:column }
+    .flow-node:hover { transform:none }
+  }
+
+  .meta-nodes { display:grid; grid-template-columns:1fr 1fr; gap:.7rem }
+  .meta-node { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+               border-radius:12px; padding:1rem 1.1rem; cursor:pointer;
+               transition:background var(--ease),border-color var(--ease);
+               text-decoration:none; display:block }
+  .meta-node:hover { background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5) }
+  .meta-node-tag { font-size:.6rem; font-weight:700; letter-spacing:.12em;
+                   text-transform:uppercase; color:var(--red); margin-bottom:.3rem }
+  .meta-node-title { font-size:.95rem; font-weight:700; color:#fff; margin-bottom:.25rem }
+  .meta-node-desc { font-size:.75rem; color:rgba(255,255,255,.4); line-height:1.45 }
+  .meta-node-sub { margin-top:.55rem; padding-top:.5rem;
+                   border-top:1px solid rgba(255,255,255,.1);
+                   font-size:.72rem; color:rgba(200,45,35,.8); font-weight:600 }
+  .meta-node-wide { grid-column:1/-1 }
+  @media(max-width:960px) { .meta-nodes { grid-template-columns:1fr } }
+</style>
+<main>
+  <div class="landing-hero">
+    <div class="landing-hero-inner">
+      <div>
+        <p class="landing-tag animate-in">UAM Azcapotzalco · División de Ciencias Básicas e Ingeniería</p>
+        <h1 class="landing-h1 animate-in delay-1">
+          Modificaciones
+          <strong>2026</strong>
+        </h1>
+        <p class="landing-sub animate-in delay-2">
+          Dos sistemas de análisis curricular con inteligencia artificial: similitud semántica
+          entre los 1,505 pares de programas de Unidad de Enseñanza-Aprendizaje (UEA) de las
+          diez licenciaturas, y verificación legislativa automatizada de los planes y programas
+          propuestos frente al Reglamento de Estudios Superiores.
+        </p>
+        <div class="landing-bar animate-in delay-2"></div>
+        <div class="landing-kpis animate-in delay-3">
+          <div class="lkpi">
+            <div class="lkpi-val">10</div>
+            <div class="lkpi-lbl">Licenciaturas</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="1505">0</div>
+            <div class="lkpi-lbl">Pares evaluados</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="626">0</div>
+            <div class="lkpi-lbl">Programas de UEA</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val">26</div>
+            <div class="lkpi-lbl">Fracciones del RES</div>
+          </div>
+        </div>
+      </div>
+      <div class="meta-nodes animate-in delay-2">
+        <a class="meta-node" href="mod_similitud.html">
+          <div class="meta-node-tag">Análisis 1</div>
+          <div class="meta-node-title">Análisis de similitud</div>
+          <div class="meta-node-desc">1,505 pares de UEAs evaluados · similitud semántica entre planes</div>
+          <div class="meta-node-sub">391 pares similares · 626 programas →</div>
+        </a>
+        <a class="meta-node" href="mod_revision.html">
+          <div class="meta-node-tag">Análisis 2</div>
+          <div class="meta-node-title">Revisión de planes y programas</div>
+          <div class="meta-node-desc">Verificación legislativa automatizada contra el Reglamento de Estudios Superiores</div>
+          <div class="meta-node-sub">26 fracciones · 2 reportes Excel →</div>
+        </a>
       </div>
     </div>
-    <div class="palette"><p class="palette-title">Licenciaturas DCBI</p><div class="palette-chips"><div class="chip"><span class="chip-dot" style="background:var(--c-amb)"></span>Ambiental</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-civ)"></span>Civil</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-com)"></span>Computación</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-ele)"></span>Eléctrica</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-elo)"></span>Electrónica</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-fis)"></span>Física</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-ind)"></span>Industrial</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-mec)"></span>Mecánica</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-met)"></span>Metalurgia</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-qui)"></span>Química</div></div></div>
+    <div class="scroll-hint">▾ desplázate para explorar</div>
   </div>
-</header>
-
-<main class="main">
-
-  <!-- ── Sección 1: Similitud inter-plan ── -->
-  <section class="section animate-in" id="mod-inter">
-    <div class="section-header">
-      <h2>Similitud de contenidos entre licenciaturas</h2>
-      <span class="section-count">391 pares similares</span>
-    </div>
-    <p class="section-desc">
-      El análisis comparó los programas de UEA entre los diez planes de estudio.
-      El par con mayor similitud es Industrial–Mecánica (38 programas equivalentes).
-      La figura interactiva muestra cuántos pares equivalentes (puntuación ≥ 0.70) existen
-      entre cada par de licenciaturas.
-    </p>
-    <div class="read-callout">
-      <strong>Cómo usar esta figura:</strong> cada barra representa un par de licenciaturas y
-      su altura indica cuántos programas de UEA tienen contenido equivalente. Pasa el cursor
-      sobre cualquier barra para ver los nombres del par y el conteo exacto. Los pares con barras
-      más altas son candidatos a contenidos transversales compartidos.
-    </div>
-    <div class="fig-iframe-wrap animate-in delay-1">
-      <iframe class="fig-iframe" src="figuras/barras_interplan_top.html" loading="lazy"
-              title="Pares equivalentes por par de licenciaturas"></iframe>
-    </div>
-  </section>
-
-  <!-- ── Sección 2: Distribución de niveles ── -->
-  <section class="section animate-in" id="mod-niveles">
-    <div class="section-header">
-      <h2>Distribución de niveles de similitud</h2>
-      <span class="section-count">1,505 pares evaluados</span>
-    </div>
-    <p class="section-desc">
-      De los 1,505 pares candidatos evaluados con inteligencia artificial,
-      203 resultaron idénticos o casi idénticos (puntuación ≥ 0.85) y
-      186 con similitud muy alta (0.70–0.84). El 22% de los pares evaluados no mostraron
-      traslape relevante de contenidos.
-    </p>
-    <div class="read-callout">
-      <strong>Qué muestran estas gráficas:</strong> la dona de la izquierda muestra la proporción
-      de pares evaluados en cada nivel de similitud. La tabla de referencia describe qué significa
-      cada nivel en términos de contenido académico y qué acción sugiere.
-    </div>
-    <div class="chart-guide-grid animate-in delay-1">
-      <div class="chart-card">
-        <div class="chart-card-header">
-          <h3>Distribución de niveles de similitud · 1,505 pares</h3>
-          <span class="chart-type-tag">Interactivo</span>
-        </div>
-        <div class="chart-canvas rendering md" id="chart-niveles"><div class="chart-skeleton"></div></div>
-      </div>
-      <div class="howto-card">
-        <h3>🎨 Escala de similitud</h3>
-        <div class="howto-step"><div class="howto-icon" style="background:#f3e5f5;color:#6a1b9a">●</div>
-          <div class="howto-text"><strong>Idéntico (203 pares):</strong> contenidos prácticamente iguales — candidatos a unificarse o reconocerse como UEA transversal.</div></div>
-        <div class="howto-step"><div class="howto-icon" style="background:#ffebee;color:#b71c1c">●</div>
-          <div class="howto-text"><strong>Muy alto (186 pares):</strong> gran solapamiento de contenidos — conviene revisar si la diferenciación es suficiente.</div></div>
-        <div class="howto-step"><div class="howto-icon" style="background:#fce4ec;color:#c62828">●</div>
-          <div class="howto-text"><strong>Alto (175 pares):</strong> temas comunes significativos — posible candidato a contenido transversal si ocurre en varios planes.</div></div>
-        <div class="howto-step"><div class="howto-icon" style="background:#fff3e0;color:#bf360c">●</div>
-          <div class="howto-text"><strong>Moderado (389 pares):</strong> algunos temas en común, pero diferenciación clara de enfoque o profundidad.</div></div>
-        <div class="howto-step"><div class="howto-icon" style="background:#fffde7;color:#795500">●</div>
-          <div class="howto-text"><strong>Bajo / Sin traslape (552 pares):</strong> contenidos distintos — no se requiere acción de unificación.</div></div>
+  <div style="padding:3rem 2rem;max-width:1440px;margin:0 auto" id="content">
+    <div class="connect-box animate-in">
+      <div class="connect-box-title">Documentos de salida</div>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">Reporte de similitud completo (análisis de duplicación y similitud semántica entre UEAs, 35 pp.) y documentación técnica del sistema de revisión legislativa (descripción de agentes, documentos de salida y referencia legislativa, 11 pp.).</p>
+      <div class="connect-links">
+        <a class="connect-link" href="Reporte_Similitud_DCBI_2026.pdf" download>↓ Reporte similitud (PDF)</a>
+        <a class="connect-link" href="documentacion_sistema.pdf" download>↓ Documentación técnica (PDF)</a>
       </div>
     </div>
-  </section>
-
-  <!-- ── Sección 3: Figuras adicionales ── -->
-  <section class="section animate-in" id="mod-figuras">
-    <div class="section-header">
-      <h2>Figuras interactivas de análisis</h2>
-      <span class="section-count">4 visualizaciones</span>
-    </div>
-    <p class="section-desc">
-      Cada figura explora una dimensión distinta del análisis de similitud: desde la vista
-      global de la matriz de similitud entre planes, hasta el agrupamiento jerárquico de las
-      120 UEAs más conectadas y la red de vínculos entre licenciaturas.
-    </p>
-    <div class="read-callout">
-      <strong>Cómo usar estas figuras:</strong> haz clic en cualquier tarjeta para abrir
-      la figura interactiva en pantalla completa. Dentro de ella, pasa el cursor o toca
-      las celdas para ver los valores exactos. Puedes hacer zoom con los controles de la
-      esquina superior derecha.
-    </div>
-    <div class="grid grid-2 animate-in delay-1">
-      <div class="card" onclick="window.open('figuras/heatmap_licenciaturas.html','_blank','noopener')">
-        <div class="card-thumb">
-          <img src="figuras/heatmap_licenciaturas.png" alt="Mapa de similitud entre licenciaturas">
-          <span class="card-badge badge-interactive">Interactivo</span>
-        </div>
-        <div class="card-body">
-          <p class="card-title">Similitud promedio entre los diez planes</p>
-          <p class="card-desc">Mapa de calor 10×10. El rojo intenso indica mayor similitud. La diagonal (cada licenciatura consigo misma) siempre es roja — ignórala y busca las celdas oscuras fuera de ella.</p>
-          <div class="card-footer">
-            <span class="card-meta">10 × 10 licenciaturas</span>
-            <span class="card-btn">Abrir <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
-          </div>
-        </div>
+    <div class="connect-box animate-in" style="margin-top:1rem">
+      <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">Las modificaciones curriculares 2026 son la respuesta a dos diagnósticos: las seriaciones identificadas como palancas en el Análisis de eficiencia terminal son exactamente las candidatas a reestructuración aquí evaluadas; la concentración docente documentada en el análisis de Distribución docente es insumo directo para las decisiones de asignación que los planes modificados deben contemplar.</p>
+      <div class="connect-links">
+        <a class="connect-link" href="metanalisis.html">📊 Ver Eficiencia terminal →</a>
+        <a class="connect-link" href="concentracion.html">👥 Ver Distribución docente →</a>
+        <a class="connect-link" href="cat26p.html">🗓 Ver CAT 26P →</a>
       </div>
-      <div class="card" onclick="window.open('figuras/scatter_tsne.html','_blank','noopener')">
-        <div class="card-thumb">
-          <img src="figuras/scatter_tsne.png" alt="Mapa t-SNE">
-          <span class="card-badge badge-interactive">Interactivo</span>
-        </div>
-        <div class="card-body">
-          <p class="card-title">Mapa de agrupamiento t-SNE</p>
-          <p class="card-desc">Cada punto es una UEA. El algoritmo acerca los programas de contenido similar y aleja los distintos. Los cúmulos de un mismo color revelan familias de contenidos compartidos.</p>
-          <div class="card-footer">
-            <span class="card-meta">626 programas · t-SNE</span>
-            <span class="card-btn">Abrir <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
-          </div>
-        </div>
-      </div>
-      <div class="card" onclick="window.open('figuras/grafo_licenciaturas_30.html','_blank','noopener')">
-        <div class="card-thumb">
-          <img src="figuras/grafo_licenciaturas_30.png" alt="Red de conexiones">
-          <span class="card-badge badge-interactive">Interactivo</span>
-        </div>
-        <div class="card-body">
-          <p class="card-title">Red de conexiones entre licenciaturas</p>
-          <p class="card-desc">Cada nodo es una licenciatura. Las aristas conectan pares con al menos un programa equivalente. Las licenciaturas más conectadas comparten más contenidos con el resto de la División.</p>
-          <div class="card-footer">
-            <span class="card-meta">Inter-licenciaturas · s ≥ 0.30</span>
-            <span class="card-btn">Abrir <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
-          </div>
-        </div>
-      </div>
-      <div class="card" onclick="window.open('figuras/heatmap_clustered.html','_blank','noopener')">
-        <div class="card-thumb">
-          <img src="figuras/heatmap_clustered.png" alt="Clustering jerárquico">
-          <span class="card-badge badge-interactive">Interactivo</span>
-        </div>
-        <div class="card-body">
-          <p class="card-title">Agrupamiento jerárquico de las 120 UEAs más conectadas</p>
-          <p class="card-desc">Las 120 UEAs con más pares similares, agrupadas automáticamente por contenido (método Ward, s ≥ 0.40). La barra lateral de color identifica la licenciatura de cada programa.</p>
-          <div class="card-footer">
-            <span class="card-meta">120 UEAs · clustering Ward</span>
-            <span class="card-btn">Abrir <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <div class="connect-box animate-in" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
-    <div>
-      <div class="connect-box-title">Reporte de similitud completo</div>
-      <p style="font-size:.84rem;color:var(--mid);line-height:1.6;margin:0">Análisis de duplicación y similitud semántica entre UEAs · 35 pp. · PDF</p>
-    </div>
-    <a href="Reporte_Similitud_DCBI_2026.pdf" download
-       style="display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;
-              text-decoration:none;padding:.7rem 1.4rem;border-radius:8px;font-size:.85rem;
-              font-weight:700;white-space:nowrap;transition:opacity .15s"
-       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-      ↓ Descargar PDF
-    </a>
-  </div>
-
-  <div class="connect-box animate-in" style="margin-top:1rem">
-    <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
-    <p style="font-size:.84rem;color:var(--mid);line-height:1.6">
-      Las UEAs identificadas como idénticas o muy similares entre planes son exactamente las
-      que aparecen como cuellos de botella en el Metaanálisis — materias del Tronco General
-      que concentran alta demanda y llenan sus grupos rápidamente en el CAT. Los tres análisis
-      apuntan al mismo núcleo estructural de la División.
-    </p>
-    <div class="connect-links">
-      <a class="connect-link" href="cat26p.html">🗓 Ver CAT 26P →</a>
-      <a class="connect-link" href="metanalisis.html">📊 Ver Metaanálisis →</a>
     </div>
   </div>
-
 </main>
 
 
@@ -516,13 +455,9 @@
   Dr. César S. López-Monsalvo ·
   <a href="mailto:cslm@azc.uam.mx" style="color:rgba(255,255,255,.5);text-decoration:underline">cslm@azc.uam.mx</a>
 </footer>
-<nav class="bottom-nav" aria-label="Navegación rápida"><div class="bottom-nav-inner">
-      <a class="bottom-nav-item" href="#mod-inter"><span class="bottom-nav-icon">⊞</span>Inter-plan</a>
-      <a class="bottom-nav-item" href="#mod-niveles"><span class="bottom-nav-icon">🎨</span>Niveles</a>
-      <a class="bottom-nav-item" href="#mod-figuras"><span class="bottom-nav-icon">🗺</span>Figuras</a>
-    </div></nav>
+
 <script>
-window.__MOD__ = {"simLevels": {"labels": ["Sin traslape", "Bajo", "Moderado", "Alto", "Muy alto", "Idéntico"], "values": [222, 330, 389, 175, 186, 203], "colors": ["#E4E2DF", "#fed976", "#fd8d3c", "#fc4e2a", "#e31a1c", "#800026"]}};
+
 
 /* ── Page transitions ──────────────────────────────────────────────────────── */
 document.querySelectorAll('a[href]').forEach(a => {
@@ -693,28 +628,6 @@ window.renderChart = function(containerId, traceFn, layoutFn) {
   io.observe(container);
 };
 
-
-(function(){
-  const D = window.__MOD__;
-
-  renderChart('chart-niveles',
-    () => [{
-      type:'pie', hole:.45,
-      labels:D.simLevels.labels,
-      values:D.simLevels.values,
-      marker:{colors:D.simLevels.colors, line:{color:'#fff',width:1.5}},
-      textinfo:'label+percent',
-      hovertemplate:'<b>%{label}</b><br>%{value} pares (%{percent})<extra></extra>',
-      textfont:{...FONT,size:11}, direction:'clockwise',
-      sort:false,
-    }],
-    () => ({
-      margin:{l:8,r:8,t:8,b:8}, showlegend:false,
-      annotations:[{text:'<b>1,505</b><br><span style="font-size:10px;color:#888">pares</span>',
-        showarrow:false, font:{size:15,color:'#C82D23',family:'Helvetica Neue,Arial'}}]
-    })
-  );
-})();
 
 </script>
 </body>
