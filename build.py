@@ -809,6 +809,7 @@ def nav(active=''):
     links = [
         ('index.html', '🏠 Inicio'),
         ('cat26p.html', 'CAT 26P'),
+        ('cat26p_asignacion.html', '↳ Asignación'),
         ('cat26p_capacidad.html', '↳ Capacidad'),
         ('metanalisis.html', 'Metaanálisis'),
         ('concentracion.html', 'Distribución docente'),
@@ -1032,7 +1033,7 @@ index_html = page_shell(
 # ══════════════════════════════════════════════════════════════════════════════
 # CAT26P.HTML  — dos partes: Resultados (público) | Sistema multiagente (técnico)
 # ══════════════════════════════════════════════════════════════════════════════
-CAT_CONTENT = f"""
+CAT_ASIGNACION_CONTENT = f"""
 <style>
   /* ── Part tabs ── */
   .part-tabs {{ display:flex; gap:0; border-bottom:2px solid var(--border);
@@ -1692,7 +1693,7 @@ CAT_CONTENT = f"""
 </main>
 """
 
-CAT_JS = """
+CAT_ASIGNACION_JS = """
 (function(){
   const D = window.__CAT__;
 
@@ -1780,17 +1781,102 @@ CAT_JS = """
 })();
 """
 
-cat_html = page_shell(
-    title='CAT 26P — Asignación de grupos',
+cat_asignacion_html = page_shell(
+    title='CAT 26P — Resultados de asignación',
     active='cat26p.html',
-    content=CAT_CONTENT,
+    content=CAT_ASIGNACION_CONTENT,
     bottom_nav_items="""
+      <a class="bottom-nav-item" href="cat26p.html"><span class="bottom-nav-icon">&#127968;</span>Índice</a>
       <a class="bottom-nav-item" href="#cat-cob"><span class="bottom-nav-icon">🍩</span>Cobertura</a>
       <a class="bottom-nav-item" href="#cat-ueas"><span class="bottom-nav-icon">📊</span>Grupos</a>
       <a class="bottom-nav-item" href="#cat-planes"><span class="bottom-nav-icon">🎓</span>Planes</a>
     """,
     data_vars=f'window.__CAT__ = {DATA_CAT};',
-    extra_js=CAT_JS,
+    extra_js=CAT_ASIGNACION_JS,
+)
+
+CAT_CONTENT = f"""
+<style>{INDEX_CSS}
+  .meta-nodes {{ display:grid; grid-template-columns:1fr 1fr; gap:.7rem }}
+  .meta-node {{ background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+               border-radius:12px; padding:1rem 1.1rem; cursor:pointer;
+               transition:background var(--ease),border-color var(--ease);
+               text-decoration:none; display:block }}
+  .meta-node:hover {{ background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5) }}
+  .meta-node-tag {{ font-size:.6rem; font-weight:700; letter-spacing:.12em;
+                   text-transform:uppercase; color:var(--red); margin-bottom:.3rem }}
+  .meta-node-title {{ font-size:.95rem; font-weight:700; color:#fff; margin-bottom:.25rem }}
+  .meta-node-desc {{ font-size:.75rem; color:rgba(255,255,255,.4); line-height:1.45 }}
+  @media(max-width:960px) {{ .meta-nodes {{ grid-template-columns:1fr }} }}
+</style>
+<main>
+  <div class="landing-hero">
+    <div class="landing-hero-inner">
+      <div>
+        <p class="landing-tag animate-in">UAM Azcapotzalco · División de Ciencias Básicas e Ingeniería</p>
+        <h1 class="landing-h1 animate-in delay-1">
+          CAT 26P
+          <strong>Asignación de grupos</strong>
+        </h1>
+        <p class="landing-sub animate-in delay-2">
+          Sistema automatizado de asignación para nuevo ingreso: cero traslapes horarios
+          en 674 estudiantes y análisis de capacidad proyectada para los diez planes
+          del ciclo 26-P.
+        </p>
+        <div class="landing-bar animate-in delay-2"></div>
+        <div class="landing-kpis animate-in delay-3">
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="674">0</div>
+            <div class="lkpi-lbl">Estudiantes asignados</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val">10</div>
+            <div class="lkpi-lbl">Licenciaturas</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val">0</div>
+            <div class="lkpi-lbl">Traslapes horarios</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val">3</div>
+            <div class="lkpi-lbl">Fases del algoritmo</div>
+          </div>
+        </div>
+      </div>
+      <div class="meta-nodes animate-in delay-2">
+        <a class="meta-node" href="cat26p_asignacion.html">
+          <div class="meta-node-tag">Resultados</div>
+          <div class="meta-node-title">Resultados de asignación</div>
+          <div class="meta-node-desc">674 estudiantes asignados al ciclo 26-P sin traslapes horarios. Cobertura, distribución y sistema multiagente.</div>
+        </a>
+        <a class="meta-node" href="cat26p_capacidad.html">
+          <div class="meta-node-tag">Análisis</div>
+          <div class="meta-node-title">Análisis de capacidad</div>
+          <div class="meta-node-desc">Proyecciones de demanda, umbrales de saturación y distribución por franjas y licenciatura.</div>
+        </a>
+      </div>
+    </div>
+    <div class="scroll-hint">▾ desplázate para explorar</div>
+  </div>
+  <div style="padding:3rem 2rem;max-width:1440px;margin:0 auto" id="content">
+    <div class="connect-box animate-in">
+      <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">Los 674 estudiantes asignados son los mismos cuyas trayectorias curriculares analiza el Análisis de eficiencia terminal. La distribución por licenciatura determina el punto de entrada a las redes de prerrequisitos cuya complejidad estructural documentan los proyectos de eficiencia terminal y distribución docente.</p>
+      <div class="connect-links">
+        <a class="connect-link" href="metanalisis.html">Ver Eficiencia terminal →</a>
+        <a class="connect-link" href="concentracion.html">Ver Distribución docente →</a>
+      </div>
+    </div>
+  </div>
+</main>
+"""
+
+cat_html = page_shell(
+    title='CAT 26P — Asignación de grupos',
+    active='cat26p.html',
+    content=CAT_CONTENT,
+    data_vars='',
+    extra_js='',
 )
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -4986,8 +5072,9 @@ conc4_html = page_shell(
 # ══════════════════════════════════════════════════════════════════════════════
 for fname, content in [
     ('index.html',           index_html),
-    ('cat26p.html',          cat_html),
-    ('cat26p_capacidad.html',cap_html),
+    ('cat26p.html',              cat_html),
+    ('cat26p_asignacion.html',   cat_asignacion_html),
+    ('cat26p_capacidad.html',    cap_html),
     ('metanalisis.html',     meta_html),
     ('meta_1.html',          meta1_html),
     ('meta_2.html',          meta2_html),
@@ -5006,4 +5093,4 @@ for fname, content in [
     p.write_text(content, encoding='utf-8')
     print(f"  {fname:<28} {p.stat().st_size/1024:.0f} KB")
 
-print("\nDone — 16 pages written to", HERE)
+print("\nDone — 17 pages written to", HERE)

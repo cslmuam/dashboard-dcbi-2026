@@ -293,6 +293,7 @@
     <a class="nav-brand" href="index.html">DCBI · 2026</a>
     <ul class="nav-links" id="navLinks"><li><a href="index.html" class="" onclick="closeNav()">🏠 Inicio</a></li>
 <li><a href="cat26p.html" class="active" onclick="closeNav()">CAT 26P</a></li>
+<li><a href="cat26p_asignacion.html" class="" onclick="closeNav()">↳ Asignación</a></li>
 <li><a href="cat26p_capacidad.html" class="" onclick="closeNav()">↳ Capacidad</a></li>
 <li><a href="metanalisis.html" class="" onclick="closeNav()">Metaanálisis</a></li>
 <li><a href="concentracion.html" class="" onclick="closeNav()">Distribución docente</a></li>
@@ -304,670 +305,129 @@
 </nav>
 
 <style>
-  /* ── Part tabs ── */
-  .part-tabs { display:flex; gap:0; border-bottom:2px solid var(--border);
-               margin:0 0 0; background:var(--card); position:sticky; top:52px;
-               z-index:50; overflow-x:auto; scrollbar-width:none }
-  .part-tabs::-webkit-scrollbar { display:none }
-  .part-tab { flex:none; padding:.75rem 1.5rem; font-size:.84rem; font-weight:600;
-              color:var(--muted); border-bottom:2.5px solid transparent;
-              margin-bottom:-2px; cursor:pointer; white-space:nowrap;
-              transition:color var(--ease),border-color var(--ease);
-              background:none; border-top:none; border-left:none; border-right:none;
-              font-family:var(--font) }
-  .part-tab:hover { color:var(--ink) }
-  .part-tab.active { color:var(--red); border-bottom-color:var(--red) }
-  .part-panel { display:none }
-  .part-panel.active { display:block }
-
-  /* ── Guarantee grid ── */
-  .guarantee-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:1.25rem }
-  .guarantee-item { background:var(--card); border:1px solid var(--border);
-                    border-top:3px solid var(--red); border-radius:var(--radius);
-                    padding:1rem 1.1rem }
-  .guarantee-item h4 { font-size:.85rem; font-weight:700; margin-bottom:.4rem; color:var(--red) }
-  .guarantee-item p { font-size:.8rem; color:var(--mid); line-height:1.6 }
-
-  /* ── Gender callout ── */
-  .gender-callout { background:#f3eefb; border-left:4px solid #6A1B9A;
-                    border-radius:0 8px 8px 0; padding:1.1rem 1.3rem; margin:1.5rem 0 }
-  .gender-callout-title { font-size:.85rem; font-weight:700; color:#6A1B9A; margin-bottom:.7rem }
-  .gender-callout p { font-size:.83rem; color:#3d1a5c; line-height:1.7; margin-bottom:.6rem }
-  .gender-callout p:last-child { margin-bottom:0 }
-
-  /* ── Agent flow diagram ── */
-  .agent-flow { display:flex; flex-direction:column; gap:0; margin:1.5rem 0 }
-  .agent-row { display:flex; align-items:stretch; gap:0 }
-  .agent-inputs { display:flex; flex-direction:column; gap:.5rem; justify-content:center;
-                  padding-right:1rem; min-width:120px }
-  .agent-input-tag { font-size:.68rem; font-weight:700; background:var(--bg);
-                     border:1px solid var(--border); border-radius:4px;
-                     padding:.25rem .6rem; text-align:right; color:var(--muted);
-                     white-space:nowrap }
-  .agent-input-arrow { font-size:.9rem; color:var(--border); text-align:right }
-  .agent-pipeline { flex:1; display:flex; flex-direction:column; align-items:stretch }
-  .agent-node { background:var(--card); border:1.5px solid var(--border);
-                border-radius:var(--radius); padding:.9rem 1.1rem;
-                display:grid; grid-template-columns:auto 1fr auto; gap:.75rem;
-                align-items:center; position:relative }
-  .agent-node.coordinator { border-color:var(--red); background:var(--red-l) }
-  .agent-phase-badge { font-size:.6rem; font-weight:800; text-transform:uppercase;
-                       letter-spacing:.08em; background:var(--red); color:#fff;
-                       padding:.2rem .55rem; border-radius:20px; white-space:nowrap }
-  .agent-node.coordinator .agent-phase-badge { background:var(--ink) }
-  .agent-name { font-size:.9rem; font-weight:700; color:var(--ink) }
-  .agent-desc { font-size:.76rem; color:var(--mid); margin-top:.15rem; line-height:1.4 }
-  .agent-complexity { font-family:monospace; font-size:.72rem; color:var(--muted);
-                      background:var(--bg); border:1px solid var(--border);
-                      padding:.2rem .5rem; border-radius:4px; white-space:nowrap;
-                      align-self:start; margin-top:.1rem }
-  .agent-connector { display:flex; align-items:center; justify-content:center;
-                     height:28px; color:var(--border); font-size:1rem }
-  .agent-outputs { display:flex; flex-direction:column; gap:.5rem; justify-content:center;
-                   padding-left:1rem; min-width:130px }
-  .agent-output-tag { font-size:.68rem; font-weight:700; background:rgba(56,142,60,.1);
-                      border:1px solid rgba(56,142,60,.3); border-radius:4px; color:#2E7D32;
-                      padding:.25rem .6rem; white-space:nowrap }
-
-  /* ── Complexity table ── */
-  .complexity-table { width:100%; border-collapse:collapse; font-size:.82rem; margin-top:1rem }
-  .complexity-table th { background:var(--ink); color:#fff; padding:.55rem .8rem;
-                         font-size:.75rem; font-weight:700; text-align:left }
-  .complexity-table td { padding:.55rem .8rem; border-bottom:1px solid var(--border);
-                         vertical-align:top; line-height:1.5 }
-  .complexity-table tr:last-child td { border-bottom:none }
-  .complexity-table tr:nth-child(even) td { background:#fafafa }
-  .complexity-table code { font-size:.78rem; background:var(--bg); padding:.1rem .3rem;
-                           border-radius:3px; border:1px solid var(--border) }
-
-  /* ── Search space callout ── */
-  .math-callout { background:#fff8e1; border-left:4px solid var(--amber);
-                  border-radius:0 8px 8px 0; padding:1rem 1.2rem; margin:1rem 0 }
-  .math-callout p { font-size:.83rem; color:#4a3800; line-height:1.7; margin-bottom:.5rem }
-  .math-callout p:last-child { margin-bottom:0 }
-  .math-num { font-family:monospace; font-weight:700; font-size:.95em }
-
+  .landing-hero { min-height:100svh; background:var(--ink); color:#fff;
+                  display:flex; flex-direction:column; justify-content:center;
+                  padding:3rem 2rem; position:relative; overflow:hidden }
+  .landing-hero::before { content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 80% 60% at 60% 40%, rgba(200,45,35,.12) 0%, transparent 70%);
+    pointer-events:none }
+  .landing-hero-inner { max-width:1440px; margin:0 auto; width:100%;
+                        display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center }
+  .landing-tag { font-size:.72rem; font-weight:700; letter-spacing:.16em;
+                 text-transform:uppercase; color:var(--red); margin-bottom:1rem }
+  .landing-h1 { font-size:clamp(2rem,5vw,4rem); font-weight:200; line-height:1.1;
+                letter-spacing:-.03em }
+  .landing-h1 strong { font-weight:800; display:block }
+  .landing-sub { margin-top:1.2rem; font-size:1rem; color:rgba(255,255,255,.5);
+                 max-width:520px; line-height:1.7 }
+  .landing-bar { width:56px; height:3px; background:var(--red); margin:1.8rem 0 }
+  .landing-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:.75rem; max-width:520px }
+  .lkpi { padding:.9rem; background:rgba(255,255,255,.06);
+          border:1px solid rgba(255,255,255,.1); border-radius:8px; text-align:center }
+  .lkpi-val { font-size:1.8rem; font-weight:700; color:#fff; line-height:1 }
+  .lkpi-lbl { font-size:.65rem; color:rgba(255,255,255,.4); margin-top:.3rem; letter-spacing:.04em }
+  .flow-diagram { display:flex; flex-direction:column; gap:1.5rem; padding:.5rem }
+  .flow-node { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+               border-radius:12px; padding:1.4rem 1.6rem; cursor:pointer;
+               transition:background var(--ease),border-color var(--ease),transform var(--ease) }
+  .flow-node:hover { background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5);
+                     transform:translateX(6px) }
+  .flow-node-tag { font-size:.62rem; font-weight:700; letter-spacing:.12em;
+                   text-transform:uppercase; color:var(--red); margin-bottom:.4rem }
+  .flow-node-title { font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:.3rem }
+  .flow-node-desc { font-size:.8rem; color:rgba(255,255,255,.45); line-height:1.5 }
+  .flow-node-stat { font-size:1.6rem; font-weight:800; color:#fff; margin-top:.6rem }
+  .flow-node-stat-lbl { font-size:.68rem; color:rgba(255,255,255,.35) }
+  .flow-arrow { text-align:center; color:var(--red); font-size:1.4rem; opacity:.6 }
+  .scroll-hint { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+                 font-size:.7rem; color:rgba(255,255,255,.3); text-align:center;
+                 animation:bobble 2s ease-in-out infinite }
+  @keyframes bobble { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(5px)} }
   @media(max-width:960px) {
-    .guarantee-grid { grid-template-columns:repeat(2,1fr) }
-    .agent-inputs,.agent-outputs { display:none }
+    .landing-hero-inner { grid-template-columns:1fr; gap:2.5rem }
+    .landing-kpis { grid-template-columns:repeat(2,1fr); max-width:none }
+    .flow-diagram { flex-direction:row; gap:1rem }
+    .flow-arrow { writing-mode:horizontal-tb; align-self:center; transform:rotate(0deg) }
+    .flow-node { flex:1 }
   }
   @media(max-width:640px) {
-    .part-tab { padding:.65rem 1rem; font-size:.8rem }
-    .guarantee-grid { grid-template-columns:1fr }
-    .agent-node { grid-template-columns:auto 1fr }
-    .agent-complexity { display:none }
-    .complexity-table { font-size:.75rem }
-    .complexity-table th,.complexity-table td { padding:.4rem .55rem }
+    .landing-hero { min-height:auto; padding:calc(52px + 2rem) 1.25rem 2rem }
+    .landing-h1 { font-size:clamp(1.8rem,8vw,2.8rem) }
+    .flow-diagram { flex-direction:column }
+    .flow-node:hover { transform:none }
   }
+
+  .meta-nodes { display:grid; grid-template-columns:1fr 1fr; gap:.7rem }
+  .meta-node { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+               border-radius:12px; padding:1rem 1.1rem; cursor:pointer;
+               transition:background var(--ease),border-color var(--ease);
+               text-decoration:none; display:block }
+  .meta-node:hover { background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5) }
+  .meta-node-tag { font-size:.6rem; font-weight:700; letter-spacing:.12em;
+                   text-transform:uppercase; color:var(--red); margin-bottom:.3rem }
+  .meta-node-title { font-size:.95rem; font-weight:700; color:#fff; margin-bottom:.25rem }
+  .meta-node-desc { font-size:.75rem; color:rgba(255,255,255,.4); line-height:1.45 }
+  @media(max-width:960px) { .meta-nodes { grid-template-columns:1fr } }
 </style>
-
-<header class="hero">
-  <div class="hero-inner">
-    <div>
-      <p class="hero-label">CAT 26P · Tronco General · Trimestre 2026-P</p>
-      <h1><strong>Sistema de asignación</strong><br>automática de grupos</h1>
-      <p class="hero-sub">Cada trimestre, la División asigna a cientos de estudiantes de nuevo
-        ingreso a los seis grupos del Tronco General. Verificar sin traslapes, respetar cupos
-        y garantizar cohesión por plan de estudios es inviable a mano. Este sistema lo resuelve
-        de forma automática, completa y verificable en menos de un segundo.</p>
-      <div class="hero-bar"></div>
-      <div class="stats">
-        <div class="stat"><span class="stat-val kpi-counter" data-target="674">0</span><span class="stat-lbl">Estudiantes procesados</span></div>
-        <div class="stat"><span class="stat-val">0</span><span class="stat-lbl">Conflictos horarios</span></div>
-        <div class="stat"><span class="stat-val">&lt;1 s</span><span class="stat-lbl">Tiempo de proceso</span></div>
-        <div class="stat"><span class="stat-val kpi-counter" data-target="864">0</span><span class="stat-lbl">Capacidad máxima del catálogo</span></div>
-      </div>
-    </div>
-    <div class="palette"><p class="palette-title">Licenciaturas DCBI</p><div class="palette-chips"><div class="chip"><span class="chip-dot" style="background:var(--c-amb)"></span>Ambiental</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-civ)"></span>Civil</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-com)"></span>Computación</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-ele)"></span>Eléctrica</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-elo)"></span>Electrónica</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-fis)"></span>Física</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-ind)"></span>Industrial</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-mec)"></span>Mecánica</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-met)"></span>Metalurgia</div>
-<div class="chip"><span class="chip-dot" style="background:var(--c-qui)"></span>Química</div></div></div>
-  </div>
-</header>
-
-<!-- ── Part tabs ── -->
-<div class="part-tabs" id="catTabs">
-  <button class="part-tab active" onclick="switchPart('resultados',this)">Resultados del ciclo 26-P</button>
-  <button class="part-tab" onclick="switchPart('tecnico',this)">Sistema multiagente</button>
-</div>
-
-<main class="main">
-
-<!-- ════════════════════════════════════════════════════════════════
-     PARTE 1 — RESULTADOS (público general)
-════════════════════════════════════════════════════════════════ -->
-<div class="part-panel active" id="panel-resultados">
-
-  <!-- Cobertura -->
-  <section class="section animate-in" id="cat-cob">
-    <div class="section-header">
-      <h2>Resultado de la asignación</h2>
-      <span class="section-count">674 / 674 · 100 %</span>
-    </div>
-    <p class="section-desc">
-      El sistema procesó a los 674 estudiantes de nuevo ingreso del ciclo 26-Primavera
-      y asignó a <strong>cada uno de ellos sus seis materias del Tronco General</strong>
-      sin ningún conflicto de horario. Cobertura: 100 %. Conflictos detectados: 0.
-      El resultado fue verificado de forma independiente por el agente auditor al finalizar
-      la ejecución. El catálogo 26-P tiene capacidad para 864 estudiantes —
-      la División tiene 190 plazas de holgura.
-    </p>
-    <div class="read-callout">
-      <strong>Cómo leer la gráfica:</strong> el círculo muestra la distribución del nuevo
-      ingreso por género — la variable de mayor relevancia operativa dado que el sistema
-      aplica prioridad matutina para alumnas. El 27.6 % de alumnas (186) y el 72.4 % de
-      alumnos (488) reciben exactamente el mismo resultado: seis materias completas, cero traslapes.
-    </div>
-    <div class="chart-guide-grid animate-in delay-1">
-      <div class="chart-card">
-        <div class="chart-card-header">
-          <h3>Distribución por género · 674 estudiantes de nuevo ingreso</h3>
-          <span class="chart-type-tag">Interactivo</span>
-        </div>
-        <div class="chart-canvas rendering md" id="chart-donut"><div class="chart-skeleton"></div></div>
-      </div>
-      <div class="howto-card">
-        <h3>Cómo leer esta gráfica</h3>
-        <div class="howto-step"><div class="howto-icon">1</div>
-          <div class="howto-text"><strong>100 % asignados con 6 materias.</strong> Todos los 674 estudiantes recibieron sus seis grupos del Tronco General sin ningún traslape.</div></div>
-        <div class="howto-step"><div class="howto-icon">2</div>
-          <div class="howto-text"><strong>El género importa en la asignación.</strong> Las 186 alumnas reciben prioridad matutina: son asignadas antes que los alumnos varones y el sistema les ofrece primero los grupos de mañana.</div></div>
-        <div class="howto-step"><div class="howto-icon">3</div>
-          <div class="howto-text"><strong>Proporción histórica.</strong> La distribución 72/28 M/F es consistente con las estadísticas de ingeniería en México; varía entre licenciaturas.</div></div>
-        <div class="howto-step"><div class="howto-icon">4</div>
-          <div class="howto-text"><strong>Sin asignación parcial: 0 estudiantes.</strong> El catálogo tiene capacidad para 864 alumnos; el padrón de 674 no satura ninguna materia.</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Grupos llenos por UEA -->
-  <section class="section animate-in" id="cat-ueas">
-    <div class="section-header">
-      <h2>Grupos que alcanzaron su cupo, por materia</h2>
-      <span class="section-count">38 grupos al 100 %</span>
-    </div>
-    <p class="section-desc">
-      De los grupos CAT asignados en el ciclo 26-P, 38 llegaron al 100 % de su cupo.
-      El Laboratorio de Reacciones Químicas concentra el mayor número (13 grupos llenos)
-      porque su cupo es 36 plazas — menor que el de las materias teóricas (45).
-      Las cinco materias teóricas tienen exactamente 5 grupos llenos cada una,
-      reflejo de que el algoritmo asigna las seis materias en bloque y el patrón
-      de ocupación es uniforme entre ellas.
-    </p>
-    <div class="read-callout">
-      <strong>Qué buscar:</strong> la longitud de cada barra indica cuántos grupos de esa
-      materia alcanzaron el 100 % de cupo. El Laboratorio lidera porque su cupo por grupo
-      es menor (36 vs 45). Que haya grupos llenos no significa que algún estudiante quedara
-      sin asignación — el sistema los ubicó en otros grupos disponibles. Ningún estudiante
-      quedó sin sus seis materias.
-    </div>
-    <div class="chart-guide-grid animate-in delay-1">
-      <div class="chart-card">
-        <div class="chart-card-header">
-          <h3>Grupos al 100 % de cupo por materia del Tronco General</h3>
-          <span class="chart-type-tag">Interactivo</span>
-        </div>
-        <div class="chart-canvas rendering" id="chart-ueas"><div class="chart-skeleton"></div></div>
-      </div>
-      <div class="howto-card">
-        <h3>Cómo leer esta gráfica</h3>
-        <div class="howto-step"><div class="howto-icon">1</div>
-          <div class="howto-text"><strong>Cada barra = una materia.</strong> La longitud indica cuántos grupos llegaron exactamente al 100 % de cupo en el ciclo 26-P.</div></div>
-        <div class="howto-step"><div class="howto-icon">2</div>
-          <div class="howto-text"><strong>Lab. Reacciones Quím.: 13 grupos llenos</strong> de 21 asignados. Cupo por grupo: 36 plazas.</div></div>
-        <div class="howto-step"><div class="howto-icon">3</div>
-          <div class="howto-text"><strong>Las 5 materias teóricas: 5 grupos llenos</strong> cada una de 17 asignados. Cupo: 45 plazas. Patrón uniforme: la asignación en bloque los sincroniza.</div></div>
-        <div class="howto-step"><div class="howto-icon">4</div>
-          <div class="howto-text"><strong>El grupo CAT07</strong> superó su cupo nominal (asignado a un aula con mayor aforo por convenio de sala). Está incluido como "lleno" en el conteo.</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Distribución por licenciatura -->
-  <section class="section animate-in" id="cat-planes">
-    <div class="section-header">
-      <h2>Nuevo ingreso por licenciatura</h2>
-      <span class="section-count">10 licenciaturas · 674 estudiantes</span>
-    </div>
-    <p class="section-desc">
-      Ingeniería en Computación concentra el mayor nuevo ingreso (166 estudiantes, 24.6 %),
-      seguida de Mecánica (112) e Ingeniería Civil (84). La gráfica de género por licenciatura
-      muestra la distribución de alumnas y alumnos en cada programa — información relevante para
-      la planeación de grupos matutinos. El sistema garantiza que todos los estudiantes de un
-      mismo plan de estudios queden en el mismo grupo de Introducción a la Ingeniería.
-    </p>
-    <div class="read-callout">
-      <strong>Qué muestran estas gráficas:</strong> la izquierda ordena las licenciaturas
-      por tamaño de nuevo ingreso. La derecha muestra la composición por género en cada una.
-      Licenciaturas con mayor proporción femenina (como Química o Ambiental) requieren más
-      plazas en grupos matutinos — el sistema lo calcula automáticamente sin configuración adicional.
-    </div>
-    <div class="chart-duo animate-in delay-1">
-      <div class="chart-card">
-        <div class="chart-card-header">
-          <h3>Nuevo ingreso por licenciatura</h3>
-          <span class="chart-type-tag">Interactivo</span>
-        </div>
-        <div class="chart-canvas rendering" id="chart-byplan"><div class="chart-skeleton"></div></div>
-      </div>
-      <div class="chart-card">
-        <div class="chart-card-header">
-          <h3>Distribución de género por licenciatura</h3>
-          <span class="chart-type-tag">Interactivo</span>
-        </div>
-        <div class="chart-canvas rendering" id="chart-stacked"><div class="chart-skeleton"></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Garantías -->
-  <section class="section animate-in" id="cat-garantias">
-    <div class="section-header">
-      <h2>Lo que el sistema garantiza</h2>
-    </div>
-    <p class="section-desc">
-      El sistema no solo produce una asignación: la certifica. Al finalizar cada ejecución,
-      un agente independiente audita el resultado y emite un reporte de validación.
-      Las siguientes garantías constan en ese reporte para el ciclo 26-Primavera.
-    </p>
-    <div class="guarantee-grid animate-in delay-1">
-      <div class="guarantee-item">
-        <h4>Cero conflictos de horario</h4>
-        <p>Ningún estudiante recibe dos grupos que coincidan en día y hora. Verificado de forma automática tras cada ejecución.</p>
-      </div>
-      <div class="guarantee-item">
-        <h4>Cobertura total del padrón</h4>
-        <p>Mientras el padrón no supere la capacidad del catálogo, todos los estudiantes reciben sus seis grupos. No hay estudiantes sin ninguna asignación.</p>
-      </div>
-      <div class="guarantee-item">
-        <h4>Prioridad matutina para alumnas</h4>
-        <p>Las 186 alumnas son asignadas antes que cualquier alumno y reciben preferencia en grupos cuyas franjas inician antes de las 14:00 h.</p>
-      </div>
-      <div class="guarantee-item">
-        <h4>Cohesión por plan de estudios</h4>
-        <p>Todo el alumnado de un mismo plan comparte el mismo grupo de Introducción a la Ingeniería. Los planes no se mezclan en un mismo carril.</p>
-      </div>
-      <div class="guarantee-item">
-        <h4>Resultados reproducibles</h4>
-        <p>Con el mismo padrón y catálogo, el sistema produce siempre la misma asignación. Los resultados son auditables trimestre a trimestre.</p>
-      </div>
-      <div class="guarantee-item">
-        <h4>Sin intervención de Sistemas Escolares</h4>
-        <p>Para un nuevo trimestre basta actualizar el padrón y el catálogo de horarios. No se requiere modificar el código ni intervención adicional.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Género -->
-  <section class="section animate-in" id="cat-genero">
-    <div class="section-header">
-      <h2>¿Por qué algunos grupos son exclusivamente de alumnas?</h2>
-    </div>
-    <div class="gender-callout">
-      <div class="gender-callout-title">Una regla de equidad explícita, no un error del sistema</div>
-      <p>El sistema aplica una política de protección para el alumnado femenino: al asignar a
-      cada alumna, le ofrece primero los grupos del turno matutino. La razón es de seguridad y
-      bienestar — los carriles vespertinos pueden concluir a las 21:00 h, lo que implica que el
-      alumnado sale de las instalaciones en horario nocturno. La prioridad matutina busca evitar
-      que las alumnas queden expuestas a esa condición de forma sistemática.</p>
-      <p>Dado que el sistema asigna a todas las alumnas antes que a cualquier alumno varón, y les
-      ofrece primero los horarios de la mañana, cuatro grupos matutinos se completan
-      exclusivamente con alumnas antes de que comience la asignación masculina. Cuando los 488
-      alumnos varones empiezan a ser asignados, esos grupos están llenos. El resultado — grupos
-      compuestos únicamente por alumnas — es el efecto esperado de aplicar la prioridad matutina
-      con rigor.</p>
-      <p><strong>Si se prefiere una composición mixta en todos los grupos,</strong> el sistema
-      cuenta con un modo de reserva que garantiza un número mínimo de plazas para alumnos varones
-      en cada grupo matutino antes de completarlo con alumnas. Activar ese modo no requiere
-      modificar el catálogo de horarios ni el padrón.</p>
-    </div>
-  </section>
-
-  <!-- Subpágina capacidad -->
-  <section class="section animate-in" id="cat-cap-link">
-    <a href="cat26p_capacidad.html" style="display:block;text-decoration:none">
-      <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid var(--red);
-                  border-radius:0 10px 10px 0;padding:1.4rem 1.6rem;
-                  transition:box-shadow var(--ease),transform var(--ease);
-                  display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem"
-           onmouseover="this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'"
-           onmouseout="this.style.boxShadow='none';this.style.transform='none'">
-        <div>
-          <div style="font-size:.7rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.35rem">Análisis detallado · CAT 26P</div>
-          <div style="font-size:1.05rem;font-weight:700;margin-bottom:.4rem">Capacidad máxima de admisión</div>
-          <div style="font-size:.83rem;color:var(--mid);line-height:1.55">
-            Capacidad instalada por materia · Ocupación por grupo · Cuello de botella ·
-            Sensibilidad ante grupos adicionales · Distribución de género
+<main>
+  <div class="landing-hero">
+    <div class="landing-hero-inner">
+      <div>
+        <p class="landing-tag animate-in">UAM Azcapotzalco · División de Ciencias Básicas e Ingeniería</p>
+        <h1 class="landing-h1 animate-in delay-1">
+          CAT 26P
+          <strong>Asignación de grupos</strong>
+        </h1>
+        <p class="landing-sub animate-in delay-2">
+          Sistema automatizado de asignación para nuevo ingreso: cero traslapes horarios
+          en 674 estudiantes y análisis de capacidad proyectada para los diez planes
+          del ciclo 26-P.
+        </p>
+        <div class="landing-bar animate-in delay-2"></div>
+        <div class="landing-kpis animate-in delay-3">
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="674">0</div>
+            <div class="lkpi-lbl">Estudiantes asignados</div>
           </div>
-          <div style="margin-top:.75rem;display:flex;gap:1rem;flex-wrap:wrap">
-            <span style="font-size:.75rem;font-weight:600;color:var(--ink)">864 plazas máximas</span>
-            <span style="font-size:.75rem;color:var(--muted)">·</span>
-            <span style="font-size:.75rem;font-weight:600;color:var(--green)">190 plazas libres hoy</span>
-            <span style="font-size:.75rem;color:var(--muted)">·</span>
-            <span style="font-size:.75rem;font-weight:600;color:var(--amber)">Lab. Reacciones = cuello de botella</span>
+          <div class="lkpi">
+            <div class="lkpi-val">10</div>
+            <div class="lkpi-lbl">Licenciaturas</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val">0</div>
+            <div class="lkpi-lbl">Traslapes horarios</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val">3</div>
+            <div class="lkpi-lbl">Fases del algoritmo</div>
           </div>
         </div>
-        <div style="font-size:2rem;color:var(--red);opacity:.6;flex-shrink:0">→</div>
       </div>
-    </a>
-  </section>
-
-  <hr class="divider">
-  <div class="connect-box animate-in" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
-    <div>
-      <div class="connect-box-title">Resumen ejecutivo</div>
-      <p style="font-size:.84rem;color:var(--mid);line-height:1.6;margin:0">Resultados del ciclo 26-P: asignaciones, distribución y garantías · PDF</p>
+      <div class="meta-nodes animate-in delay-2">
+        <a class="meta-node" href="cat26p_asignacion.html">
+          <div class="meta-node-tag">Resultados</div>
+          <div class="meta-node-title">Resultados de asignación</div>
+          <div class="meta-node-desc">674 estudiantes asignados al ciclo 26-P sin traslapes horarios. Cobertura, distribución y sistema multiagente.</div>
+        </a>
+        <a class="meta-node" href="cat26p_capacidad.html">
+          <div class="meta-node-tag">Análisis</div>
+          <div class="meta-node-title">Análisis de capacidad</div>
+          <div class="meta-node-desc">Proyecciones de demanda, umbrales de saturación y distribución por franjas y licenciatura.</div>
+        </a>
+      </div>
     </div>
-    <a href="resumen_ejecutivo_cat26p.pdf" download
-       style="display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;
-              text-decoration:none;padding:.7rem 1.4rem;border-radius:8px;font-size:.85rem;
-              font-weight:700;white-space:nowrap;transition:opacity .15s"
-       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-      ↓ Descargar PDF
-    </a>
+    <div class="scroll-hint">▾ desplázate para explorar</div>
   </div>
-
-  <div class="connect-box animate-in" style="margin-top:1rem">
-    <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
-    <p style="font-size:.84rem;color:var(--mid);line-height:1.6">
-      Los 674 estudiantes asignados por este sistema son los mismos cuyas trayectorias
-      curriculares analiza el Metaanálisis. La distribución por licenciatura que se ve aquí
-      determina el punto de entrada a las redes de prerrequisitos cuya complejidad estructural
-      mide el índice C — y sobre cuyos programas trabajó el análisis de Modificaciones 2026.
-    </p>
-    <div class="connect-links">
-      <a class="connect-link" href="metanalisis.html">📊 Ver Metaanálisis →</a>
-      <a class="connect-link" href="modificaciones.html">📋 Ver Modificaciones 2026 →</a>
+  <div style="padding:3rem 2rem;max-width:1440px;margin:0 auto" id="content">
+    <div class="connect-box animate-in">
+      <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">Los 674 estudiantes asignados son los mismos cuyas trayectorias curriculares analiza el Análisis de eficiencia terminal. La distribución por licenciatura determina el punto de entrada a las redes de prerrequisitos cuya complejidad estructural documentan los proyectos de eficiencia terminal y distribución docente.</p>
+      <div class="connect-links">
+        <a class="connect-link" href="metanalisis.html">Ver Eficiencia terminal →</a>
+        <a class="connect-link" href="concentracion.html">Ver Distribución docente →</a>
+      </div>
     </div>
   </div>
-
-</div><!-- /panel-resultados -->
-
-<!-- ════════════════════════════════════════════════════════════════
-     PARTE 2 — SISTEMA MULTIAGENTE (técnico)
-════════════════════════════════════════════════════════════════ -->
-<div class="part-panel" id="panel-tecnico">
-
-  <!-- Descripción general -->
-  <section class="section animate-in" id="cat-arq">
-    <div class="section-header">
-      <h2>Arquitectura multi-agente orientada a flujo de trabajo</h2>
-    </div>
-    <p class="section-desc">
-      El sistema sigue el patrón <em>multi-agente orientado a flujo de trabajo</em>: un
-      orquestador central invoca secuencialmente cinco agentes especializados, cada uno
-      responsable de una fase bien delimitada. La separación entre la verificación previa
-      (Fase 1) y la auditoría posterior (Fase 5) permite diagnosticar cualquier anomalía
-      de forma precisa sin repetir el proceso completo.
-    </p>
-    <div class="math-callout animate-in delay-1">
-      <p><strong>¿Por qué no revisión exhaustiva?</strong> Con 674 estudiantes y hasta
-      26 grupos por materia, el espacio de combinaciones posibles para un solo estudiante
-      es <span class="math-num">26⁶ = 308,915,776</span> (más de 300 millones). Para los
-      674 estudiantes en simultáneo, el espacio conjunto crece a
-      <span class="math-num">26⁴⁰⁴⁴ ≈ 10⁵⁷²²</span> configuraciones — un número
-      10⁵⁶⁴² veces mayor que el número estimado de átomos en el universo observable.
-      La revisión exhaustiva es, en la práctica, imposible. El algoritmo voraz del sistema
-      resuelve el problema en tiempo <span class="math-num">O(N)</span>, alcanzando
-      coberturas superiores al 99 %.</p>
-    </div>
-  </section>
-
-  <!-- Diagrama de flujo -->
-  <section class="section animate-in" id="cat-flujo">
-    <div class="section-header">
-      <h2>Flujo de operación del sistema</h2>
-      <span class="section-count">5 fases + orquestador</span>
-    </div>
-    <p class="section-desc">
-      El sistema recibe dos insumos: el <strong>padrón de nuevo ingreso</strong>
-      (datos de los estudiantes a asignar) y el <strong>catálogo de horarios</strong>
-      (grupos disponibles con sus franjas). A partir de ahí, el orquestador activa
-      las cinco fases en secuencia y produce dos salidas: la
-      <strong>tabla de asignaciones</strong> y el <strong>reporte de validación</strong>.
-    </p>
-
-    <div class="agent-flow animate-in delay-1">
-
-      <!-- Inputs -->
-      <div class="agent-row" style="margin-bottom:.6rem">
-        <div class="agent-inputs">
-          <div class="agent-input-tag">Padrón de nuevo ingreso</div>
-          <div class="agent-input-tag">Catálogo de horarios</div>
-        </div>
-        <div class="agent-pipeline" style="justify-content:center;padding-top:.4rem">
-          <div style="font-size:.8rem;color:var(--muted);text-align:center">▼ insumos del sistema</div>
-        </div>
-        <div class="agent-outputs"></div>
-      </div>
-
-      <!-- Coordinator -->
-      <div class="agent-row">
-        <div class="agent-inputs"></div>
-        <div class="agent-pipeline">
-          <div class="agent-node coordinator">
-            <span class="agent-phase-badge">Orquestador</span>
-            <div>
-              <div class="agent-name">Coordinador</div>
-              <div class="agent-desc">Recibe los insumos, activa las cinco fases en secuencia y centraliza el estado compartido entre agentes.</div>
-            </div>
-            <div class="agent-complexity">O(1)</div>
-          </div>
-          <div class="agent-connector">↓</div>
-        </div>
-        <div class="agent-outputs"></div>
-      </div>
-
-      <!-- Fase 1 -->
-      <div class="agent-row">
-        <div class="agent-inputs">
-          <div class="agent-input-tag">Catálogo de horarios</div>
-          <div class="agent-input-arrow">→</div>
-        </div>
-        <div class="agent-pipeline">
-          <div class="agent-node">
-            <span class="agent-phase-badge">Fase 1</span>
-            <div>
-              <div class="agent-name">Verificador de propuesta</div>
-              <div class="agent-desc">Detecta conflictos de horario <em>dentro del catálogo</em> antes de asignar a nadie. Si dos grupos del mismo carril CAT se traslapan, reporta el problema al coordinador sin continuar.</div>
-            </div>
-            <div class="agent-complexity">O(K · C(G,2) · S²)</div>
-          </div>
-          <div class="agent-connector">↓</div>
-        </div>
-        <div class="agent-outputs">
-          <div class="agent-input-arrow">←</div>
-          <div class="agent-output-tag">Reporte de conflictos intra-CAT</div>
-        </div>
-      </div>
-
-      <!-- Fase 2 -->
-      <div class="agent-row">
-        <div class="agent-inputs">
-          <div class="agent-input-tag">Padrón de nuevo ingreso</div>
-          <div class="agent-input-arrow">→</div>
-        </div>
-        <div class="agent-pipeline">
-          <div class="agent-node">
-            <span class="agent-phase-badge">Fase 2</span>
-            <div>
-              <div class="agent-name">Procesador de datos</div>
-              <div class="agent-desc">Lee e interpreta el padrón y el catálogo. Construye las estructuras internas del motor de asignación: tablas de búsqueda indexadas por materia, franjas horarias normalizadas y lista de estudiantes ordenada por prioridad.</div>
-            </div>
-            <div class="agent-complexity">O(N + |G|)</div>
-          </div>
-          <div class="agent-connector">↓</div>
-        </div>
-        <div class="agent-outputs"></div>
-      </div>
-
-      <!-- Fase 3 -->
-      <div class="agent-row">
-        <div class="agent-inputs"></div>
-        <div class="agent-pipeline">
-          <div class="agent-node" style="border-color:var(--red)">
-            <span class="agent-phase-badge">Fase 3</span>
-            <div>
-              <div class="agent-name">Motor de asignación</div>
-              <div class="agent-desc">Núcleo del sistema. Itera sobre los N estudiantes en orden de prioridad (alumnas primero). Para cada estudiante y cada materia, selecciona el primer grupo factible que satisfaga las cinco restricciones: cupo (R1), prefijo CAT (R2), exclusión de carriles complemento (R3), agrupamiento por plan (R4) y cero traslapes (R5).</div>
-            </div>
-            <div class="agent-complexity">O(N · U² · G · S)</div>
-          </div>
-          <div class="agent-connector">↓</div>
-        </div>
-        <div class="agent-outputs"></div>
-      </div>
-
-      <!-- Fase 4 -->
-      <div class="agent-row">
-        <div class="agent-inputs"></div>
-        <div class="agent-pipeline">
-          <div class="agent-node">
-            <span class="agent-phase-badge">Fase 4</span>
-            <div>
-              <div class="agent-name">Generador de resultados</div>
-              <div class="agent-desc">Produce la tabla de asignaciones en formato de uso administrativo y el reporte de métricas con totales por materia, por licenciatura y por tipo de asignación.</div>
-            </div>
-            <div class="agent-complexity">O(N · U)</div>
-          </div>
-          <div class="agent-connector">↓</div>
-        </div>
-        <div class="agent-outputs">
-          <div class="agent-input-arrow">←</div>
-          <div class="agent-output-tag">Tabla de asignaciones</div>
-          <div class="agent-output-tag">Reporte de métricas</div>
-        </div>
-      </div>
-
-      <!-- Fase 5 -->
-      <div class="agent-row">
-        <div class="agent-inputs"></div>
-        <div class="agent-pipeline">
-          <div class="agent-node">
-            <span class="agent-phase-badge">Fase 5</span>
-            <div>
-              <div class="agent-name">Auditor independiente</div>
-              <div class="agent-desc">Verifica de forma independiente, sin acceso al código del motor, que la solución final esté libre de traslapes. Para cada estudiante revisa todos los pares de materias asignadas. El resultado consta en el reporte de validación.</div>
-            </div>
-            <div class="agent-complexity">O(N · U² · S²)</div>
-          </div>
-        </div>
-        <div class="agent-outputs">
-          <div class="agent-input-arrow">←</div>
-          <div class="agent-output-tag">Reporte de validación</div>
-        </div>
-      </div>
-
-    </div><!-- /agent-flow -->
-  </section>
-
-  <!-- Complejidad -->
-  <section class="section animate-in" id="cat-complejidad">
-    <div class="section-header">
-      <h2>Complejidad algorítmica por fase</h2>
-    </div>
-    <p class="section-desc">
-      El costo computacional total del sistema es del orden de 3.8 × 10⁶ operaciones
-      elementales — consistente con la ejecución observada de menos de un segundo.
-      La Fase 3 (motor de asignación) concentra el 83 % del costo; la Fase 5
-      (auditoría) el 16 % restante. Las fases 1, 2 y 4 son negligibles en comparación.
-      Los parámetros son: N = 674 estudiantes, U = 6 materias por estudiante,
-      G = 26 grupos máximos por materia, S = 5 franjas horarias máximas por grupo.
-    </p>
-    <table class="complexity-table animate-in delay-1">
-      <thead>
-        <tr>
-          <th>Fase</th>
-          <th>Agente</th>
-          <th>Operación dominante</th>
-          <th>Complejidad</th>
-          <th>Operaciones (26-P)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>1</strong></td>
-          <td>Verificador de propuesta</td>
-          <td>Pares conflictivos intra-CAT</td>
-          <td><code>O(K·C(G,2)·S²)</code></td>
-          <td>3,600</td>
-        </tr>
-        <tr>
-          <td><strong>2</strong></td>
-          <td>Procesador de datos</td>
-          <td>Lectura de padrón y catálogo</td>
-          <td><code>O(N + |G|)</code></td>
-          <td>1,557</td>
-        </tr>
-        <tr>
-          <td><strong>3</strong></td>
-          <td>Motor de asignación</td>
-          <td>Asignación voraz con verificación de restricciones</td>
-          <td><code>O(N·U²·G·S)</code></td>
-          <td>3,157,680</td>
-        </tr>
-        <tr>
-          <td><strong>4</strong></td>
-          <td>Generador de resultados</td>
-          <td>Escritura de tabla de asignaciones</td>
-          <td><code>O(N·U)</code></td>
-          <td>4,044</td>
-        </tr>
-        <tr>
-          <td><strong>5</strong></td>
-          <td>Auditor independiente</td>
-          <td>Verificación de pares de materias por estudiante</td>
-          <td><code>O(N·U²·S²)</code></td>
-          <td>606,600</td>
-        </tr>
-        <tr style="background:#fafafa;font-weight:700">
-          <td colspan="4" style="text-align:right">Total aproximado</td>
-          <td>≈ 3.8 × 10⁶</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="recuadro animate-in delay-2" style="margin-top:1.5rem">
-      <div class="recuadro-title">Las cinco restricciones del sistema</div>
-      <p><strong>R1 — Cupo:</strong> ningún grupo puede recibir más estudiantes que su cupo máximo (36 para el laboratorio, 45 para las materias teóricas).</p>
-      <p><strong>R2 — Prefijo CAT:</strong> solo se asignan grupos con identificador que comience con "CAT". Los grupos de servicio social, intercambio y educación continua se descartan automáticamente.</p>
-      <p><strong>R3 — Exclusión de carriles complemento:</strong> los carriles CAT12–CAT18 son laboratorios adicionales; las cinco materias teóricas no tienen sección en esos carriles y no pueden asignarse ahí.</p>
-      <p><strong>R4 — Agrupamiento por plan:</strong> todo el alumnado de un mismo plan de estudios comparte el mismo grupo de Introducción a la Ingeniería. El número de carriles asignados por plan escala con el tamaño del plan.</p>
-      <p><strong>R5 — Cero traslapes:</strong> ningún par de grupos asignados al mismo estudiante puede compartir una franja horaria. Es la restricción más compleja de verificar y la que domina la complejidad de la Fase 3.</p>
-    </div>
-  </section>
-
-  <hr class="divider">
-  <div class="connect-box animate-in" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
-    <div>
-      <div class="connect-box-title">Reporte técnico completo</div>
-      <p style="font-size:.84rem;color:var(--mid);line-height:1.6;margin:0">Arquitectura del sistema multiagente, algoritmos y validación formal · 27 pp. · PDF</p>
-    </div>
-    <a href="reporte_tecnico_sistema_multiagente.pdf" download
-       style="display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;
-              text-decoration:none;padding:.7rem 1.4rem;border-radius:8px;font-size:.85rem;
-              font-weight:700;white-space:nowrap;transition:opacity .15s"
-       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-      ↓ Descargar PDF
-    </a>
-  </div>
-
-  <div class="connect-box animate-in" style="margin-top:1rem">
-    <div class="connect-box-title">Ver los resultados del ciclo 26-P</div>
-    <div class="connect-links">
-      <a class="connect-link" href="#" onclick="switchPart('resultados',document.querySelector('.part-tab'));return false">← Resultados del ciclo 26-P</a>
-      <a class="connect-link" href="cat26p_capacidad.html">📊 Análisis de capacidad →</a>
-    </div>
-  </div>
-
-</div><!-- /panel-tecnico -->
-
 </main>
 
 
@@ -977,13 +437,9 @@
   Dr. César S. López-Monsalvo ·
   <a href="mailto:cslm@azc.uam.mx" style="color:rgba(255,255,255,.5);text-decoration:underline">cslm@azc.uam.mx</a>
 </footer>
-<nav class="bottom-nav" aria-label="Navegación rápida"><div class="bottom-nav-inner">
-      <a class="bottom-nav-item" href="#cat-cob"><span class="bottom-nav-icon">🍩</span>Cobertura</a>
-      <a class="bottom-nav-item" href="#cat-ueas"><span class="bottom-nav-icon">📊</span>Grupos</a>
-      <a class="bottom-nav-item" href="#cat-planes"><span class="bottom-nav-icon">🎓</span>Planes</a>
-    </div></nav>
+
 <script>
-window.__CAT__ = {"total": 674, "completa": 674, "parcial": 0, "gruposLlenos": 38, "ueas": ["Lab. Reacciones Quím.", "Intro. a la Ing.", "Intro. a la Física", "Comp. de Matemáticas", "Intro. al Cálculo", "Estructura Atómica"], "gruposLlenados": [13, 5, 5, 5, 5, 5], "planNames": ["Computación", "Mecánica", "Civil", "Química", "Industrial", "Electrónica", "Eléctrica", "Física", "Ambiental", "Metalurgia"], "planTotal": [166, 112, 84, 81, 64, 51, 42, 29, 27, 18], "planCompleta": [166, 112, 84, 81, 64, 51, 42, 29, 27, 18], "planParcial": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "planColors": ["#1565C0", "#37474F", "#BF360C", "#558B2F", "#C62828", "#6A1B9A", "#E65100", "#00838F", "#2E7D32", "#78909C"], "genM": 488, "genF": 186, "genMpct": 72.4, "genFpct": 27.6, "planM": [125, 94, 66, 39, 38, 46, 37, 20, 11, 12], "planF": [41, 18, 18, 42, 26, 5, 5, 9, 16, 6]};
+
 
 /* ── Page transitions ──────────────────────────────────────────────────────── */
 document.querySelectorAll('a[href]').forEach(a => {
@@ -1154,92 +610,6 @@ window.renderChart = function(containerId, traceFn, layoutFn) {
   io.observe(container);
 };
 
-
-(function(){
-  const D = window.__CAT__;
-
-  /* Tab switcher */
-  window.switchPart = function(panelId, clickedTab) {
-    document.querySelectorAll('.part-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.part-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('panel-' + panelId)?.classList.add('active');
-    if (clickedTab) clickedTab.classList.add('active');
-    document.querySelectorAll('#panel-'+panelId+' .animate-in:not(.visible)').forEach(el => {
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }});
-      },{threshold:.1});
-      io.observe(el);
-    });
-  };
-
-  renderChart('chart-donut',
-    () => [{
-      type:'pie', hole:.52,
-      labels:['Alumnas','Alumnos'],
-      values:[D.genF, D.genM],
-      marker:{colors:['#C82D23','#1565C0'], line:{color:'#fff',width:2}},
-      textinfo:'label+percent',
-      hovertemplate:'<b>%{label}</b><br>%{value} estudiantes (%{percent})<extra></extra>',
-      textfont:{...FONT,size:11}, direction:'clockwise',
-      pull:[0.04, 0],
-    }],
-    () => ({
-      margin:{l:8,r:8,t:8,b:8}, showlegend:false,
-      annotations:[{text:'<b>'+D.total.toLocaleString('es-MX')+'</b><br><span style="font-size:10px;color:#888">total</span>',
-        showarrow:false, font:{size:16,color:'#1A1A1A',family:'Helvetica Neue,Arial'}}]
-    })
-  );
-
-  renderChart('chart-ueas',
-    () => [{
-      type:'bar', orientation:'h',
-      x:D.gruposLlenados, y:D.ueas,
-      marker:{color:'#C82D23', opacity:.87, line:{color:'#9E1E18',width:.5}},
-      hovertemplate:'<b>%{y}</b><br>%{x} grupos al 100 % de cupo<extra></extra>',
-      text:D.gruposLlenados, textposition:'outside', textfont:{...FONT,size:12}, cliponaxis:false,
-    }],
-    () => ({
-      margin:{l:10,r:36,t:8,b:40},
-      xaxis:{title:'Grupos al 100 % de cupo',titlefont:{size:10},tickfont:FONT,gridcolor:'#E4E2DF',range:[0,22]},
-      yaxis:{tickfont:{...FONT,size:11},automargin:true},
-    })
-  );
-
-  renderChart('chart-byplan',
-    () => [{
-      type:'bar', orientation:'h',
-      x:D.planTotal, y:D.planNames,
-      marker:{color:D.planColors, opacity:.88, line:{color:'rgba(0,0,0,.1)',width:.5}},
-      hovertemplate:'<b>%{y}</b><br>%{x} estudiantes<extra></extra>',
-      text:D.planTotal, textposition:'outside', textfont:{...FONT,size:11}, cliponaxis:false,
-    }],
-    () => ({
-      margin:{l:10,r:40,t:8,b:40},
-      xaxis:{title:'Estudiantes',titlefont:{size:10},tickfont:FONT,gridcolor:'#E4E2DF',range:[0,195]},
-      yaxis:{tickfont:{...FONT,size:11},automargin:true},
-    })
-  );
-
-  renderChart('chart-stacked',
-    () => [
-      {type:'bar',orientation:'h',name:'Alumnas',
-       x:D.planF, y:D.planNames,
-       marker:{color:'#C82D23',opacity:.87},
-       hovertemplate:'<b>%{y}</b><br>Alumnas: %{x}<extra></extra>'},
-      {type:'bar',orientation:'h',name:'Alumnos',
-       x:D.planM, y:D.planNames,
-       marker:{color:'#1565C0',opacity:.8},
-       hovertemplate:'<b>%{y}</b><br>Alumnos: %{x}<extra></extra>'},
-    ],
-    () => ({
-      barmode:'stack',
-      margin:{l:10,r:10,t:8,b:40},
-      xaxis:{title:'Estudiantes',titlefont:{size:10},tickfont:FONT,gridcolor:'#E4E2DF'},
-      yaxis:{tickfont:{...FONT,size:11},automargin:true},
-      legend:{font:{size:10},orientation:'h',xanchor:'center',x:.5,y:1.06},
-    })
-  );
-})();
 
 </script>
 </body>
