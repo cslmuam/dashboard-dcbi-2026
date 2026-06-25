@@ -811,6 +811,7 @@ def nav(active=''):
         ('cat26p.html', 'CAT 26P'),
         ('cat26p_capacidad.html', '↳ Capacidad'),
         ('metanalisis.html', 'Metaanálisis'),
+        ('concentracion.html', 'Distribución docente'),
         ('modificaciones.html', 'Modificaciones 2026'),
     ]
     items = '\n'.join(
@@ -1002,6 +1003,14 @@ INDEX_CONTENT = f"""
           <div class="flow-node-desc">Revisión curricular automatizada con agentes de inteligencia artificial</div>
           <div class="flow-node-stat kpi-counter" data-target="1505">0</div>
           <div class="flow-node-stat-lbl">UEAs evaluadas con IA</div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node" onclick="window.location.href='concentracion.html'">
+          <div class="flow-node-tag">Proyecto 4</div>
+          <div class="flow-node-title">Distribución docente</div>
+          <div class="flow-node-desc">Concentración curricular, riesgo estructural y vecindades de co-impartición</div>
+          <div class="flow-node-stat kpi-counter" data-target="791">0</div>
+          <div class="flow-node-stat-lbl">profesores en 10 planes</div>
         </div>
       </div>
     </div>
@@ -4093,6 +4102,832 @@ cap_html = page_shell(
 )
 
 # ══════════════════════════════════════════════════════════════════════════════
+# CONCENTRACION.HTML  — Distribución docente: landing
+# ══════════════════════════════════════════════════════════════════════════════
+CONC_CONTENT = f"""
+<style>{INDEX_CSS}
+  .meta-nodes {{ display:grid; grid-template-columns:1fr 1fr; gap:.7rem }}
+  .meta-node {{ background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+               border-radius:12px; padding:1rem 1.1rem; cursor:pointer;
+               transition:background var(--ease),border-color var(--ease);
+               text-decoration:none; display:block }}
+  .meta-node:hover {{ background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5) }}
+  .meta-node-tag {{ font-size:.6rem; font-weight:700; letter-spacing:.12em;
+                   text-transform:uppercase; color:var(--red); margin-bottom:.3rem }}
+  .meta-node-title {{ font-size:.95rem; font-weight:700; color:#fff; margin-bottom:.25rem }}
+  .meta-node-desc {{ font-size:.75rem; color:rgba(255,255,255,.4); line-height:1.45 }}
+  .meta-node-sub {{ margin-top:.55rem; padding-top:.5rem;
+                   border-top:1px solid rgba(255,255,255,.1);
+                   font-size:.72rem; color:rgba(200,45,35,.8); font-weight:600 }}
+  .meta-node-wide {{ grid-column:1/-1 }}
+  @media(max-width:960px) {{ .meta-nodes {{ grid-template-columns:1fr }} }}
+</style>
+<main>
+  <div class="landing-hero">
+    <div class="landing-hero-inner">
+      <div>
+        <p class="landing-tag animate-in">UAM Azcapotzalco · División de Ciencias Básicas e Ingeniería</p>
+        <h1 class="landing-h1 animate-in delay-1">
+          Distribución
+          <strong>docente</strong>
+        </h1>
+        <p class="landing-sub animate-in delay-2">
+          A partir de 5 391 grupos registrados entre 2016 y 2025, el análisis cuantifica la concentración docente por UEA, calcula el riesgo estructural que surge cuando esa concentración coincide con posiciones terminales de las cadenas de seriación, e identifica los bloques curriculares donde la salida de un solo profesor podría bloquear el avance de cohortes enteras.
+        </p>
+        <div class="landing-bar animate-in delay-2"></div>
+        <div class="landing-kpis animate-in delay-3">
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="809">0</div>
+            <div class="lkpi-lbl">UEAs activas</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="791">0</div>
+            <div class="lkpi-lbl">Profesores</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="61">0</div>
+            <div class="lkpi-lbl">UEAs críticas</div>
+          </div>
+          <div class="lkpi">
+            <div class="lkpi-val kpi-counter" data-target="11">0</div>
+            <div class="lkpi-lbl">Vecindades</div>
+          </div>
+        </div>
+      </div>
+      <div class="meta-nodes animate-in delay-2">
+        <a class="meta-node" href="conc_1.html">
+          <div class="meta-node-tag">Infografía 1</div>
+          <div class="meta-node-title">La concentración docente</div>
+          <div class="meta-node-desc">El Índice de Herfindahl-Hirschman aplicado a la impartición: 44.3 % de las UEAs con concentración alta.</div>
+        </a>
+        <a class="meta-node" href="conc_2.html">
+          <div class="meta-node-tag">Infografía 2</div>
+          <div class="meta-node-title">El riesgo estructural</div>
+          <div class="meta-node-desc">El Riesgo Concentrado combina cadenas de seriación con dependencia de un único docente.</div>
+        </a>
+        <a class="meta-node" href="conc_3.html">
+          <div class="meta-node-tag">Infografía 3</div>
+          <div class="meta-node-title">Redes y vecindades</div>
+          <div class="meta-node-desc">11 vecindades curriculares controladas donde la fragilidad no es puntual sino sistémica.</div>
+        </a>
+        <a class="meta-node meta-node-wide" href="conc_4.html">
+          <div class="meta-node-tag">Infografía 4</div>
+          <div class="meta-node-title">El mapa de riesgo</div>
+          <div class="meta-node-desc">Exposición estructural por plan de estudios y departamento: Ingeniería Civil, 30.6 % de UEAs críticas.</div>
+        </a>
+      </div>
+    </div>
+    <div class="scroll-hint">▾ desplázate para explorar</div>
+  </div>
+  <div style="padding:3rem 2rem;max-width:1440px;margin:0 auto" id="content">
+    <div class="connect-box animate-in">
+      <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">La concentración docente explica parte de la variación en eficiencia terminal que el <strong>Análisis de eficiencia terminal</strong> documenta por plan: una UEA con un único impartidor al final de una cadena larga no solo retarda el egreso, lo bloquea. Las recomendaciones de este análisis son insumo directo para las decisiones de asignación que las <strong>Modificaciones 2026</strong> deben contemplar.</p>
+      <div class="connect-links">
+        <a class="connect-link" href="metanalisis.html">Ver Eficiencia terminal →</a>
+        <a class="connect-link" href="modificaciones.html">Ver Modificaciones 2026 →</a>
+      </div>
+    </div>
+  </div>
+</main>
+"""
+
+conc_html = page_shell(
+    title='Distribución Docente — DCBI',
+    active='concentracion.html',
+    content=CONC_CONTENT,
+    data_vars='',
+    extra_js='',
+)
+
+# ══════════════════════════════════════════════════════════════════════════════
+# CONC_1.HTML  — Infografía 1: La concentración docente
+# ══════════════════════════════════════════════════════════════════════════════
+CONC1_CONTENT = """
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-label">Distribución docente · Infografía 1 · División de Ciencias Básicas e Ingeniería · UAM-Azcapotzalco</p>
+      <h1><strong>La concentración docente</strong></h1>
+      <p class="hero-sub">El Índice de Herfindahl-Hirschman mide la dependencia de impartición por UEA: 187 unidades de enseñanza-aprendizaje tienen un único docente en toda la historia registrada.</p>
+      <div class="hero-bar"></div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <section class="section animate-in">
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid)">El <strong>Índice de Herfindahl-Hirschman (HHI)</strong> mide qué tan concentrada está la impartición de una UEA entre sus profesores. Para cada UEA se calcula la fracción de grupos históricos que ha impartido cada docente; esas fracciones se elevan al cuadrado y se suman. El resultado va de 0 —muchos profesores con participación igualitaria— a 1 —un único impartidor en toda la historia registrada. Este último caso no es anecdótico: representa una <strong>dependencia estructural</strong>. Si ese profesor deja de estar disponible, la institución no tiene otro docente con historial documentado en esa UEA. El índice fue diseñado originalmente para detectar monopolios de mercado; aquí se adapta para detectar monopolios de impartición.</p>
+  </section>
+
+  <section class="section animate-in" id="chart-section-hhi-cat">
+    <div class="section-header">
+      <h2>Distribución de UEAs por nivel de concentración docente</h2>
+      <span class="section-count">809 UEAs activas · período 2016–2025</span>
+    </div>
+    <p class="section-desc">Las cuatro categorías van de monopolio total (HHI = 1) a distribución diversa (HHI &lt; 0.25). La barra más larga revela el estado habitual del sistema.</p>
+    <div class="read-callout"><strong>Qué buscar:</strong> la proporción de UEAs en las dos categorías de mayor concentración (HHI ≥ 0.5) frente al total, y la diferencia entre la categoría de monopolio exacto y la de concentración alta.</div>
+    <div class="chart-card animate-in delay-1">
+      <div class="chart-card-header">
+        <h3>Distribución de UEAs por categoría de HHI (n = 809)</h3>
+        <span class="chart-type-tag">Interactivo</span>
+      </div>
+      <div class="chart-canvas rendering md" id="chart-hhi-cat">
+        <div class="chart-skeleton"></div>
+      </div>
+    </div>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem">La distribución divisional no es simétrica ni benigna. <strong>187 UEAs —el 23.1 % del total— tienen HHI = 1</strong>: un único profesor las ha impartido durante todos los trimestres del período 2016–2025, sin ninguna alternativa documentada. Si se amplía el umbral a concentración alta (HHI ≥ 0.5), el porcentaje alcanza el <strong>44.3 %</strong>. Solo el 30.5 % de las UEAs muestra una distribución diversa entre varios docentes. Esto no es una excepción: es el estado habitual del sistema. Una UEA con 40 o 50 grupos históricos y HHI = 1 significa que la misma persona ha impartido todos esos grupos a lo largo de nueve años; no hay transferencia de conocimiento docente, no hay protocolo de relevo, y el riesgo ante una baja no planificada es inmediato.</p>
+  </section>
+
+  <section class="section animate-in" id="chart-section-hhi-dept">
+    <div class="section-header">
+      <h2>Concentración docente mediana por departamento</h2>
+      <span class="section-count">7 departamentos · HHI mediana + línea divisional</span>
+    </div>
+    <p class="section-desc">La línea discontinua marca la mediana divisional (0.39). Los departamentos a la derecha de esa línea presentan una concentración sistemáticamente más alta que el promedio de la División.</p>
+    <div class="read-callout"><strong>Qué buscar:</strong> qué departamentos superan la mediana divisional, la distancia de Ciencias Básicas al resto, y el contraste entre el volumen de UEAs de Materiales y su nivel de concentración.</div>
+    <div class="chart-card animate-in delay-1">
+      <div class="chart-card-header">
+        <h3>HHI mediana por departamento</h3>
+        <span class="chart-type-tag">Interactivo</span>
+      </div>
+      <div class="chart-canvas rendering md" id="chart-hhi-dept">
+        <div class="chart-skeleton"></div>
+      </div>
+    </div>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem">La concentración no se distribuye uniformemente entre departamentos: hay un patrón estructural, no una dispersión aleatoria. <strong>Ciencias Básicas</strong> muestra la distribución más sana (mediana HHI = 0.17), lo cual refleja que sus UEAs del Tronco General —compartidas por todas las licenciaturas— se imparten históricamente por equipos amplios de profesores; la demanda masiva obliga a la diversificación. En el extremo opuesto, <strong>Dirección de la División</strong> registra la mediana más alta (HHI = 0.50) y el mayor porcentaje de UEAs en régimen de exclusiva (30.3 %): un tercio de sus UEAs depende de un único docente. <strong>Materiales</strong> combina un volumen grande de UEAs con concentración moderada-alta (mediana 0.37, 17.8 % en exclusiva), lo que amerita atención particular dado el peso de ese departamento en los planes de ingeniería de especialidad.</p>
+  </section>
+
+  <hr class="divider">
+
+  <div class="connect-box animate-in">
+    <div class="connect-box-title">Navegación</div>
+    <p style="font-size:.84rem;color:var(--mid);line-height:1.6">Saber que una UEA tiene HHI = 1 identifica una dependencia; saber en qué punto de la cadena de seriaciones se encuentra esa UEA determina si esa dependencia es un riesgo menor o un riesgo sistémico. La siguiente infografía introduce el <strong>Riesgo Concentrado</strong>, el indicador que combina ambas dimensiones.</p>
+    <div class="connect-links">
+      <a class="connect-link" href="concentracion.html">← Índice</a>
+      <a class="connect-link" href="conc_2.html">Infografía 2: El riesgo estructural →</a>
+    </div>
+  </div>
+
+</main>
+"""
+
+CONC1_JS = """
+renderChart('chart-hhi-cat',
+  function() {
+    var labels   = ['Monopolio (HHI = 1)', 'Concentración alta (HHI ≥ 0.5)', 'Concentración moderada (HHI 0.25–0.5)', 'Diversa (HHI < 0.25)'];
+    var values   = [187, 171, 204, 247];
+    var pcts     = [23.1, 21.1, 25.2, 30.5];
+    var colors   = ['#C82D23', '#FF6B35', '#FF9800', '#2E7D32'];
+    var htext = labels.map(function(l, i) {
+      return l + '<br>' + values[i] + ' UEAs (' + pcts[i] + '%)';
+    });
+    return [{
+      type: 'bar',
+      orientation: 'h',
+      x: values,
+      y: labels,
+      marker: { color: colors },
+      text: values.map(function(v, i) { return v + ' (' + pcts[i] + '%)'; }),
+      textposition: 'outside',
+      hovertemplate: '%{y}<br>UEAs: %{x}<extra></extra>',
+      cliponaxis: false
+    }];
+  },
+  function() {
+    return Object.assign({}, LAYOUT_BASE, {
+      title: { text: 'Distribución de UEAs por categoría de HHI (n = 809)', font: FONT, x: 0.5 },
+      xaxis: { title: 'Número de UEAs', tickfont: FONT, range: [0, 310] },
+      yaxis: { automargin: true, tickfont: FONT },
+      margin: { l: 220, r: 60, t: 50, b: 50 },
+      bargap: 0.3
+    });
+  }
+);
+
+renderChart('chart-hhi-dept',
+  function() {
+    var labels = ["Dirección", "Humanidades", "Materiales", "Electrónica", "Sistemas", "Energía", "Ciencias Básicas"];
+    var hhi_vals = [0.5, 0.375, 0.3646, 0.2639, 0.2503, 0.2474, 0.166];
+    var n_ueas   = [109, 5, 107, 83, 62, 138, 89];
+    var pct1     = [22.9, 20.0, 14.0, 9.6, 6.5, 4.3, 4.5];
+    var colors   = ["#C82D23", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#2E7D32", "#2E7D32"];
+    return [
+      {
+        type: 'bar',
+        orientation: 'h',
+        x: hhi_vals,
+        y: labels,
+        marker: { color: colors, opacity: 0.85 },
+        name: 'HHI mediana',
+        text: hhi_vals.map(function(v) { return v.toFixed(3); }),
+        textposition: 'outside',
+        customdata: n_ueas.map(function(n, i) { return [n, pct1[i]]; }),
+        hovertemplate: '<b>%{y}</b><br>HHI mediana: %{x:.3f}<br>UEAs: %{customdata[0]}<br>% monopolio: %{customdata[1]}%<extra></extra>'
+      },
+      {
+        type: 'scatter',
+        mode: 'lines',
+        x: [0.39, 0.39],
+        y: [labels[labels.length-1], labels[0]],
+        line: { color: '#1A1A1A', width: 1.5, dash: 'dash' },
+        name: 'Mediana divisional (0.39)',
+        hoverinfo: 'skip'
+      }
+    ];
+  },
+  function() {
+    return Object.assign({}, LAYOUT_BASE, {
+      title: { text: 'HHI mediana por departamento', font: FONT, x: 0.5 },
+      xaxis: { title: 'HHI mediana', range: [0, 0.65], tickfont: FONT },
+      yaxis: { automargin: true, tickfont: FONT },
+      margin: { l: 160, r: 60, t: 50, b: 50 },
+      bargap: 0.3,
+      legend: { x: 0.6, y: 0.05, font: FONT }
+    });
+  }
+);
+"""
+
+conc1_html = page_shell(
+    title='La concentración docente — DCBI',
+    active='concentracion.html',
+    content=CONC1_CONTENT,
+    data_vars='',
+    extra_js=CONC1_JS,
+    bottom_nav_items="""
+      <a class="bottom-nav-item" href="concentracion.html"><span class="bottom-nav-icon">&#127968;</span>Índice</a>
+      <a class="bottom-nav-item" href="conc_2.html"><span class="bottom-nav-icon">&#9654;</span>Riesgo</a>
+    """,
+)
+
+# ══════════════════════════════════════════════════════════════════════════════
+# CONC_2.HTML  — Infografía 2: El riesgo estructural
+# ══════════════════════════════════════════════════════════════════════════════
+CONC2_CONTENT = """
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-label">Distribución docente · Infografía 2 · División de Ciencias Básicas e Ingeniería · UAM-Azcapotzalco</p>
+      <h1><strong>El riesgo estructural</strong></h1>
+      <p class="hero-sub">Las seriaciones formales obligan al estudiante a aprobar una UEA antes de inscribirse en la siguiente: el Riesgo Concentrado (RC) cuantifica cuándo esa cadena y un único impartidor se combinan para crear fragilidad máxima.</p>
+      <div class="hero-bar"></div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <section class="section animate-in">
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid)">Las seriaciones formales obligan al estudiante a aprobar una UEA antes de inscribirse en la siguiente. Cuando varias UEAs están encadenadas, la probabilidad de que el estudiante llegue a la última es el producto de las tasas de aprobación de todos los eslabones anteriores: con cuatro UEAs consecutivas al 85 % de aprobación, solo la mitad de quienes comenzaron la cadena podrán cursar la cuarta. El <strong>Riesgo Concentrado (RC)</strong> multiplica ese filtrado acumulado de la cadena por el HHI de la UEA al final de ella. Una UEA con un único impartidor (HHI = 1) situada al término de una cadena de diez prerrequisitos alcanza RC = 1 —el nivel máximo—: prácticamente nadie llega, y quien llega no tiene alternativa docente. El RC distingue la concentración inocua de la concentración peligrosa.</p>
+  </section>
+
+  <section class="section animate-in" id="chart-section-rc-scatter">
+    <div class="section-header">
+      <h2>Profundidad de cadena vs. concentración docente</h2>
+      <span class="section-count">809 UEAs · tres dimensiones simultáneas</span>
+    </div>
+    <p class="section-desc">Cada punto es una UEA. El eje horizontal indica la profundidad de la cadena de prerrequisitos; el vertical, su HHI; el tamaño de la burbuja, el filtrado acumulado de estudiantes antes de llegar a ella.</p>
+    <div class="read-callout"><strong>Qué buscar:</strong> la esquina superior derecha —cadena larga + HHI alto— concentra las 61 UEAs críticas. La franja densa al centro revela que el riesgo intermedio es el estado habitual, no la excepción.</div>
+    <div class="chart-card animate-in delay-1">
+      <div class="chart-card-header">
+        <h3>Profundidad de cadena vs. concentración docente</h3>
+        <span class="chart-type-tag">Interactivo</span>
+      </div>
+      <div class="chart-canvas rendering lg" id="chart-rc-scatter">
+        <div class="chart-skeleton"></div>
+      </div>
+    </div>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem">El diagrama posiciona cada UEA en tres dimensiones simultáneamente: profundidad de la cadena de prerrequisitos (eje horizontal), concentración docente HHI (eje vertical) y magnitud del filtrado acumulado (tamaño de la burbuja). Las UEAs de mayor riesgo aparecen en la esquina superior derecha con burbujas grandes: cadenas largas, impartición exclusiva y alta proporción de estudiantes ya filtrados antes de llegar. Lo que revela el gráfico no es solo la existencia de esos casos extremos —que son los 61 clasificados como críticos (RC ≥ percentil 90)— sino la continuidad del espacio: hay una franja densa de UEAs con RC intermedio, ninguna de ellas segura, que representa el grueso del riesgo estructural cotidiano de la División.</p>
+  </section>
+
+  <section class="section animate-in" id="chart-section-rc-top">
+    <div class="section-header">
+      <h2>Top 15 UEAs por Riesgo Concentrado (RC)</h2>
+      <span class="section-count">RC = filtrado acumulado × HHI · HHI secundario como diamante</span>
+    </div>
+    <p class="section-desc">Las 15 UEAs con RC más alto. Los diamantes negros en el eje superior muestran el HHI de cada una; todas se ubican en HHI = 1, confirmando dependencia absoluta de un único docente.</p>
+    <div class="read-callout"><strong>Qué buscar:</strong> que HHI = 1 en todos los casos, y los departamentos de origen: el patrón no es aleatorio — Materiales, Sistemas, Energía y Electrónica dominan la lista.</div>
+    <div class="chart-card animate-in delay-1">
+      <div class="chart-card-header">
+        <h3>Top 15 UEAs por Riesgo Concentrado (RC)</h3>
+        <span class="chart-type-tag">Interactivo</span>
+      </div>
+      <div class="chart-canvas rendering md" id="chart-rc-top">
+        <div class="chart-skeleton"></div>
+      </div>
+    </div>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem">Las 15 UEAs con RC más alto comparten el mismo perfil: HHI = 1 en todos los casos, e impacto de cascada próximo o igual a 1. Los nombres son reveladores — <strong>Puentes, Evaluación y Reparación de Estructuras, Modelos Hidráulicos, Bases de Datos Distribuidas, Estabilidad de los Sistemas de Potencia</strong> — son UEAs de especialidad terminal de sus respectivos planes, ubicadas exactamente donde el currículo más exige al estudiante y donde la institución más depende de un solo docente. El patrón no es coincidencia: las UEAs de especialidad tienden a tener menos profesores habilitados para impartirlas, y tienden a estar al final de las cadenas más largas. La concentración docente y la profundidad de seriación se refuerzan mutuamente en los eslabones más críticos del sistema.</p>
+  </section>
+
+  <div class="recuadro animate-in">
+    <div class="recuadro-title">Perfil de riesgo máximo</div>
+    <p>El caso de mayor riesgo individual identificado en el análisis corresponde al profesor con número económico <strong>ECO 20197</strong>, quien concentra <strong>13 UEAs en régimen de exclusiva</strong> (HHI = 1 en cada una) dentro de una cadena de seriación de profundidad 8. La probabilidad de acceso al nodo final de esa cadena es prácticamente nula: los estudiantes que llegan a esas UEAs han superado ocho prerrequisitos consecutivos, y al llegar no encuentran alternativa docente. El RC de cada una de esas 13 UEAs es 1.0 —el máximo posible. Este perfil —alto número de monopolios, cadena profunda y RC máximo sostenido— define el escenario de mayor fragilidad institucional individual que pueden producir los datos disponibles. Una baja no planificada de este docente bloquearía simultáneamente a múltiples grupos de estudiantes que ya han invertido trimestres en completar los prerrequisitos.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="connect-box animate-in">
+    <div class="connect-box-title">Navegación</div>
+    <p style="font-size:.84rem;color:var(--mid);line-height:1.6">El análisis UEA por UEA identifica los casos extremos, pero no captura la estructura colectiva: hay bloques de UEAs temáticamente relacionadas —por seriación, corregistro o similitud de programas— donde el mismo pequeño grupo de profesores domina la impartición de todo el bloque. La siguiente infografía presenta esas <strong>vecindades curriculares controladas</strong> y revela por qué las zonas de mayor concentración agregada no son siempre las de mayor riesgo real.</p>
+    <div class="connect-links">
+      <a class="connect-link" href="conc_1.html">← Infografía 1: La concentración</a>
+      <a class="connect-link" href="conc_3.html">Infografía 3: Redes y vecindades →</a>
+    </div>
+  </div>
+
+</main>
+"""
+
+CONC2_JS = """
+renderChart('chart-rc-top',
+  function() {
+    var names   = ["Puentes", "Taller de An\u00e1lisis y Dise\u00f1o de\u2026", "Evaluaci\u00f3n y Reparaci\u00f3n de Estructuras", "Estabilidad de los Sistemas de\u2026", "Taller de Sistemas Embebidos", "Modelado Num\u00e9rico de Cimentaciones", "Construcci\u00f3n de Obras de\u2026", "Bases de Datos Distribuidas", "Nanotecnolog\u00eda Ambiental", "Temas Selectos de Redes de\u2026", "Modelos Hidr\u00e1ulicos", "Dise\u00f1o Geot\u00e9cnico de Obras\u2026", "Captaci\u00f3n de Aguas Subterr\u00e1neas", "Fuentes de Alimentaci\u00f3n Conmutadas\u2026", "An\u00e1lisis Experimental de Esfuerzos"];
+    var rc_vals = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.9997, 0.9989, 0.9975, 0.9973, 0.9958, 0.9945, 0.9927];
+    var hhi_vals= [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0];
+    var depts   = ["MATERIALES", "SISTEMAS", "MATERIALES", "ENERGIA", "ELECTRONICA", "MATERIALES", "MATERIALES", "SISTEMAS", "ENERGIA", "DIRECCION DE LA", "ENERGIA", "MATERIALES", "MATERIALES", "ELECTRONICA", "MATERIALES"];
+    var fullnames= ["Puentes", "Taller de An\u00e1lisis y Dise\u00f1o de Algoritmos", "Evaluaci\u00f3n y Reparaci\u00f3n de Estructuras", "Estabilidad de los Sistemas de Potencia", "Taller de Sistemas Embebidos", "Modelado Num\u00e9rico de Cimentaciones", "Construcci\u00f3n de Obras de Infraestructura", "Bases de Datos Distribuidas", "Nanotecnolog\u00eda Ambiental", "Temas Selectos de Redes de Computadoras I", "Modelos Hidr\u00e1ulicos", "Dise\u00f1o Geot\u00e9cnico de Obras Subterr\u00e1neas", "Captaci\u00f3n de Aguas Subterr\u00e1neas", "Fuentes de Alimentaci\u00f3n Conmutadas OPT.*", "An\u00e1lisis Experimental de Esfuerzos"];
+    var barcolors= ["#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23"];
+    return [
+      {
+        type: 'bar',
+        orientation: 'h',
+        x: rc_vals,
+        y: names,
+        marker: { color: barcolors, opacity: 0.9 },
+        name: 'RC',
+        customdata: hhi_vals.map(function(h, i) { return [depts[i], h, fullnames[i]]; }),
+        hovertemplate: '<b>%{customdata[2]}</b><br>Depto: %{customdata[0]}<br>RC: %{x:.4f}<br>HHI: %{customdata[1]:.3f}<extra></extra>',
+        text: rc_vals.map(function(v) { return v.toFixed(3); }),
+        textposition: 'outside',
+        cliponaxis: false
+      },
+      {
+        type: 'scatter',
+        mode: 'markers',
+        x: hhi_vals,
+        y: names,
+        marker: { size: 8, symbol: 'diamond', color: '#1A1A1A', line: { width: 1, color: '#fff' } },
+        name: 'HHI',
+        xaxis: 'x2',
+        hovertemplate: 'HHI: %{x:.3f}<extra></extra>'
+      }
+    ];
+  },
+  function() {
+    return Object.assign({}, LAYOUT_BASE, {
+      title: { text: 'Top 15 UEAs por Riesgo Concentrado (RC)', font: FONT, x: 0.5 },
+      xaxis:  { title: 'RC', range: [0, 1.15], tickfont: FONT, domain: [0, 0.85] },
+      xaxis2: { title: 'HHI', range: [0, 1.1], overlaying: 'x', side: 'top', tickfont: FONT, showgrid: false },
+      yaxis:  { automargin: true, tickfont: FONT },
+      margin: { l: 280, r: 30, t: 60, b: 50 },
+      bargap: 0.25,
+      legend: { x: 0.72, y: 0.05, font: FONT },
+      showlegend: true
+    });
+  }
+);
+
+renderChart('chart-rc-scatter',
+  function() {
+    var sc_x    = [7.0, 8.0, 7.0, 10.0, 7.0, 9.0, 7.0, 7.0, 6.0, 7.0, 7.0, 8.0, 5.0, 7.0, 5.0, 5.0, 5.0, 5.0, 5.0, 7.0, 7.0, 7.0, 9.0, 3.0, 9.0, 9.0, 2.0, 7.0, 6.0, 4.0, 8.0, 7.0, 7.0, 6.0, 7.0, 4.0, 10.0, 7.0, 7.0, 5.0, 7.0, 7.0, 9.0, 7.0, 8.0, 5.0, 9.0, 6.0, 9.0, 8.0, 6.0, 9.0, 6.0, 7.0, 6.0, 7.0, 8.0, 6.0, 7.0, 5.0, 8.0, 8.0, 7.0, 3.0, 7.0, 6.0, 5.0, 7.0, 11.0, 7.0, 7.0, 3.0, 4.0, 5.0, 2.0, 7.0, 6.0, 5.0, 7.0, 7.0, 6.0, 9.0, 2.0, 7.0, 8.0, 9.0, 10.0, 8.0, 7.0, 5.0, 6.0, 3.0, 10.0, 5.0, 5.0, 3.0, 7.0, 7.0, 3.0, 6.0, 6.0, 7.0, 3.0, 4.0, 5.0, 9.0, 3.0, 6.0, 6.0, 3.0, 6.0, 6.0, 1.0, 7.0, 8.0, 8.0, 6.0, 5.0, 2.0, 10.0, 8.0, 5.0, 8.0, 4.0, 4.0, 7.0, 10.0, 7.0, 8.0, 3.0, 6.0, 4.0, 6.0, 3.0, 10.0, 5.0, 6.0, 7.0, 5.0, 4.0, 5.0, 4.0, 5.0, 8.0, 4.0, 6.0, 6.0, 7.0, 6.0, 5.0, 0.0, 8.0, 5.0, 5.0, 3.0, 5.0, 4.0, 6.0, 4.0, 4.0, 6.0, 6.0, 2.0, 8.0, 4.0, 3.0, 6.0, 4.0, 4.0, 5.0, 6.0, 3.0, 5.0, 4.0, 5.0, 6.0, 10.0, 5.0, 9.0, 6.0, 2.0, 8.0, 5.0, 5.0, 6.0, 3.0, 5.0, 4.0, 7.0, 4.0, 5.0, 10.0, 7.0, 10.0, 5.0, 10.0, 8.0, 6.0, 5.0, 1.0, 8.0, 3.0, 2.0, 9.0, 6.0, 3.0, 5.0, 9.0, 5.0, 2.0, 6.0, 3.0, 4.0, 7.0, 5.0, 3.0, 4.0, 1.0, 6.0, 5.0, 3.0, 6.0, 4.0, 5.0, 4.0, 8.0, 6.0, 6.0, 3.0, 3.0, 5.0, 5.0, 4.0, 4.0, 4.0, 1.0, 3.0, 10.0, 6.0, 9.0, 7.0, 2.0, 5.0, 4.0, 3.0, 3.0, 5.0, 4.0, 4.0, 6.0, 7.0, 4.0, 5.0, 6.0, 4.0, 2.0, 3.0, 3.0, 9.0, 6.0, 10.0, 2.0, 5.0, 4.0, 4.0, 4.0, 4.0, 6.0, 1.0, 4.0, 1.0, 11.0, 2.0, 5.0, 2.0, 3.0, 8.0, 7.0, 3.0, 5.0, 5.0, 4.0, 3.0, 6.0, 2.0, 2.0, 4.0, 10.0, 1.0, 2.0, 4.0, 2.0, 1.0, 3.0, 2.0, 2.0, 8.0, 5.0, 11.0, 7.0, 7.0, 2.0, 0.0, 4.0, 5.0, 2.0, 2.0, 6.0, 2.0, 3.0, 2.0, 2.0, 6.0, 7.0, 1.0, 3.0, 8.0, 1.0, 1.0, 4.0, 3.0, 1.0, 2.0, 6.0, 9.0, 1.0, 1.0, 3.0, 4.0, 1.0, 2.0, 7.0, 1.0, 5.0, 2.0, 1.0, 1.0, 1.0, 3.0, 4.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+    var sc_y    = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.8963, 1.0, 1.0, 0.7551, 0.7222, 1.0, 0.7562, 0.686, 0.7415, 0.68, 0.68, 0.68, 0.68, 0.6543, 0.66, 0.625, 0.625, 0.625, 0.8756, 0.6055, 0.5918, 0.5556, 0.5556, 0.5556, 0.5556, 0.54, 0.54, 0.5312, 0.52, 0.5148, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.4815, 0.4545, 0.4545, 0.5, 1.0, 0.4286, 0.4286, 0.4321, 0.4174, 0.4123, 0.4102, 0.4083, 1.0, 0.5, 0.3878, 0.42, 0.375, 0.375, 0.3735, 0.36, 0.3728, 0.3554, 0.3564, 0.8061, 0.34, 0.3554, 0.3333, 0.3333, 0.3333, 0.3333, 0.3333, 0.3223, 1.0, 0.32, 0.3195, 0.3333, 0.3439, 0.3113, 0.3244, 1.0, 0.3061, 0.3061, 0.3333, 0.7551, 0.3056, 0.3061, 0.2971, 0.68, 0.2959, 0.2893, 0.6095, 0.2991, 0.2891, 0.5024, 0.3125, 0.28, 0.7551, 0.2812, 0.2734, 0.6327, 0.2653, 0.2653, 0.2798, 0.264, 0.5, 0.5, 0.2633, 0.2593, 0.2593, 0.2593, 0.8347, 0.2562, 0.2601, 0.2535, 0.2922, 0.25, 0.25, 0.25, 0.25, 0.25, 0.2723, 0.2448, 0.2506, 0.24, 0.2384, 0.2359, 0.262, 0.2426, 0.2318, 0.2308, 0.2296, 0.3031, 0.225, 0.2361, 0.225, 0.5062, 0.2223, 0.2231, 0.218, 0.2316, 0.2396, 0.2164, 0.2136, 0.5207, 0.2109, 0.2126, 0.2672, 0.2092, 0.2175, 0.2091, 0.2131, 0.2083, 0.4375, 0.2044, 0.5005, 0.2, 0.1963, 0.1953, 0.1953, 0.1936, 0.1909, 0.3277, 0.1927, 0.1891, 0.1884, 0.1953, 0.3884, 0.1852, 0.1852, 0.1775, 0.1956, 0.2071, 0.1756, 0.1736, 0.3472, 0.1748, 0.1722, 0.1719, 0.1722, 0.1715, 0.3817, 0.1747, 0.1728, 0.3889, 1.0, 0.1667, 0.1732, 0.1667, 1.0, 0.1633, 0.2741, 0.7551, 0.3605, 0.169, 0.1541, 0.1527, 0.3208, 0.164, 0.5556, 0.177, 0.148, 0.4603, 0.5556, 0.1428, 0.1531, 0.1456, 0.1405, 0.1505, 0.1886, 0.4187, 0.4325, 0.1426, 0.1302, 0.1295, 0.1381, 0.1327, 0.3061, 0.1234, 0.12, 0.1426, 0.2207, 0.5102, 0.6818, 0.1378, 0.1183, 0.1435, 0.3605, 0.1221, 0.115, 0.1133, 0.358, 0.1178, 0.2383, 0.2786, 0.11, 0.1094, 0.1684, 0.1161, 0.1357, 0.2875, 0.4139, 0.4515, 0.6074, 0.1061, 0.1044, 0.1, 0.1086, 0.1457, 0.3935, 0.3875, 0.0922, 0.1823, 0.2734, 0.1901, 0.0967, 0.4603, 0.1667, 0.28, 0.3813, 0.0754, 0.0912, 0.2397, 0.1504, 0.1429, 0.08, 0.1055, 0.1037, 0.0878, 0.1893, 0.2966, 0.0715, 0.0801, 0.3636, 0.5938, 0.0706, 0.3424, 0.3308, 0.2287, 0.1249, 0.159, 0.12, 0.1205, 0.0884, 0.1626, 0.0556, 0.1444, 0.0638, 0.0774, 0.1773, 0.2769, 0.0488, 0.0727, 0.068, 0.2188, 0.1357, 0.3564, 0.0634, 0.2, 0.2653, 0.3314, 0.1204, 0.0433, 0.0808, 0.0481, 0.1427, 0.1446, 0.2959, 0.2, 0.0803, 0.0691, 0.2853, 0.0343, 0.0702, 0.0364, 0.0508, 0.1289, 0.0485, 0.0582, 0.0438, 0.1344, 0.0285, 0.0366, 0.0304, 0.142, 0.0874, 0.1953, 0.0813, 0.0859, 0.157, 0.072, 0.1985, 0.0517, 0.051, 0.2, 0.2, 0.2, 0.0483, 0.0458, 0.2018, 0.2022, 0.0349, 0.2, 0.1853, 0.1913, 0.135, 0.1368, 0.1387, 0.172, 0.1397, 0.1412, 0.1713, 0.1682, 0.1493, 0.166, 0.165, 0.1517, 0.1523, 0.1633, 0.1531, 0.1627, 0.1531, 0.1562, 0.1565, 0.1587, 0.1584, 0.1569, 0.1735, 0.1276, 0.0896, 0.1264, 0.1901, 0.0909, 0.0972, 0.0995, 0.1899, 0.1893, 0.1056, 0.1103, 0.1111, 0.112, 0.1122, 0.1125, 0.1837, 0.1145, 0.1806, 0.18, 0.18, 0.1796, 0.1156, 0.177, 0.1233, 0.2048, 0.68, 0.2082, 0.4132, 0.3889, 0.3889, 0.3889, 0.3889, 0.391, 1.0, 0.4097, 1.0, 1.0, 0.415, 1.0, 1.0, 1.0, 0.42, 1.0, 1.0, 1.0, 0.4321, 0.434, 0.438, 0.3878, 0.3827, 0.44, 0.3728, 0.3511, 1.0, 0.3554, 1.0, 1.0, 1.0, 0.3636, 0.3646, 0.365, 1.0, 0.38, 1.0, 0.375, 1.0, 0.375, 1.0, 0.375, 0.3776, 0.3787, 0.3795, 0.44, 0.44, 0.3462, 0.5, 0.68, 0.5, 0.551, 0.5, 0.5, 0.5, 0.5, 0.7551, 0.7551, 0.5, 0.7812, 0.7222, 0.5009, 0.551, 0.5062, 0.7222, 0.7222, 0.5247, 0.5306, 0.5312, 0.76, 0.68, 0.44, 0.8472, 0.4446, 0.4489, 0.4512, 0.4518, 1.0, 1.0, 0.4576, 0.4603, 0.4688, 0.4944, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.82, 0.5, 0.5, 0.7812, 0.3491, 1.0, 0.2083, 0.2639, 0.25, 0.25, 0.2521, 0.66, 0.6213, 0.6676, 0.6009, 0.2628, 0.5938, 0.5938, 0.625, 0.2647, 0.6686, 0.2653, 0.585, 0.2689, 0.2719, 0.5702, 0.2754, 0.2778, 0.6458, 0.25, 0.5692, 0.2282, 0.2092, 0.2132, 0.2154, 0.2188, 0.22, 0.2221, 0.2222, 0.2222, 0.2231, 0.2301, 0.25, 0.231, 0.2325, 0.2344, 0.54, 0.2416, 0.2428, 0.2449, 0.2494, 0.25, 0.2779, 0.28, 0.3438, 1.0, 0.3333, 0.3333, 0.3333, 1.0, 0.3333, 1.0, 1.0, 0.3333, 1.0, 1.0, 1.0, 1.0, 0.3333, 0.3333, 0.3347, 0.3366, 0.34, 1.0, 0.3403, 0.3426, 0.3333, 0.3233, 0.6689, 0.2933, 0.28, 0.28, 0.5556, 0.2812, 0.284, 0.284, 0.2851, 0.5556, 0.68, 0.5556, 1.0, 1.0, 0.5556, 1.0, 0.3056, 1.0, 1.0, 1.0, 1.0, 0.5556, 0.0243];
+    var sc_sz   = [40.0, 40.0, 40.0, 40.0, 39.9999, 39.9995, 39.9992, 39.9991, 39.9874, 39.9579, 39.9011, 39.8913, 39.8326, 39.78, 39.7093, 39.5585, 39.1471, 37.8203, 37.4399, 36.2529, 36.2529, 39.9892, 34.4775, 31.3909, 40.0, 39.9079, 28.2424, 36.4907, 39.9991, 36.765, 40.0, 39.9995, 39.9989, 39.8253, 39.9961, 38.7957, 40.0, 39.9579, 39.78, 28.3909, 39.9579, 39.941, 40.0, 39.9935, 39.8913, 39.1471, 40.0, 39.9999, 39.9999, 39.8913, 39.8253, 39.9998, 39.9998, 39.9995, 39.9934, 39.9037, 39.8913, 39.706, 39.0713, 37.8956, 39.9992, 39.8913, 36.2529, 17.4029, 39.9037, 39.889, 39.5585, 39.9579, 40.0, 39.9997, 39.9995, 15.9804, 31.2826, 39.6933, 35.6828, 39.9011, 39.7838, 39.7493, 39.9011, 38.4356, 39.952, 39.7003, 17.2143, 39.9935, 37.6376, 40.0, 40.0, 39.9999, 39.9961, 39.4238, 39.9977, 12.8841, 39.991, 39.9956, 37.9657, 36.5137, 39.9902, 38.2817, 12.3912, 40.0, 39.7838, 36.2529, 15.9804, 39.2367, 39.1486, 40.0, 17.4029, 39.8854, 39.9967, 18.9392, 38.0406, 39.0261, 22.4015, 35.8674, 39.8913, 14.736, 39.3743, 39.9718, 17.2143, 40.0, 40.0, 37.8047, 39.9998, 21.1127, 21.1127, 39.9692, 39.9999, 39.9892, 39.8913, 12.3912, 39.871, 39.2367, 39.871, 34.3375, 40.0, 39.9976, 39.9308, 39.7856, 39.4506, 35.8284, 39.8065, 38.5994, 39.9998, 39.9998, 39.753, 35.5049, 38.2732, 39.9961, 39.871, 39.9098, 30.203, 39.9998, 37.8047, 39.439, 17.4029, 39.3862, 39.2367, 39.9855, 37.4656, 36.1087, 39.7021, 39.9967, 16.3701, 39.9998, 39.538, 31.3909, 39.9987, 38.4363, 39.9131, 39.1486, 39.9978, 18.9392, 39.9839, 16.252, 39.4897, 39.9938, 40.0, 39.8326, 40.0, 39.9874, 23.2727, 39.5559, 39.9229, 39.7093, 38.0406, 18.9392, 39.5829, 39.1457, 39.9955, 36.2797, 34.162, 39.9999, 39.9997, 19.9789, 39.5585, 39.9999, 39.9999, 39.889, 39.6741, 17.6708, 38.4094, 38.7453, 17.2143, 6.668, 39.9154, 38.2269, 39.6933, 6.532, 39.5585, 23.5667, 8.472, 17.4029, 36.765, 39.8531, 39.8326, 18.9392, 36.765, 10.736, 33.653, 39.8172, 12.3912, 10.256, 39.753, 36.9578, 38.7957, 39.9999, 37.3341, 29.4598, 12.8841, 12.3912, 37.5699, 39.9434, 39.4156, 36.1087, 37.4477, 15.8157, 39.0157, 40.0, 33.653, 21.6938, 9.352, 6.9198, 34.162, 39.4156, 32.4041, 12.8841, 37.5699, 39.6055, 39.4156, 12.472, 37.7017, 18.336, 15.656, 39.5797, 39.753, 25.4625, 36.9224, 31.3909, 14.816, 10.256, 9.4, 6.9198, 39.5278, 38.3563, 39.9131, 36.2797, 26.6376, 9.772, 9.6943, 39.9527, 19.1009, 12.052, 17.2143, 33.6905, 6.9198, 18.9392, 11.212, 8.064, 39.4581, 31.6947, 11.72, 18.5101, 18.9392, 33.653, 25.4625, 25.4625, 29.8681, 13.692, 8.6, 35.5086, 31.6947, 6.9198, 6.0, 34.3375, 6.9198, 6.9198, 9.672, 17.608, 13.776, 17.884, 17.32, 23.5667, 12.74, 36.1087, 13.872, 31.2704, 25.4625, 10.924, 6.9198, 38.3526, 25.4625, 27.1364, 7.944, 12.432, 6.0, 26.0056, 8.18, 6.144, 6.0, 12.764, 34.3375, 18.26, 28.8362, 9.172, 9.024, 6.0, 6.144, 15.128, 17.148, 6.0, 29.5021, 13.956, 24.7705, 17.608, 6.9198, 18.26, 13.964, 18.144, 6.0, 24.7189, 18.144, 19.596, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0, 6.0];
+    var sc_col  = ["#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#C82D23", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "#FF9800", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)", "rgba(100,100,100,0.35)"];
+    var sc_rc   = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.9997, 0.9989, 0.9975, 0.9973, 0.9958, 0.9945, 0.9927, 0.989, 0.9787, 0.9455, 0.936, 0.9063, 0.9063, 0.8961, 0.8619, 0.7848, 0.7551, 0.7205, 0.7061, 0.6899, 0.686, 0.6815, 0.68, 0.68, 0.68, 0.677, 0.6542, 0.6401, 0.625, 0.6243, 0.6216, 0.6215, 0.6049, 0.5909, 0.5556, 0.5555, 0.5541, 0.5438, 0.54, 0.54, 0.5312, 0.5186, 0.5126, 0.5, 0.5, 0.5, 0.4999, 0.4988, 0.4986, 0.4963, 0.4884, 0.4562, 0.4545, 0.4533, 0.4532, 0.4351, 0.4276, 0.4274, 0.4273, 0.417, 0.4123, 0.4102, 0.4083, 0.3995, 0.391, 0.3848, 0.3747, 0.3741, 0.373, 0.3712, 0.3591, 0.3582, 0.355, 0.3537, 0.3469, 0.3399, 0.3344, 0.3333, 0.3333, 0.3333, 0.3333, 0.3285, 0.3223, 0.3221, 0.3199, 0.3195, 0.3163, 0.3139, 0.3112, 0.3105, 0.3098, 0.3061, 0.3044, 0.3021, 0.3017, 0.2998, 0.2996, 0.2971, 0.2958, 0.2951, 0.2893, 0.2886, 0.2844, 0.2821, 0.2814, 0.2802, 0.2792, 0.2782, 0.2768, 0.2732, 0.2723, 0.2653, 0.2653, 0.2644, 0.264, 0.2639, 0.2639, 0.2631, 0.2593, 0.2592, 0.2586, 0.2586, 0.2554, 0.2551, 0.2527, 0.2508, 0.25, 0.25, 0.2496, 0.2487, 0.2466, 0.2439, 0.2436, 0.2418, 0.24, 0.2384, 0.2344, 0.2326, 0.2321, 0.2318, 0.2301, 0.2291, 0.2289, 0.225, 0.2231, 0.2218, 0.2202, 0.2189, 0.2188, 0.2179, 0.2169, 0.2163, 0.2148, 0.2136, 0.2131, 0.2109, 0.2101, 0.2097, 0.2092, 0.209, 0.2086, 0.2086, 0.2083, 0.2071, 0.2043, 0.2034, 0.1974, 0.1963, 0.1953, 0.1945, 0.1936, 0.1908, 0.1907, 0.1906, 0.1887, 0.187, 0.1857, 0.1839, 0.1833, 0.1812, 0.1775, 0.1774, 0.1769, 0.1756, 0.1736, 0.1734, 0.1729, 0.1722, 0.1719, 0.1717, 0.1701, 0.1686, 0.1678, 0.1674, 0.1674, 0.1667, 0.1663, 0.1655, 0.1654, 0.1633, 0.1615, 0.1615, 0.1599, 0.1568, 0.1553, 0.1535, 0.1521, 0.1519, 0.1507, 0.1491, 0.1489, 0.1473, 0.1426, 0.1425, 0.1419, 0.1415, 0.1412, 0.1405, 0.1405, 0.1389, 0.1349, 0.134, 0.1339, 0.13, 0.1276, 0.1247, 0.1242, 0.121, 0.1204, 0.12, 0.12, 0.1197, 0.1193, 0.1179, 0.1177, 0.1166, 0.1162, 0.1161, 0.1147, 0.1139, 0.1116, 0.1116, 0.111, 0.1092, 0.109, 0.1088, 0.1087, 0.1072, 0.1072, 0.1065, 0.1065, 0.1061, 0.1061, 0.1051, 0.1048, 0.1001, 0.0998, 0.0985, 0.097, 0.0961, 0.0939, 0.0921, 0.0871, 0.0824, 0.0818, 0.0814, 0.0796, 0.0789, 0.0785, 0.0769, 0.0744, 0.0723, 0.0702, 0.0696, 0.0677, 0.0673, 0.0672, 0.066, 0.0656, 0.0648, 0.0638, 0.0635, 0.0635, 0.0629, 0.0616, 0.0606, 0.0592, 0.0572, 0.0553, 0.055, 0.0548, 0.0537, 0.0522, 0.0521, 0.0518, 0.0502, 0.0501, 0.0499, 0.0493, 0.0484, 0.0479, 0.0468, 0.0463, 0.0461, 0.0435, 0.0422, 0.0414, 0.0412, 0.0409, 0.0408, 0.0397, 0.0384, 0.0372, 0.0369, 0.0347, 0.0327, 0.0326, 0.031, 0.0307, 0.0304, 0.0296, 0.0296, 0.0253, 0.0245, 0.0225, 0.0224, 0.0223, 0.0221, 0.0203, 0.0199, 0.018, 0.0176, 0.0166, 0.0149, 0.0127, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+    var sc_imp  = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.9997, 0.9989, 0.9975, 0.9973, 0.9958, 0.9945, 0.9927, 0.989, 0.9787, 0.9455, 0.936, 0.9063, 0.9063, 0.9997, 0.8619, 0.7848, 1.0, 0.9977, 0.7061, 0.9123, 1.0, 0.9191, 1.0, 1.0, 1.0, 0.9956, 0.9999, 0.9699, 1.0, 0.9989, 0.9945, 0.7098, 0.9989, 0.9985, 1.0, 0.9998, 0.9973, 0.9787, 1.0, 1.0, 1.0, 0.9973, 0.9956, 1.0, 1.0, 1.0, 0.9998, 0.9976, 0.9973, 0.9927, 0.9768, 0.9474, 1.0, 0.9973, 0.9063, 0.4351, 0.9976, 0.9972, 0.989, 0.9989, 1.0, 1.0, 1.0, 0.3995, 0.7821, 0.9923, 0.8921, 0.9975, 0.9946, 0.9937, 0.9975, 0.9609, 0.9988, 0.9925, 0.4304, 0.9998, 0.9409, 1.0, 1.0, 1.0, 0.9999, 0.9856, 0.9999, 0.3221, 0.9998, 0.9999, 0.9491, 0.9128, 0.9998, 0.957, 0.3098, 1.0, 0.9946, 0.9063, 0.3995, 0.9809, 0.9787, 1.0, 0.4351, 0.9971, 0.9999, 0.4735, 0.951, 0.9757, 0.56, 0.8967, 0.9973, 0.3684, 0.9844, 0.9993, 0.4304, 1.0, 1.0, 0.9451, 1.0, 0.5278, 0.5278, 0.9992, 1.0, 0.9997, 0.9973, 0.3098, 0.9968, 0.9809, 0.9968, 0.8584, 1.0, 0.9999, 0.9983, 0.9946, 0.9863, 0.8957, 0.9952, 0.965, 1.0, 1.0, 0.9938, 0.8876, 0.9568, 0.9999, 0.9968, 0.9977, 0.7551, 1.0, 0.9451, 0.986, 0.4351, 0.9847, 0.9809, 0.9996, 0.9366, 0.9027, 0.9926, 0.9999, 0.4093, 1.0, 0.9884, 0.7848, 1.0, 0.9609, 0.9978, 0.9787, 0.9999, 0.4735, 0.9996, 0.4063, 0.9872, 0.9998, 1.0, 0.9958, 1.0, 0.9997, 0.5818, 0.9889, 0.9981, 0.9927, 0.951, 0.4735, 0.9896, 0.9786, 0.9999, 0.907, 0.854, 1.0, 1.0, 0.4995, 0.989, 1.0, 1.0, 0.9972, 0.9919, 0.4418, 0.9602, 0.9686, 0.4304, 0.1667, 0.9979, 0.9557, 0.9923, 0.1633, 0.989, 0.5892, 0.2118, 0.4351, 0.9191, 0.9963, 0.9958, 0.4735, 0.9191, 0.2684, 0.8413, 0.9954, 0.3098, 0.2564, 0.9938, 0.9239, 0.9699, 1.0, 0.9334, 0.7365, 0.3221, 0.3098, 0.9392, 0.9986, 0.9854, 0.9027, 0.9362, 0.3954, 0.9754, 1.0, 0.8413, 0.5423, 0.2338, 0.173, 0.854, 0.9854, 0.8101, 0.3221, 0.9392, 0.9901, 0.9854, 0.3118, 0.9425, 0.4584, 0.3914, 0.9895, 0.9938, 0.6366, 0.9231, 0.7848, 0.3704, 0.2564, 0.235, 0.173, 0.9882, 0.9589, 0.9978, 0.907, 0.6659, 0.2443, 0.2424, 0.9988, 0.4775, 0.3013, 0.4304, 0.8423, 0.173, 0.4735, 0.2803, 0.2016, 0.9865, 0.7924, 0.293, 0.4628, 0.4735, 0.8413, 0.6366, 0.6366, 0.7467, 0.3423, 0.215, 0.8877, 0.7924, 0.173, 0.1038, 0.8584, 0.173, 0.173, 0.2418, 0.4402, 0.3444, 0.4471, 0.433, 0.5892, 0.3185, 0.9027, 0.3468, 0.7818, 0.6366, 0.2731, 0.173, 0.9588, 0.6366, 0.6784, 0.1986, 0.3108, 0.1161, 0.6501, 0.2045, 0.1536, 0.1199, 0.3191, 0.8584, 0.4565, 0.7209, 0.2293, 0.2256, 0.1049, 0.1536, 0.3782, 0.4287, 0.1038, 0.7376, 0.3489, 0.6193, 0.4402, 0.173, 0.4565, 0.3491, 0.4536, 0.134, 0.618, 0.4536, 0.4899, 0.0891, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+    var sc_names= ["Puentes", "Taller de An\u00e1lisis y Dise\u00f1o de Algoritmos", "Evaluaci\u00f3n y Reparaci\u00f3n de Estructuras", "Estabilidad de los Sistemas de Potencia", "Taller de Sistemas Embebidos", "Modelado Num\u00e9rico de Cimentaciones", "Construcci\u00f3n de Obras de Infraestructura", "Bases de Datos Distribuidas", "Nanotecnolog\u00eda Ambiental", "Temas Selectos de Redes de Computadoras I", "Modelos Hidr\u00e1ulicos", "Dise\u00f1o Geot\u00e9cnico de Obras Subterr\u00e1neas", "Captaci\u00f3n de Aguas Subterr\u00e1neas", "Fuentes de Alimentaci\u00f3n Conmutadas OPT.*", "An\u00e1lisis Experimental de Esfuerzos", "Dise\u00f1o y Construcci\u00f3n de Obras Provisionales", "Materiales Compuestos en la Construcci\u00f3n", "Introducci\u00f3n a las Estructuras I", "Temas Selectos de Matem\u00e1ticas Discretas", "Calidad de Software", "Temas Selectos de Sistemas de Informaci\u00f3n", "Taller de Muestreo y Control de Contaminantes\u2026", "Temas Selectos de Telecomunicaciones 11 OPT.*", "Temas Selectos de Lenguajes de Programaci\u00f3n", "M\u00e9todo de Elemento Finito Aplicado a M\u00e1quinas\u2026", "V\u00edas F\u00e9rreas", "Temas Selectos de Topograf\u00eda", "Instalaciones El\u00e9ctricas en Baja Tensi\u00f3n", "Maquinaria y Equipo de Construcci\u00f3n", "Series, Transformadas y Ecuaciones Diferenciales", "Seguridad en los Sistemas de Informaci\u00f3n", "Hidr\u00e1ulica Fluvial", "Edificaci\u00f3n", "Ingenier\u00eda de Costos de Construcci\u00f3n", "Complejidad Computacional", "Programaci\u00f3n de Sistemas", "Tratamiento de Residuos L\u00edquidos Industriales", "Integraci\u00f3n de Redes de Voz y Datos", "Impulsores para Motores de CD y CA OPT.*", "Energ\u00eda Solar Fotovoltaica", "Redes Inal\u00e1mbricas", "Teletr\u00e1fico", "Sistemas de Generaci\u00f3n E\u00f3lica", "Administraci\u00f3n de Proyectos de Software", "Aeropuertos", "Tecnolog\u00eda del Concreto", "Dise\u00f1o de M\u00e1quinas El\u00e9ctricas", "Programaci\u00f3n Orientada a Servicios", "Gesti\u00f3n Integral de Residuos S\u00f3lidos Urbanos", "Geotecnia Aplicada a la Construcci\u00f3n", "Administraci\u00f3n de la Construcci\u00f3n", "Taller de Restauraci\u00f3n de Suelos", "Concreto Presforzado", "Hidr\u00e1ulica Mar\u00edtima", "Temas Selectos de Ingenier\u00eda Sustentable", "Temas Selectos de Ingenier\u00eda en Construcci\u00f3n", "Asfaltos", "Aplicaci\u00f3n de Motores El\u00e9ctricos OPT.*", "Limnolog\u00eda y Saneamiento de Corrientes", "Ingenier\u00eda Financiera", "Ingenier\u00eda de Cimentaciones", "Dise\u00f1o Geot\u00e9cnico de V\u00edas Terrestres", "Taller de Productos de Software", "Trabajo de Investigaci\u00f3n en Ingenier\u00eda en\u2026", "Legislaci\u00f3n en la Construcci\u00f3n", "Se\u00f1ales Aleatorias", "Dise\u00f1o de Estructuras de Mamposter\u00eda", "Seguridad en Redes", "Control Digital", "Procesos Fisicoqu\u00edmicos en Ingenier\u00eda Ambiental", "Dise\u00f1o y Construcci\u00f3n de Carreteras", "Proyecto de Integraci\u00f3n en Ingenier\u00eda El\u00e9ctrica II", "Temas Selectos de Gesti\u00f3n Ambiental", "Taller de An\u00e1lisis Estructural", "Geolog\u00eda", "Infraestructura para el Tratamiento de Aguas", "Geolog\u00eda Aplicada a la Ingenier\u00eda Civil", "Costos y Presupuestos de Obra", "Temas Selectos de Ingenier\u00eda Hidr\u00e1ulica", "Ingenier\u00eda de Biorreactores", "Dise\u00f1o y Administraci\u00f3n de Redes de Computadoras", "Sistemas de Potencia en Estado Estable", "Legislaci\u00f3n y Gesti\u00f3n Ambiental", "Arquitectura e Integraci\u00f3n de Aplicaciones\u2026", "Ingenier\u00eda de Iluminaci\u00f3n", "Control de M\u00e1quinas El\u00e9ctricas", "Plantas Potabilizadoras", "Temas Selectos de Sistemas Embebidos", "Combinatoria", "Temas Selectos de Inteligencia Artificial", "Dise\u00f1o de Estructuras de Acero", "Introducci\u00f3n al Trabajo de Investigaci\u00f3n en\u2026", "Protecciones El\u00e9ctricas", "Teor\u00eda Electromagn\u00e9tica", "Instrumentaci\u00f3n Virtual", "Ingenier\u00eda de Materiales en Construcci\u00f3n", "Sistemas Digitales con Microcontroladores", "Microcontroladores", "Trabajo de Investigaci\u00f3n en Ingenier\u00eda Ambiental", "Proyecto de Edificios", "Flujo de Agua en Suelos", "Patrones de Dise\u00f1o de Software", "Proyecto de Integraci\u00f3n en Ingenier\u00eda El\u00e9ctrica I", "Inteligencia Computacional", "Arquitecturas Paralelas de Computadoras", "T\u00e9cnicas de Altas Tensiones", "Introducci\u00f3n al Trabajo de Investigaci\u00f3n en\u2026", "Planeaci\u00f3n, Programaci\u00f3n y Control de Obras", "Propiedades El\u00e9ctricas y Magn\u00e9ticas de los\u2026", "Sistemas de Gesti\u00f3n Ambiental", "Microbiolog\u00eda Aplicada", "Taller de An\u00e1lisis de la Calidad del Agua", "Topograf\u00eda", "Sensores, Transductores y Detectores", "Mec\u00e1nica de Rocas", "Laboratorio de Ingenier\u00eda de Biorreactores", "Sistemas Distribuidos", "Combusti\u00f3n", "An\u00e1lisis de Ciclo de Vida", "Plantas de Tratamiento de Aguas Residuales", "Presas", "Sistemas de Gesti\u00f3n de la Calidad", "Manejo y Tratamiento de Residuos Industriales y\u2026", "Planeaci\u00f3n Ambiental", "An\u00e1lisis de Riesgo Ambiental", "Electr\u00f3nica de Potencia", "Aprovechamiento y Tratamiento de Residuos\u2026", "Procesos de Control de la Contaminaci\u00f3n\u2026", "Pavimentos", "Introducci\u00f3n al Trabajo de Investigaci\u00f3n en\u2026", "Sistemas de Alcantarillado", "Almacenamiento y Estructuras de Archivos", "Hidr\u00e1ulica de Canales", "C\u00e1lculo Vectorial y sus Aplicaciones", "Reuso del Agua", "Simulaci\u00f3n Aplicada a Ingenier\u00eda Mec\u00e1nica OPT.*", "Taller de Desarrollo de Aplicaciones Web", "Taller de Mecatr\u00f3nica", "Sistemas Ambientales", "Lenguajes y Aut\u00f3matas", "Instalaciones Industriales", "Gr\u00e1ficas por Computadora", "An\u00e1lisis Estructural Matricial", "Contaminaci\u00f3n y Restauraci\u00f3n de Suelos", "Din\u00e1mica y Vibraciones", "An\u00e1lisis y Dise\u00f1o de Sistemas de Informaci\u00f3n", "Efecto Invernadero y Cambio Clim\u00e1tico", "Criptograf\u00eda", "Abastecimiento de Agua", "Bases de Datos", "Comunicaciones Digitales", "M\u00e1quinas de CD y de Inducci\u00f3n", "Desarrollo Organizacional", "Circuitos El\u00e9ctricos II", "Proyecto de Integraci\u00f3n en Ingenier\u00eda en\u2026", "Estad\u00edstica Aplicada I", "Inteligencia Artificial", "Hidrolog\u00eda", "Control de Calidad y Confiabilidad", "An\u00e1lisis y Dise\u00f1o de Experimentos en Ingenier\u00eda", "Teor\u00eda de Control", "Aplicaciones del Electromagnetismo", "Metalurgia Computacional", "M\u00e1quinas S\u00edncronas en Estado Din\u00e1mico", "Fundamentos Electr\u00f3nica de de Manufactura\u2026", "Programaci\u00f3n Visual Orientada a Eventos", "Dise\u00f1o de Sistemas Energ\u00e9ticos OPT.*", "Variable Compleja", "Radiaci\u00f3n y Propagaci\u00f3n ....", "Sistemas Operativos", "Dise\u00f1o de Estructuras de Concreto", "Legislaci\u00f3n Aplicada a los Recursos Naturales", "Fen\u00f3menos de Transporte", "Laboratorio de Mec\u00e1nica de S\u00f3lidos", "Elemento Finito", "An\u00e1lisis y Dise\u00f1o de Algoritmos", "Subestaciones El\u00e9ctricas", "Mec\u00e1nica de Fluidos Avanzada", "Taller de Procesos de Tratamiento de Agua", "Control de la Contaminaci\u00f3n Atmosf\u00e9rica", "Laboratorio de Procesos", "Modelado de Sistemas El\u00e9ctricos de Potencia", "Compiladores", "Fundamentos de Geotecnia", "Toxicolog\u00eda Ambiental", "An\u00e1lisis de Casos en Auditor\u00eda Ambiental", "Din\u00e1mica de M\u00e1quinas", "Dise\u00f1o de Mecanismos", "Operaciones Unitarias en Ingenier\u00eda Ambiental", "Equilibrio Qu\u00edmico", "Procesos de Conversi\u00f3n de Energ\u00eda", "Taller de Residuos S\u00f3lidos Urbanos y Suelos", "Transformadores y M\u00e1quinas S\u00edncronas", "Taller de Fuentes Alternas de Energ\u00eda", "Elementos de Acero", "Dise\u00f1o de Sistemas Electr\u00f3nicos", "Procesos Biol\u00f3gicos en Ingenier\u00eda Ambiental", "Procesamiento Digital de Se\u00f1ales", "Automatizaci\u00f3n Industrial", "Procesos de Separaci\u00f3n 1", "Circuitos Electr\u00f3nicos II", "Mecanismos", "Inventarios de Emisiones Atmosf\u00e9ricas", "Laboratorio de Pavimentos", "Aprovechamientos Hidr\u00e1ulicos", "Microprocesadores", "Ingenier\u00eda S\u00edsmica", "Laboratorio de Asfaltos", "Elementos de Concreto", "Manufactura Asistida por Computadora", "Laboratorio de Combusti\u00f3n", "Proyecto de Integraci\u00f3n en Ingenier\u00eda en\u2026", "Transformada de Laplace y An\u00e1lisis de Fourier", "Ingenier\u00eda Geot\u00e9cnica", "Hidr\u00e1ulica de Tuber\u00edas", "Seguridad e Higiene Industrial", "Matem\u00e1ticas Aplicadas para Ingenier\u00eda", "Energ\u00eda Solar Fotovoltaica", "Circuitos El\u00e9ctricos de Corriente Alterna", "An\u00e1lisis de Se\u00f1ales", "Proyecto de Integraci\u00f3n en Ingenier\u00eda Ambiental I", "Laboratorio de An\u00e1lisis Experimental de Esfuerzos", "Mec\u00e1nica de Fluidos", "Laboratorio de Termofluidos 1", "Arquitectura de Computadoras", "Centrales El\u00e9ctricas", "Laboratorio de Termofluidos 11 OPT.*", "Laboratorio de Circuitos El\u00e9ctricos II", "Proyecto de Integraci\u00f3n en Ingenier\u00eda Civil II", "Proyecto de Integraci\u00f3n en Ingenier\u00eda Ambiental II", "Fundamentos de Qu\u00edmica Org\u00e1nica y Bioqu\u00edmica", "Fundamentos de Redes de Computadoras", "An\u00e1lisis Estructural", "Metrolog\u00eda para Manufactura", "An\u00e1lisis de Decisiones II", "Procesos Met\u00e1licos de Formado de los Materiales", "Mec\u00e1nica de S\u00f3lidos I", "Redes de Distribuci\u00f3n", "Circuitos Electr\u00f3nicos I", "Comunicaciones Anal\u00f3gicas", "Laboratorio de Hidr\u00e1ulica de Canales", "Seminario de Integraci\u00f3n en Ingenier\u00eda El\u00e9ctrica", "Recursos Energ\u00e9ticos", "Dise\u00f1o de Elementos de M\u00e1quinas", "Matem\u00e1ticas Discretas", "Proyecto de Integraci\u00f3n en Ingenier\u00eda Civil I", "Qu\u00edmica Ambiental", "Microelectr\u00f3nica", "Dise\u00f1o Estructural", "Laboratorio de Energ\u00eda Solar", "Taller de Termofluidos", "Laboratorio de Concreto", "Laboratorio de Din\u00e1mica y Vibraciones", "Investigaci\u00f3n de Operaciones II", "Transferencia de Momento", "L\u00f3gica", "C\u00e1lculo de Varias Variables", "Laboratorio de Programaci\u00f3n Orientada a Objetos", "Laboratorio de Circuitos Electr\u00f3nicos II", "Laboratorio de Geotecnia", "Programaci\u00f3n Aplicada a Sistemas El\u00e9ctricos de\u2026", "Seminario de Integraci\u00f3n en Ingenier\u00eda Mec\u00e1nica", "Transferencia de Calor", "Din\u00e1mica Aplicada", "Inducci\u00f3n y Ondas Electromagn\u00e9ticas", "Ingenier\u00eda de los Materiales OPT.*", "Laboratorio de Sistemas Digitales con\u2026", "Laboratorio de Electromagnetismo", "Fundici\u00f3n de los Materiales Met\u00e1licos", "Mec\u00e1nica de S\u00f3lidos II", "Laboratorio de Operaciones Unitarias", "Laboratorio de Protecciones El\u00e9ctricas", "Aplicaciones de Ecolog\u00eda Industrial", "Investigaci\u00f3n de Operaciones I", "Seminario de Integraci\u00f3n en Ingenier\u00eda Ambiental", "Sistemas de Informaci\u00f3n Geogr\u00e1fica", "Laboratorio de Electr\u00f3nica de Potencia", "Laboratorio de Microbiolog\u00eda Aplicada", "Laboratorio del Cuerpo R\u00edgido y Oscilaciones", "Dibujo Mec\u00e1nico Asistido por Computadora", "Laboratorio de Arquitectura de Computadoras", "Laboratorio de Microprocesadores", "Evaluaci\u00f3n de Impacto Ambiental", "Introducci\u00f3n a la Electr\u00f3nica", "Algoritmos y Estructuras de Datos", "Programaci\u00f3n Orientada a Objetos", "Termodin\u00e1mica Aplicada", "Laboratorio de Comunicaciones Anal\u00f3gicas", "Administraci\u00f3n de la Producci\u00f3n", "Din\u00e1mica del Cuerpo R\u00edgido", "M\u00e9todos Num\u00e9ricos en Ingenier\u00eda", "Seminario de Integraci\u00f3n en Ingenier\u00eda Metal\u00fargica", "Proyecto Mec\u00e1nico de Montajes OPT.*", "Probabilidad y Estad\u00edstica", "Seminario de Integraci\u00f3n en Ingenier\u00eda Civil", "Seminario de Integraci\u00f3n en Ingenier\u00eda en\u2026", "Laboratorio de Transformadores y M\u00e1quinas\u2026", "Introducci\u00f3n a las Comunicaciones", "Laboratorio de Dise\u00f1o de Sistemas Electr\u00f3nicos", "Laboratorio de Circuitos El\u00e9ctricos de\u2026", "Laboratorio de Circuitos Electr\u00f3nicos I", "Procesos de Manufactura 1 OPT.*", "Laboratorio de Comunicaciones Digitales", "Mediciones en Ingenier\u00eda", "Laboratorio de Qu\u00edmica Anal\u00edtica", "Laboratorio de Movimiento de una Part\u00edcula", "Dise\u00f1o L\u00f3gico", "Laboratorio de Introducci\u00f3n a las Comunicaciones", "Seminario de Integraci\u00f3n en Ingenier\u00eda Industrial", "Introducci\u00f3n a la Electrost\u00e1tica y Magnetost\u00e1tica", "Introducci\u00f3n al \u00c1lgebra Lineal", "Estructuras Isost\u00e1ticas", "Taller de Instalaciones Industriales", "Laboratorio de Control", "Qu\u00edmica Org\u00e1nica 111 OPT.*", "Termodin\u00e1mica", "Laboratorio de Sistemas Digitales con\u2026", "Estudio del M\u00e9todo del Trabajo", "Dise\u00f1o de Instalaciones y Manejo de Materiales", "Laboratorio de Mecanismos", "Ecuaciones Diferenciales Ordinarias", "Est\u00e1tica", "Laboratorio de Estructura y Propiedades de los\u2026", "Laboratorio de Hidr\u00e1ulica de Tuber\u00edas", "Laboratorio de M\u00e1quinas de CD y de Inducci\u00f3n", "Flujo de Energ\u00eda y Balance de Materia en\u2026", "Planeaci\u00f3n Estrat\u00e9gica", "Laboratorio de Dise\u00f1o L\u00f3gico", "Circuitos El\u00e9ctricos I", "Control Num\u00e9rico Computarizado", "C\u00e1lculo Integral", "Laboratorio de Introducci\u00f3n a la Electr\u00f3nica", "Cinem\u00e1tica y Din\u00e1mica de Part\u00edculas", "Laboratorio de Circuitos El\u00e9ctricos I", "Seminario de Integraci\u00f3n en Ingenier\u00eda Electr\u00f3nica", "Programaci\u00f3n Estructurada", "Laboratorio de Ingenier\u00eda de los Materiales OPT.*", "Estructura y Propiedades de los Materiales en\u2026", "Taller de Procesos de Manufactura 1 OPT.*", "Complementos de Matem\u00e1ticas", "Laboratorio de Reacciones Qu\u00edmicas", "C\u00e1lculo Diferencial", "Taller de Planeaci\u00f3n y Ejecuci\u00f3n de Proyectos", "TOTAL Propiedades DE CR\u00c9DITOS Termodin\u00e1micas\u2026", "Mantenimiento Industrial OPT.*", "Evaluaci\u00f3n Ambiental de Tecnolog\u00edas", "Temas Selectos de Ingenier\u00eda F\u00edsica 11", "Qu\u00edmica Org\u00e1nica 11", "Retos del Desarrollo Nacional", "Laboratorio de Cin\u00e9tica y Cat\u00e1lisis", "Introducci\u00f3n a la Ingenier\u00eda", "Introducci\u00f3n al Desarrollo Sustentable", "Gesti\u00f3n Industrial Eficiente de Procesos\u2026", "Instrumentaci\u00f3n Industrial", "F\u00edsica del Estado S\u00f3lido OPT.*", "Taller de Expresi\u00f3n Oral y Escrita", "Introducci\u00f3n a la F\u00edsica", "Metalurgia de las Aleaciones no Ferrosas", "Balance de Energ\u00eda", "Estructura At\u00f3mica y Enlace Qu\u00edmico", "Temas Selectos de Ingenier\u00eda Civil", "Laboratorio de F\u00edsica At\u00f3mica y Molecular", "Mec\u00e1nica Estad\u00edstica", "Fisicoqu\u00edmica de los Materiales", "Laboratorio de Qu\u00edmica Inorg\u00e1nica 1", "Procesos F\u00edsicos Industriales", "Laboratorio de Qu\u00edmica Org\u00e1nica 11", "Optativa T\u00e9cnica de Movilidad V", "Laboratorio de Electricidad y Magnetismo", "Log\u00edstica", "Laboratorio Protecci\u00f3n de de los Oxidaci\u00f3n,\u2026", "Administraci\u00f3n de Proyectos", "Funciones Especiales", "Qu\u00edmica Inorg\u00e1nica 1", "Econom\u00eda Mundial", "Laboratorio Ferrosas de Metalurgia de las\u2026", "\u00d3ptica", "Cristales y Dislocaciones OPT.*", "Planeaci\u00f3n Estrat\u00e9gica de Infraestructura en\u2026", "Optativa T\u00e9cnica de Movilidad VI", "Temas Selectos de Ingenier\u00eda El\u00e9ctrica I", "Introducci\u00f3n a la Automatizaci\u00f3n Industrial", "Optativa T\u00e9cnica de Movilidad III", "Reactores Heterog\u00e9neos", "Reactores Homog\u00e9neos", "Turbomaquinaria", "Electromagnetismo", "Laboratorio de Qu\u00edmica Inorg\u00e1nica 11", "F\u00edsica Moderna", "Cin\u00e9tica y Cat\u00e1lisis", "Organizaci\u00f3n Industrial", "Prevenci\u00f3n y Minimizaci\u00f3n de la Contaminaci\u00f3n\u2026", "Dibujo Asistido con Computadora en Ingenier\u00eda\u2026", "Qu\u00edmica Org\u00e1nica 1", "Laboratorio que apruebe Tecnolog\u00eda de\u2026", "An\u00e1lisis Vectorial", "Taller de Procesos de Manufactura 11", "Caracterizaci\u00f3n de los Materiales", "Procesos de Manufactura 11", "Temas Selectos de Ingenier\u00eda F\u00edsica 111", "Laboratorio Ingenier\u00eda Industrial de Sistemas\u2026", "Qu\u00edmica Inorg\u00e1nica 11", "An\u00e1lisis de Decisiones I", "Retos Ambientales", "Optativa T\u00e9cnica de Movilidad I", "Energ\u00eda E\u00f3lica Aplicada", "TOTAL Metalurgia DE se del CR\u00c9DITOS realizar\u00e1\u2026", "Laboratorio de Metrolog\u00eda para Manufactura", "Laboratorio Met\u00e1licos de Plasticidad de los\u2026", "Laboratorio de Qu\u00edmica Org\u00e1nica 1", "Taller de Principios de Ingenier\u00eda Qu\u00edmica", "Experiencia Inter y Multidisciplinar", "Transferencia de Masa", "\u00c9tica y Valores", "Degradaci\u00f3n de los Materiales", "Laboratorio lnterdisciplinario", "Temas Selectos de Producci\u00f3n y Manufactura 1", "Instrumentaci\u00f3n y Equipo 1 OPT.*", "Planeaci\u00f3n de la Producci\u00f3n", "Temas Selectos Inter y Multidisciplinares II", "Procesos de Separaci\u00f3n 11", "Responsabilidad Social Organizacional", "Dislocaciones en los Materiales Met\u00e1licos", "Tratamientos Met\u00e1licos T\u00e9rmicos de los Materiales", "Introducci\u00f3n Electr\u00f3nica al Trabajo de\u2026", "Metal\u00fargica Introducci\u00f3n al Trabajo de\u2026", "Inserci\u00f3n Laboral", "Ciencia y Tecnolog\u00eda de los Nanomateriales", "Laboratorio de Maquinado de los Materiales\u2026", "Proyecto de Integraci\u00f3n en Ingenier\u00eda Mec\u00e1nica 11", "TOTAL Proyecto 3.5.2.2. de DE Ciencias de se\u2026", "Control Laboratorio mediante de Instrumentaci\u00f3n\u2026", "Oxidaci\u00f3n, Met\u00e1licos Corrosi\u00f3n y Protecci\u00f3n de\u2026", "Termodin\u00e1mica y Cin\u00e9tica en Metalurgia", "Narrativa para Medios Audiovisuales y Digitales", "Aplicaciones Heterog\u00e9neos Industriales de\u2026", "Procesos Metal\u00fargicos Avanzados", "Habilidades Gerenciales", "Taller de Dispositivos Hidroneum\u00e1ticos", "Laboratorio de Radiocomunicaci\u00f3n OPT.*", "Planeaci\u00f3n Estrat\u00e9gica", "Temas Avanzados de Comunicaciones OPT.*", "Laboratorio de Soldadura de los Materiales\u2026", "Pr\u00e1cticas de Ciencias Profesionales se se\u2026", "Taller de Fotograf\u00eda", "Laboratorio Materiales de Comportamiento\u2026", "Taller de Ingenier\u00eda Civil I", "Laboratorio de Instrumentaci\u00f3n Industrial", "Trabajo Materiales en Met\u00e1licos Planta de\u2026", "Pr\u00e1cticas de Ciencias Profesionales se se\u2026", "Taller de Teatro", "Comunicaciones Industriales OPT.*", "Trabajo en Planta Sider\u00fargica", "Controladores L\u00f3gicos Programables OPT.*", "Im\u00e1genes", "Cambiadores de Calor OPT.*", "Metalurgia del Hierro", "Dispositivos Hidroneum\u00e1ticos", "Dise\u00f1o de Instrumentos OPT.*", "Ecodise\u00f1o", "Laboratorio Met\u00e1licos de Fundici\u00f3n de los\u2026", "Ingenier\u00eda El\u00e9ctrica", "Tratamientos Met\u00e1licos Termoqu\u00edmicos de los\u2026", "Interfaces Hombre-M\u00e1quina OPT.*", "Ingenier\u00eda de Reactores Avanzados OPT.*", "Temas Met\u00e1licos Selectos de Formado de los\u2026", "Temas Selectos de Gesti\u00f3n Industrial 11", "Tecnolog\u00eda Innovaci\u00f3n y en Administraci\u00f3n la\u2026", "Electroqu\u00edmica", "Comunicaciones Laboratorio de Simulaci\u00f3n de\u2026", "Pr\u00e1cticas de Ciencias Profesionales se se\u2026", "Comunicaci\u00f3n en Proyectos Multidisciplinarios", "Soldadura de los Materiales Met\u00e1licos", "Proyecto de Integraci\u00f3n en Ingenier\u00eda\u2026", "Laboratorio de Metalurgia Computacional", "Plasticidad de los Materiales Met\u00e1licos", "Psicolog\u00eda Industrial", "Laboratorio Materiales Met\u00e1licos de Mec\u00e1nica de\u2026", "Taller de Proyecto Mec\u00e1nico de Montajes OPT.*", "Familia y Violencia en el M\u00e9xico Contempor\u00e1neo", "Herramientas para el Emprendedor", "Comunicaciones \u00d3pticas OPT.*", "Sistemas de Manufactura Esbelta OPT.*", "Temas Selectos de Ingenier\u00eda en Computaci\u00f3n II", "Comunicaciones Celulares OPT.*", "Taller de Dibujo", "Trabajo Laboratorio de Estudio de la Medici\u00f3n del", "Instrumentaci\u00f3n Programaci\u00f3n Gr\u00e1fica y Control\u2026", "Mec\u00e1nica de Fluidos en Procesos Metal\u00fargicos", "Comportamiento Mec\u00e1nico de los Materiales OPT.*", "TOTAL Proyecto de 3.5.2.2. Ciencias DE de se\u2026", "G\u00e9nero y Sexualidad", "T\u00e9cnicas de Medici\u00f3n de Composici\u00f3n", "TOTAL Proyecto 3.5.2.2. de DE Ciencias de se\u2026", "Ergonom\u00eda Industrial", "Innovaci\u00f3n", "Laboratorio de Dise\u00f1o de Instrumentos OPT.*", "Metalurgia Mec\u00e1nica Avanzada", "Optoelectr\u00f3nica", "Introducci\u00f3n Parciales a las Ecuaciones\u2026", "Ciencia y Tecnolog\u00eda de los Cer\u00e1micos y Vidrios", "M\u00e9todos Decisiones Cuantitativos para la Toma de", "Dise\u00f1o e Innovaci\u00f3n de Productos OPT.*", "Tecnolog\u00edas de Radio M\u00f3vil OPT.*", "Mejora Continua de Procesos", "Pr\u00e1cticas Profesionales de Ingenier\u00eda Civil", "Introducci\u00f3n a la Bioqu\u00edmica OPT.*", "Temas Selectos de Ingenier\u00eda Mec\u00e1nica", "Sistemas Digitales y Redes", "Tecnolog\u00edas de la Informaci\u00f3n Industrial", "Ciencia y Tecnolog\u00eda de los Metales y Aleaciones", "Fen\u00f3menos de Superficie", "Laboratorio de Control de Calidad", "Qu\u00edmica Introducci\u00f3n al Trabajo de\u2026", "Taller de Ingenier\u00eda Civil II", "Proyecto de Integraci\u00f3n en Ingenier\u00eda Qu\u00edmica 11", ".,_,',\u00bfJ,~\\,'U~ TOTAL Proyecto . 3.5.2.2.\u2026", "Laboratorio Materiales Met\u00e1licos de Procesos de\u2026", "Laboratorio de Ciencia de los Materiales OPT.*", "Trabajo Met\u00e1licos en Planta de Fundici\u00f3n de los\u2026", "An\u00e1lisis de Problemas en Termofluidos OPT.*", "Poder y G\u00e9nero", "Simulaci\u00f3n y Control de Procesos", "Fotointerpretaci\u00f3n", "Introducci\u00f3n Ingenier\u00eda F\u00edsica al Trabajo de\u2026", "Metalograf\u00eda", "Laboratorio de Estudio del M\u00e9todo del Trabajo", "TOTAL Proyecto 3.5.2.2. de DE Ciencias de se\u2026", "Equilibrio Termodin\u00e1mico", "Laboratorio de F\u00edsica Moderna", "Ingenier\u00eda de Procesos", "Laboratorio Materiales Met\u00e1licos de\u2026", "TOTAL Proyecto 3.5.2.2. de DE Ciencias de se\u2026", "Temas Selectos Inter y Multidisciplinares I", "Optativa T\u00e9cnica de Movilidad IV", "Balance de Materia", "Metalurgia Extractiva", "Dise\u00f1o de Elementos de M\u00e1quinas 11 OPT.*", "Transformaciones Met\u00e1licos de Fase en los\u2026", "Ingenier\u00eda de Costos", "Temas Selectos de Qu\u00edmica", "S\u00edntesis, Materiales Caracterizaci\u00f3n\u2026", "Proyecto Mec\u00e1nico OPT.*", "Laboratorio de Fisicoqu\u00edmica de los Materiales", "Dise\u00f1o Mec\u00e1nico de Equipos OPT.*", "Estudio de la Medici\u00f3n del Trabajo", "Control de Calidad", "Derechos Humanos", "Gesti\u00f3n de Servicios OPT.*", "Ciencias Ambientales y Sustentabilidad", "Procesos de Mercadeo OPT.*", "Ciencia de los Materiales OPT.*", "Laboratorio de \u00d3ptica", "Electroqu\u00edmica de los Materiales", "Termotransferencia en Procesos Metal\u00fargicos", "Temas Selectos de Ingenier\u00eda Qu\u00edmica", "Temas Selectos de Gesti\u00f3n Industrial 1", "Pr\u00e1cticas Profesionales de Ingenier\u00eda Ambiental", "Ingenier\u00eda de Productos y de Procesos Metal\u00fargicos", "Administraci\u00f3n y Econom\u00eda Pol\u00edtica de la\u2026", "Divulgaci\u00f3n del Conocimiento", "Ac\u00fastica", "Est\u00e1tica del Cuerpo Deformable", "Gerencia de Proyectos de Infraestructura", "Pr\u00e1cticas de Ciencias Profesionales se se\u2026", "Temas Selectos de Telecomunicaciones 1 OPT.*", "Pr\u00e1cticas Profesionales de Ingenier\u00eda El\u00e9ctrica", "Laboratorio de Ingenier\u00eda El\u00e9ctrica", "Recristalizaci\u00f3n Din\u00e1mica de los Materiales\u2026", "Superplasticidad en Materiales Avanzados", "An\u00e1lisis Horno de Materiales y Balance T\u00e9rmico\u2026", "Dise\u00f1o Electr\u00f3nico Asistido por Computadora", "Trabajo en Planta Metal\u00fargica", "Historia Social de M\u00e9xico en el Siglo XX", "Mec\u00e1nica de la Fractura de los Materiales\u2026", "Ingenier\u00eda de Proyectos OPT.*", "Laboratorio Materiales Met\u00e1licos de\u2026", "El Paisaje como Agente de los Asentamientos y\u2026", "Hornos y Combusti\u00f3n en Procesos Metal\u00fargicos", "Historia del Arte", "Seminario de Integraci\u00f3n en Ingenier\u00eda F\u00edsica", "Energ\u00eda Solar Aplicada", "An\u00e1lisis de Problemas", "Optativa T\u00e9cnica de Movilidad II", "An\u00e1lisis de Sistemas de Control OPT.*", "Taller de Proyecto Mec\u00e1nico OPT.*", "Calefacci\u00f3n, Ventilaci\u00f3n y Aire Acondicionado", "Comunicaciones Satel ita les OPT.*", "Metalurgia Mec\u00e1nica", "Temas Selectos de Control e Instrumentaci\u00f3n 1\u2026", "Maquinado de los Materiales Met\u00e1licos", "Taller de Manufactura Asistido por Computadora", "Pr\u00e1cticas Profesionales en Ingenier\u00eda F\u00edsica", "Temas Selectos de Ingenier\u00eda Metal\u00fargica 1", "Trabajo en Planta de Aleaciones no Ferrosas", "Trabajo en Planta Metal Mec\u00e1nica", "Temas Selectos de Ingenier\u00eda en Computaci\u00f3n I", "Ciencia y Tecnolog\u00eda de los Pol\u00edmeros", "Ingenier\u00eda \u00d3ptica", "Ingenier\u00eda del Producto", "alumno Metalurgia que Procesos se del apruebe\u2026", "Contaminaci\u00f3n Ambiental", "Introducci\u00f3n al C\u00e1lculo"];
+    return [{
+      type: 'scatter',
+      mode: 'markers',
+      x: sc_x,
+      y: sc_y,
+      marker: {
+        size: sc_sz,
+        color: sc_col,
+        opacity: 0.65,
+        line: { width: 0.5, color: 'rgba(255,255,255,0.5)' }
+      },
+      customdata: sc_names.map(function(n, i) { return [n, sc_rc[i], sc_imp[i]]; }),
+      hovertemplate: '<b>%{customdata[0]}</b><br>Profundidad de cadena: %{x}<br>HHI: %{y:.3f}<br>RC: %{customdata[1]:.3f}<br>Impacto cascada: %{customdata[2]:.3f}<extra></extra>',
+      name: 'UEA'
+    }];
+  },
+  function() {
+    return Object.assign({}, LAYOUT_BASE, {
+      title: { text: 'UEAs: profundidad de cadena vs HHI (tamaño = impacto cascada)', font: FONT, x: 0.5 },
+      xaxis: { title: 'Profundidad de cadena (n° prerrequisitos)', tickfont: FONT, range: [-0.5, 12] },
+      yaxis: { title: 'HHI', tickfont: FONT, range: [0, 1.05] },
+      margin: { l: 60, r: 20, t: 50, b: 60 },
+      showlegend: false
+    });
+  }
+);
+"""
+
+conc2_html = page_shell(
+    title='El riesgo estructural — DCBI',
+    active='concentracion.html',
+    content=CONC2_CONTENT,
+    data_vars='',
+    extra_js=CONC2_JS,
+    bottom_nav_items="""
+      <a class="bottom-nav-item" href="conc_1.html"><span class="bottom-nav-icon">&#9664;</span>Concentración</a>
+      <a class="bottom-nav-item" href="concentracion.html"><span class="bottom-nav-icon">&#127968;</span>Índice</a>
+      <a class="bottom-nav-item" href="conc_3.html"><span class="bottom-nav-icon">&#9654;</span>Vecindades</a>
+    """,
+)
+
+# ══════════════════════════════════════════════════════════════════════════════
+# CONC_3.HTML  — Infografía 3: Redes y vecindades
+# ══════════════════════════════════════════════════════════════════════════════
+CONC3_CONTENT = """
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-label">Distribución docente · Infografía 3 · División de Ciencias Básicas e Ingeniería · UAM-Azcapotzalco</p>
+      <h1><strong>Redes y vecindades</strong></h1>
+      <p class="hero-sub">Una vecindad curricular controlada es un grupo de UEAs relacionadas donde un pequeño número de profesores domina la impartición histórica del bloque completo: 11 vecindades identificadas donde la fragilidad es sistémica, no puntual.</p>
+      <div class="hero-bar"></div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <section class="section animate-in">
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid)">Una <strong>vecindad curricular controlada</strong> es un grupo de UEAs relacionadas entre sí —por seriación formal, por corregistro obligatorio o por similitud de contenido en sus programas— donde además un pequeño número de profesores domina la impartición histórica del bloque completo. La combinación de vínculos curriculares fuertes con concentración docente sostenida crea una zona del plan de estudios donde la fragilidad no es puntual sino sistémica: afectar a un docente o a una UEA del bloque afecta al conjunto. El análisis identificó <strong>11 vecindades controladas</strong> de entre 22 grupos detectados automáticamente.</p>
+  </section>
+
+  <section class="section animate-in" id="chart-section-vecindades">
+    <div class="section-header">
+      <h2>Vecindades curriculares controladas (HHI cluster)</h2>
+      <span class="section-count">11 vecindades · HHI de vecindad agregado</span>
+    </div>
+    <p class="section-desc">El HHI de vecindad agrega la concentración docente a nivel del bloque completo, no UEA por UEA. Las barras en naranja tienen concentración elevada; las verdes, moderada. Pasa el cursor para ver el RC medio del bloque.</p>
+    <div class="read-callout"><strong>Qué buscar:</strong> el hallazgo contraintuitivo: las vecindades con mayor HHI de cluster no son las de mayor riesgo curricular real. La posición en el grafo de seriaciones importa más que el HHI agregado.</div>
+    <div class="chart-card animate-in delay-1">
+      <div class="chart-card-header">
+        <h3>HHI de vecindad curricular (11 vecindades controladas)</h3>
+        <span class="chart-type-tag">Interactivo</span>
+      </div>
+      <div class="chart-canvas rendering md" id="chart-vecindades">
+        <div class="chart-skeleton"></div>
+      </div>
+    </div>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem">El gráfico expone un hallazgo contraintuitivo que tiene consecuencias directas para la gobernanza: <strong>las vecindades con mayor concentración docente agregada no son las de mayor riesgo curricular</strong>. La vecindad C16 (Comportamiento Mecánico de los Materiales), con el HHI de cluster más alto del conjunto (0.137), registra Riesgo Concentrado nulo en todas sus UEAs porque ninguna de ellas forma parte de cadenas de seriación formales: la concentración existe, pero está desacoplada del mecanismo de cascada. En contraste, la vecindad C1 (Hidráulica y recursos hídricos), con un HHI de cluster de apenas 0.026, acumula <strong>19 UEAs en nivel crítico</strong> precisamente por el mecanismo inverso: concentración docente moderada amplificada por cadenas de hasta nueve eslabones. El riesgo institucional real es más alto donde la concentración docente <strong>parece</strong> menor. Medir solo el HHI, sin considerar la posición en el grafo de seriaciones, lleva a priorizar mal.</p>
+  </section>
+
+  <section class="section animate-in" id="chart-section-vecindades-risk">
+    <div class="section-header">
+      <h2>UEAs críticas por vecindad curricular</h2>
+      <span class="section-count">Crítico (RC ≥ p90) + Alto (RC p75–p90) · barras apiladas</span>
+    </div>
+    <p class="section-desc">El apilado muestra UEAs críticas (rojo) y alto riesgo (naranja) por vecindad. La longitud total indica la exposición agregada del bloque.</p>
+    <div class="read-callout"><strong>Qué buscar:</strong> qué vecindades acumulan más UEAs críticas y cómo eso contrasta con su posición en el gráfico anterior de HHI de cluster.</div>
+    <div class="chart-card animate-in delay-1">
+      <div class="chart-card-header">
+        <h3>UEAs en riesgo por vecindad curricular</h3>
+        <span class="chart-type-tag">Interactivo</span>
+      </div>
+      <div class="chart-canvas rendering sm" id="chart-vecindades-risk">
+        <div class="chart-skeleton"></div>
+      </div>
+    </div>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem">Entre las vecindades más relevantes para la gobernanza destacan tres perfiles distintos. <strong>Cluster 13 — Comunicaciones (Electrónica)</strong> agrupa 19 UEAs de la línea de comunicaciones analógicas y digitales con sus laboratorios correspondientes; su sensibilidad estructural es alta porque combina teoría y práctica en cadenas de seriación verticales donde el estudiante no puede avanzar sin haber completado los cursos precedentes, todos bajo la misma estructura de impartición concentrada (tasa de aprobación media: 74.5 %). <strong>Cluster 11 — Mecánica de sólidos y edificación</strong> agrupa 24 UEAs con la segunda tasa de aprobación más baja de las vecindades controladas (64.6 %): la combinación de bajo rendimiento y concentración docente crea un cuello de botella académico sostenido. <strong>Cluster 17 — Prácticas profesionales</strong> presenta un riesgo de naturaleza diferente: sus 11 UEAs de prácticas son, en varios planes, un <strong>requisito de egreso</strong>, de modo que la concentración docente en este bloque tiene implicaciones directas sobre la eficiencia terminal, no solo sobre el avance trimestral.</p>
+  </section>
+
+  <hr class="divider">
+
+  <div class="connect-box animate-in">
+    <div class="connect-box-title">Navegación</div>
+    <p style="font-size:.84rem;color:var(--mid);line-height:1.6">Las vecindades controladas revelan la textura interna del riesgo; el mapa de riesgo por plan y por departamento muestra su distribución institucional. La siguiente infografía cierra el análisis identificando qué planes y qué departamentos acumulan la mayor exposición estructural y dónde la intervención produciría el mayor retorno.</p>
+    <div class="connect-links">
+      <a class="connect-link" href="conc_2.html">← Infografía 2: El riesgo estructural</a>
+      <a class="connect-link" href="conc_4.html">Infografía 4: El mapa de riesgo →</a>
+    </div>
+  </div>
+
+</main>
+"""
+
+CONC3_JS = """
+renderChart('chart-vecindades',
+  function() {
+    var names  = ["Comportamiento Mec\\u00e1nico y Fractura de\\u2026", "Sistemas de Comunicaciones Anal\\u00f3gicas,\\u2026", "Sistemas Digitales, Redes y Proyectos de\\u2026", "Pr\\u00e1cticas Profesionales y Gesti\\u00f3n de\\u2026", "An\\u00e1lisis y Dise\\u00f1o Estructural de Obras de\\u2026", "Metalurgia de Procesos: Fundici\\u00f3n, Formado\\u2026", "Arquitectura de Computadoras, Redes y\\u2026", "Seminarios y Proyectos de Integraci\\u00f3n\\u2026", "Hidr\\u00e1ulica, Geotecnia y Construcci\\u00f3n de\\u2026", "F\\u00edsica Aplicada, Matem\\u00e1ticas Avanzadas y\\u2026", "F\\u00edsica Aplicada, Matem\\u00e1ticas Avanzadas y\\u2026"];
+    var hhi_c  = [0.1373, 0.0915, 0.0826, 0.0801, 0.0479, 0.0456, 0.0302, 0.0294, 0.0261, 0.0187, 0.0115];
+    var hhi_m  = [0.4759, 0.44, 0.5, 1.0, 0.3142, 0.38, 0.3333, 0.4832, 0.42, 0.25, 0.2175];
+    var nueas  = [14, 19, 11, 11, 24, 35, 37, 48, 53, 55, 35];
+    var pct    = [0.2694, 0.136, 0.2102, 0.1698, 0.1062, 0.1185, 0.0533, 0.0659, 0.049, 0.0338, 0.0273];
+    var rc     = [0.5524, 0.5121, 0.4951, 0.7596, 0.3991, 0.4371, 0.4204, 0.5354, 0.4763, 0.3423, 0.2849];
+    var colors = ["#FF9800", "#FF9800", "#FF9800", "#FF9800", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32"];
+    var full   = ["Comportamiento Mec\\u00e1nico y Fractura de Materiales Met\\u00e1licos", "Sistemas de Comunicaciones Anal\\u00f3gicas, Digitales y Radiofrecuencia", "Sistemas Digitales, Redes y Proyectos de Integraci\\u00f3n El\\u00e9ctrica", "Pr\\u00e1cticas Profesionales y Gesti\\u00f3n de Calidad Industrial", "An\\u00e1lisis y Dise\\u00f1o Estructural de Obras de Ingenier\\u00eda Civil", "Metalurgia de Procesos: Fundici\\u00f3n, Formado y Tratamientos T\\u00e9rmicos", "Arquitectura de Computadoras, Redes y Sistemas de Informaci\\u00f3n", "Seminarios y Proyectos de Integraci\\u00f3n Multidisciplinar en Ingenier\\u00eda", "Hidr\\u00e1ulica, Geotecnia y Construcci\\u00f3n de Infraestructura Civil", "F\\u00edsica Aplicada, Matem\\u00e1ticas Avanzadas y Fundamentos Computacionales", "F\\u00edsica Aplicada, Matem\\u00e1ticas Avanzadas y Fundamentos Computacionales"];
+    return [{
+      type: 'bar',
+      orientation: 'h',
+      x: hhi_c,
+      y: names,
+      marker: { color: colors, opacity: 0.85 },
+      text: hhi_c.map(function(v) { return v.toFixed(4); }),
+      textposition: 'outside',
+      cliponaxis: false,
+      customdata: names.map(function(n, i) { return [full[i], nueas[i], (pct[i]*100).toFixed(1), hhi_m[i], rc[i]]; }),
+      hovertemplate: '<b>%{customdata[0]}</b><br>HHI vecindad: %{x:.4f}<br>HHI mediana UEAs: %{customdata[3]:.3f}<br>UEAs: %{customdata[1]}<br>% grupos prof. dominante: %{customdata[2]}%<br>RC medio: %{customdata[4]:.3f}<extra></extra>',
+      name: 'HHI vecindad'
+    }];
+  },
+  function() {
+    return Object.assign({}, LAYOUT_BASE, {
+      title: { text: 'HHI de vecindad curricular (11 vecindades controladas)', font: FONT, x: 0.5 },
+      xaxis: { title: 'HHI de vecindad', tickfont: FONT, range: [0, 0.20] },
+      yaxis: { automargin: true, tickfont: FONT },
+      margin: { l: 290, r: 60, t: 50, b: 50 },
+      bargap: 0.3
+    });
+  }
+);
+
+renderChart('chart-vecindades-risk',
+  function() {
+    var names   = ["Comportamiento Mec\\u00e1nico y Fractura de\\u2026", "Sistemas de Comunicaciones Anal\\u00f3gicas,\\u2026", "Sistemas Digitales, Redes y Proyectos de\\u2026", "Pr\\u00e1cticas Profesionales y Gesti\\u00f3n de\\u2026", "An\\u00e1lisis y Dise\\u00f1o Estructural de Obras de\\u2026", "Metalurgia de Procesos: Fundici\\u00f3n, Formado\\u2026", "Arquitectura de Computadoras, Redes y\\u2026", "Seminarios y Proyectos de Integraci\\u00f3n\\u2026", "Hidr\\u00e1ulica, Geotecnia y Construcci\\u00f3n de\\u2026", "F\\u00edsica Aplicada, Matem\\u00e1ticas Avanzadas y\\u2026", "F\\u00edsica Aplicada, Matem\\u00e1ticas Avanzadas y\\u2026"];
+    var n_crit  = [0, 1, 0, 0, 6, 0, 11, 0, 19, 4, 4];
+    var n_alto  = [0, 1, 2, 0, 5, 0, 13, 5, 18, 5, 8];
+    var rc_max  = [0.0, 0.862, 0.4, 0.0, 1.0, 0.213, 1.0, 0.435, 1.0, 1.0, 1.0];
+    var full    = ["Comportamiento Mec\\u00e1nico y Fractura de Materiales Met\\u00e1licos", "Sistemas de Comunicaciones Anal\\u00f3gicas, Digitales y Radiofrecuencia", "Sistemas Digitales, Redes y Proyectos de Integraci\\u00f3n El\\u00e9ctrica", "Pr\\u00e1cticas Profesionales y Gesti\\u00f3n de Calidad Industrial", "An\\u00e1lisis y Dise\\u00f1o Estructural de Obras de Ingenier\\u00eda Civil", "Metalurgia de Procesos: Fundici\\u00f3n, Formado y Tratamientos T\\u00e9rmicos", "Arquitectura de Computadoras, Redes y Sistemas de Informaci\\u00f3n", "Seminarios y Proyectos de Integraci\\u00f3n Multidisciplinar en Ingenier\\u00eda", "Hidr\\u00e1ulica, Geotecnia y Construcci\\u00f3n de Infraestructura Civil", "F\\u00edsica Aplicada, Matem\\u00e1ticas Avanzadas y Fundamentos Computacionales", "F\\u00edsica Aplicada, Matem\\u00e1ticas Avanzadas y Fundamentos Computacionales"];
+    return [
+      {
+        type: 'bar',
+        orientation: 'h',
+        x: n_crit,
+        y: names,
+        name: 'Crítico',
+        marker: { color: '#C82D23', opacity: 0.9 },
+        customdata: full.map(function(f, i) { return [f, rc_max[i]]; }),
+        hovertemplate: '<b>%{customdata[0]}</b><br>UEAs críticas: %{x}<br>RC máx: %{customdata[1]:.3f}<extra></extra>'
+      },
+      {
+        type: 'bar',
+        orientation: 'h',
+        x: n_alto,
+        y: names,
+        name: 'Alto',
+        marker: { color: '#FF9800', opacity: 0.85 },
+        hovertemplate: '<b>%{y}</b><br>UEAs alto riesgo: %{x}<extra></extra>'
+      }
+    ];
+  },
+  function() {
+    return Object.assign({}, LAYOUT_BASE, {
+      title: { text: 'UEAs en riesgo por vecindad curricular', font: FONT, x: 0.5 },
+      xaxis: { title: 'Número de UEAs', tickfont: FONT },
+      yaxis: { automargin: true, tickfont: FONT },
+      barmode: 'stack',
+      margin: { l: 290, r: 30, t: 50, b: 50 },
+      bargap: 0.3,
+      legend: { x: 0.75, y: 0.05, font: FONT }
+    });
+  }
+);
+"""
+
+conc3_html = page_shell(
+    title='Redes y vecindades — DCBI',
+    active='concentracion.html',
+    content=CONC3_CONTENT,
+    data_vars='',
+    extra_js=CONC3_JS,
+    bottom_nav_items="""
+      <a class="bottom-nav-item" href="conc_2.html"><span class="bottom-nav-icon">&#9664;</span>Riesgo</a>
+      <a class="bottom-nav-item" href="concentracion.html"><span class="bottom-nav-icon">&#127968;</span>Índice</a>
+      <a class="bottom-nav-item" href="conc_4.html"><span class="bottom-nav-icon">&#9654;</span>Mapa</a>
+    """,
+)
+
+# ══════════════════════════════════════════════════════════════════════════════
+# CONC_4.HTML  — Infografía 4: El mapa de riesgo
+# ══════════════════════════════════════════════════════════════════════════════
+CONC4_CONTENT = """
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-label">Distribución docente · Infografía 4 · División de Ciencias Básicas e Ingeniería · UAM-Azcapotzalco</p>
+      <h1><strong>El mapa de riesgo</strong></h1>
+      <p class="hero-sub">Los análisis anteriores operaron sobre UEAs individuales y vecindades. Esta infografía eleva la escala: qué planes de estudio y qué departamentos concentran la mayor exposición estructural, con variación de dos órdenes de magnitud entre extremos.</p>
+      <div class="hero-bar"></div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <section class="section animate-in">
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid)">Los análisis anteriores operaron sobre UEAs individuales y vecindades. Esta infografía eleva la escala: ¿qué planes de estudio y qué departamentos concentran la mayor exposición estructural? La respuesta no es uniforme. La variación entre los planes más y menos expuestos alcanza dos órdenes de magnitud, y el patrón no es aleatorio: refleja la arquitectura curricular de cada licenciatura —la densidad de sus cadenas de seriación y la especialización de sus plantillas docentes— más que diferencias en el volumen de UEAs.</p>
+  </section>
+
+  <section class="section animate-in" id="chart-section-risk-plan">
+    <div class="section-header">
+      <h2>Riesgo estructural por plan de estudios</h2>
+      <span class="section-count">10 planes · UEAs críticas + alto riesgo + medio-bajo · RC medio como diamante</span>
+    </div>
+    <p class="section-desc">Barras apiladas por nivel de riesgo; el diamante negro en el eje superior marca el RC medio de cada plan. Los planes están ordenados de menor a mayor exposición total.</p>
+    <div class="read-callout"><strong>Qué buscar:</strong> la brecha entre Ingeniería Civil y el resto, el RC medio de los planes intermedios, y cuáles planes tienen cero UEAs críticas a pesar de tener HHI alto.</div>
+    <div class="chart-card animate-in delay-1">
+      <div class="chart-card-header">
+        <h3>Distribución de riesgo por plan de estudios</h3>
+        <span class="chart-type-tag">Interactivo</span>
+      </div>
+      <div class="chart-canvas rendering lg" id="chart-risk-plan">
+        <div class="chart-skeleton"></div>
+      </div>
+    </div>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem"><strong>Ingeniería Civil</strong> encabeza la clasificación con una distancia considerable respecto al resto: el <strong>30.6 % de sus UEAs son críticas</strong> (RC ≥ percentil 90) y el RC medio del plan es 0.36, el más alto entre los diez programas. Le siguen <strong>Ingeniería en Computación</strong> (17.6 % de UEAs críticas, RC medio 0.29) e <strong>Ingeniería Eléctrica</strong> (15.9 %, RC medio 0.27). En el extremo opuesto, <strong>Ingeniería Física, Ingeniería Química, Ingeniería Industrial e Ingeniería Metalúrgica</strong> registran cero UEAs en nivel crítico y RC medio inferior a 0.02. Esta diferencia no refleja una gestión docente mejor o peor en esos planes: refleja que sus cadenas de seriación son menos profundas y sus UEAs de especialidad tienen, históricamente, mayor diversidad de impartidores. El diseño curricular determina la magnitud del riesgo tanto como la política de asignación docente.</p>
+  </section>
+
+  <section class="section animate-in" id="chart-section-risk-dept">
+    <div class="section-header">
+      <h2>Mapa de riesgo por departamento</h2>
+      <span class="section-count">HHI mediana (eje x) · RC medio (eje y) · tamaño = n° UEAs</span>
+    </div>
+    <p class="section-desc">Cada burbuja es un departamento. La zona sombreada en rojo (HHI &gt; 0.5 y RC &gt; 0.15) marca el cuadrante de máxima exposición compuesta. El tamaño de la burbuja es proporcional al número de UEAs del departamento.</p>
+    <div class="read-callout"><strong>Qué buscar:</strong> qué departamentos entran en la zona crítica, cuál tiene el HHI más alto pero RC bajo, y cómo Ciencias Básicas se separa del resto en dirección contraria a todos.</div>
+    <div class="chart-card animate-in delay-1">
+      <div class="chart-card-header">
+        <h3>Perfil de riesgo departamental</h3>
+        <span class="chart-type-tag">Interactivo</span>
+      </div>
+      <div class="chart-canvas rendering md" id="chart-risk-dept">
+        <div class="chart-skeleton"></div>
+      </div>
+    </div>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem">A nivel departamental, <strong>Materiales</strong> registra el RC medio más alto entre los departamentos con más de cinco UEAs (0.21), con una mediana de HHI de 0.37 y el 14 % de sus UEAs en régimen de exclusiva. Es el departamento con mayor exposición compuesta, aunque permanece ligeramente por debajo del umbral crítico de HHI = 0.5. <strong>Dirección de la División</strong> presenta la mediana de HHI más alta (0.50) y el porcentaje de monopolios individuales más elevado (23 %), pero su RC medio es menor (0.13): sus UEAs en exclusiva están en su mayoría fuera de cadenas de seriación largas, lo que aísla el efecto de cascada más grave. <strong>Ciencias Básicas</strong> se comporta de forma inversa a todos los demás: HHI mediana baja (0.17), sin UEAs en el cuadrante crítico y el número de monopolios más reducido de la División, en coherencia con la estructura del Tronco General.</p>
+  </section>
+
+  <div class="recuadro animate-in">
+    <div class="recuadro-title">Síntesis</div>
+    <p>Tres conclusiones organizan la agenda de gobernanza que se desprende de este análisis. <strong>Primera:</strong> la concentración docente es el estado habitual del sistema, no una anomalía —el 44.3 % de las UEAs tiene HHI ≥ 0.5—, por lo que las políticas de relevo docente deben diseñarse como estructura permanente, no como respuesta a emergencias. <strong>Segunda:</strong> el riesgo estructural está localizado: 61 UEAs críticas en tres planes (Civil, Computación, Eléctrica) y un conjunto reducido de profesores que son puntos únicos de fallo acumulan la mayor parte de la exposición; la intervención focalizada tiene alto retorno. <strong>Tercera:</strong> medir solo el HHI es insuficiente —la vecindad C1 lo demuestra—: cualquier política de diversificación docente debe cruzar la concentración con la posición de la UEA en el grafo de seriaciones para priorizar correctamente.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="connect-box animate-in">
+    <div class="connect-box-title">Navegación</div>
+    <div class="connect-links">
+      <a class="connect-link" href="conc_3.html">← Infografía 3: Redes y vecindades</a>
+      <a class="connect-link" href="concentracion.html">↑ Índice Distribución docente</a>
+    </div>
+  </div>
+
+</main>
+"""
+
+CONC4_JS = """
+renderChart('chart-risk-plan',
+  function() {
+    var labels = ["Ing. Metal\\u00fargica", "Ing. Industrial", "Ing. Qu\\u00edmica", "Lic. F\\u00edsica Aplicada", "Ing. Mec\\u00e1nica", "Ing. El\\u00e9ctrica", "Ing. Ambiental", "Ing. Electr\\u00f3nica", "Ing. Computaci\\u00f3n", "Ing. Civil"];
+    var n_crit = [0, 0, 0, 0, 1, 3, 8, 7, 16, 26];
+    var n_alto = [0, 0, 0, 0, 2, 1, 25, 14, 25, 23];
+    var n_mb   = [56, 37, 36, 61, 13, 30, 110, 23, 50, 36];
+    var n_ueas = [56, 37, 36, 61, 16, 34, 143, 44, 91, 85];
+    var rc_med = [0.0088, 0.0106, 0.0135, 0.0185, 0.0787, 0.0984, 0.1313, 0.2731, 0.288, 0.3607];
+    var hhi_m  = [0.4873, 0.4264, 0.3487, 0.3138, 0.5594, 0.5203, 0.3066, 0.3811, 0.3508, 0.4663];
+    var pct_c  = [0.0, 0.0, 0.0, 0.0, 6.2, 8.8, 5.6, 15.9, 17.6, 30.6];
+    var pct_a  = [0.0, 0.0, 0.0, 0.0, 12.5, 2.9, 17.5, 31.8, 27.5, 27.1];
+    return [
+      {
+        type: 'bar',
+        orientation: 'h',
+        x: n_crit,
+        y: labels,
+        name: 'Crítico',
+        marker: { color: '#C82D23', opacity: 0.9 },
+        customdata: labels.map(function(l, i) { return [pct_c[i], n_ueas[i], rc_med[i]]; }),
+        hovertemplate: '%{y} — Crítico<br>UEAs: %{x} (%{customdata[0]}%)<br>RC medio: %{customdata[2]:.3f}<extra></extra>'
+      },
+      {
+        type: 'bar',
+        orientation: 'h',
+        x: n_alto,
+        y: labels,
+        name: 'Alto',
+        marker: { color: '#FF9800', opacity: 0.85 },
+        customdata: labels.map(function(l, i) { return [pct_a[i]]; }),
+        hovertemplate: '%{y} — Alto<br>UEAs: %{x} (%{customdata[0]}%)<extra></extra>'
+      },
+      {
+        type: 'bar',
+        orientation: 'h',
+        x: n_mb,
+        y: labels,
+        name: 'Medio-bajo',
+        marker: { color: 'rgba(0,0,0,0.12)' },
+        hovertemplate: '%{y} — Medio-bajo<br>UEAs: %{x}<extra></extra>'
+      },
+      {
+        type: 'scatter',
+        mode: 'markers',
+        x: rc_med,
+        y: labels,
+        xaxis: 'x2',
+        marker: { size: 9, color: '#1A1A1A', symbol: 'diamond', line: { color: '#fff', width: 1 } },
+        name: 'RC medio',
+        hovertemplate: 'RC medio: %{x:.3f}<extra></extra>'
+      }
+    ];
+  },
+  function() {
+    return Object.assign({}, LAYOUT_BASE, {
+      title: { text: 'Distribución de riesgo por plan de estudios', font: FONT, x: 0.5 },
+      xaxis:  { title: 'Número de UEAs', tickfont: FONT, domain: [0, 0.82] },
+      xaxis2: { title: 'RC medio', overlaying: 'x', side: 'top', range: [0, 0.5], tickfont: FONT, showgrid: false },
+      yaxis:  { automargin: true, tickfont: FONT },
+      barmode: 'stack',
+      margin: { l: 155, r: 20, t: 60, b: 50 },
+      bargap: 0.25,
+      legend: { x: 0.84, y: 0.5, font: FONT }
+    });
+  }
+);
+
+renderChart('chart-risk-dept',
+  function() {
+    var b_names  = ["EVA. DISENO EN E", "DERECHO", "PROCESOS TEC. RE", "Direcci\\u00f3n", "INV.CONOCIMIENTO", "MEDIO AMBIENTE", "SOCIOLOGIA", "Humanidades", "Materiales", "ADMINISTRACION", "Electr\\u00f3nica", "Sistemas", "Energ\\u00eda", "Ciencias B\\u00e1sicas", "ECONOMIA"];
+    var b_hhi    = [0.6736, 0.6172, 0.5306, 0.5, 0.4132, 0.39, 0.3795, 0.375, 0.3646, 0.346, 0.2639, 0.2503, 0.2474, 0.166, 0.1517];
+    var b_rc     = [0.2266, 0.0, 0.0, 0.1278, 0.0, 0.0, 0.0, 0.0, 0.2142, 0.0, 0.1638, 0.1918, 0.1864, 0.0759, 0.0];
+    var b_nueas  = [2, 2, 1, 109, 1, 2, 2, 5, 107, 2, 83, 62, 138, 89, 1];
+    var b_pct1   = [0.0, 50.0, 0.0, 22.9, 0.0, 0.0, 0.0, 20.0, 14.0, 0.0, 9.6, 6.5, 4.3, 4.5, 0.0];
+    var b_sz     = [8.0, 8.0, 8.0, 46.9814, 8.0, 8.0, 8.0, 10.0623, 46.5484, 8.0, 40.997, 35.433, 52.863, 42.4529, 8.0];
+    var b_colors = ["#2E7D32", "#C82D23", "#2E7D32", "#C82D23", "#2E7D32", "#2E7D32", "#2E7D32", "#C82D23", "#FF9800", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32"];
+    return [
+      {
+        type: 'scatter',
+        mode: 'markers+text',
+        x: b_hhi,
+        y: b_rc,
+        marker: {
+          size: b_sz,
+          color: b_colors,
+          opacity: 0.75,
+          line: { width: 1, color: 'rgba(255,255,255,0.6)' }
+        },
+        text: b_names,
+        textposition: 'top center',
+        textfont: Object.assign({}, FONT, { size: 10 }),
+        customdata: b_names.map(function(n, i) { return [b_nueas[i], b_pct1[i]]; }),
+        hovertemplate: '<b>%{text}</b><br>HHI mediana: %{x:.3f}<br>RC medio: %{y:.3f}<br>UEAs: %{customdata[0]}<br>% monopolio (HHI=1): %{customdata[1]}%<extra></extra>',
+        name: 'Departamento'
+      },
+      {
+        type: 'scatter',
+        mode: 'lines',
+        x: [0.5, 0.5, null, 0.5, 1.0],
+        y: [0.15, 0.7, null, 0.15, 0.15],
+        line: { color: 'rgba(200,45,35,0.25)', width: 1, dash: 'dot' },
+        fill: 'none',
+        hoverinfo: 'skip',
+        showlegend: false,
+        name: ''
+      }
+    ];
+  },
+  function() {
+    return Object.assign({}, LAYOUT_BASE, {
+      title: { text: 'Perfil de riesgo departamental (tamaño = n° UEAs, color = % monopolio)', font: FONT, x: 0.5 },
+      xaxis: { title: 'HHI mediana', tickfont: FONT, range: [0, 0.6] },
+      yaxis: { title: 'RC medio', tickfont: FONT, range: [-0.02, 0.35] },
+      margin: { l: 60, r: 30, t: 50, b: 60 },
+      showlegend: false,
+      shapes: [{
+        type: 'rect',
+        x0: 0.5, x1: 0.65, y0: 0.15, y1: 0.30,
+        fillcolor: 'rgba(200,45,35,0.06)',
+        line: { color: 'rgba(200,45,35,0.3)', width: 1, dash: 'dot' },
+        layer: 'below'
+      }],
+      annotations: [{
+        x: 0.57, y: 0.29,
+        text: 'Zona crítica',
+        showarrow: false,
+        font: Object.assign({}, FONT, { size: 10, color: '#C82D23' })
+      }]
+    });
+  }
+);
+"""
+
+conc4_html = page_shell(
+    title='El mapa de riesgo — DCBI',
+    active='concentracion.html',
+    content=CONC4_CONTENT,
+    data_vars='',
+    extra_js=CONC4_JS,
+    bottom_nav_items="""
+      <a class="bottom-nav-item" href="conc_3.html"><span class="bottom-nav-icon">&#9664;</span>Vecindades</a>
+      <a class="bottom-nav-item" href="concentracion.html"><span class="bottom-nav-icon">&#127968;</span>Índice</a>
+    """,
+)
+
+# ══════════════════════════════════════════════════════════════════════════════
 # WRITE FILES
 # ══════════════════════════════════════════════════════════════════════════════
 for fname, content in [
@@ -4107,9 +4942,14 @@ for fname, content in [
     ('meta_5.html',          meta5_html),
     ('meta_6.html',          meta6_html),
     ('modificaciones.html',  mod_html),
+    ('concentracion.html',   conc_html),
+    ('conc_1.html',          conc1_html),
+    ('conc_2.html',          conc2_html),
+    ('conc_3.html',          conc3_html),
+    ('conc_4.html',          conc4_html),
 ]:
     p = HERE / fname
     p.write_text(content, encoding='utf-8')
     print(f"  {fname:<28} {p.stat().st_size/1024:.0f} KB")
 
-print("\nDone — 11 pages written to", HERE)
+print("\nDone — 16 pages written to", HERE)

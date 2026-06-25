@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="theme-color" content="#C82D23">
-  <title>Análisis de Eficiencia Terminal — DCBI · DCBI UAM-A</title>
+  <title>Distribución Docente — DCBI · DCBI UAM-A</title>
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <style>
   :root {
@@ -294,8 +294,8 @@
     <ul class="nav-links" id="navLinks"><li><a href="index.html" class="" onclick="closeNav()">🏠 Inicio</a></li>
 <li><a href="cat26p.html" class="" onclick="closeNav()">CAT 26P</a></li>
 <li><a href="cat26p_capacidad.html" class="" onclick="closeNav()">↳ Capacidad</a></li>
-<li><a href="metanalisis.html" class="active" onclick="closeNav()">Metaanálisis</a></li>
-<li><a href="concentracion.html" class="" onclick="closeNav()">Distribución docente</a></li>
+<li><a href="metanalisis.html" class="" onclick="closeNav()">Metaanálisis</a></li>
+<li><a href="concentracion.html" class="active" onclick="closeNav()">Distribución docente</a></li>
 <li><a href="modificaciones.html" class="" onclick="closeNav()">Modificaciones 2026</a></li></ul>
     <button class="nav-hamburger" id="hamburger" aria-label="Menú" onclick="toggleNav()">
       <span></span><span></span><span></span>
@@ -378,60 +378,52 @@
       <div>
         <p class="landing-tag animate-in">UAM Azcapotzalco · División de Ciencias Básicas e Ingeniería</p>
         <h1 class="landing-h1 animate-in delay-1">
-          Análisis de
-          <strong>eficiencia terminal</strong>
+          Distribución
+          <strong>docente</strong>
         </h1>
         <p class="landing-sub animate-in delay-2">
-          Cinco infografías interactivas que diagnostican el rezago en los diez programas
-          del Plan 2020: causas estructurales, palancas de mejora, índices de prelación
-          y complejidad sistémica — con datos de 2018 a 2025.
+          A partir de 5 391 grupos registrados entre 2016 y 2025, el análisis cuantifica la concentración docente por UEA, calcula el riesgo estructural que surge cuando esa concentración coincide con posiciones terminales de las cadenas de seriación, e identifica los bloques curriculares donde la salida de un solo profesor podría bloquear el avance de cohortes enteras.
         </p>
         <div class="landing-bar animate-in delay-2"></div>
         <div class="landing-kpis animate-in delay-3">
           <div class="lkpi">
-            <div class="lkpi-val">10</div>
-            <div class="lkpi-lbl">Licenciaturas</div>
+            <div class="lkpi-val kpi-counter" data-target="809">0</div>
+            <div class="lkpi-lbl">UEAs activas</div>
           </div>
           <div class="lkpi">
-            <div class="lkpi-val kpi-counter" data-target="6562">0</div>
-            <div class="lkpi-lbl">Estudiantes activos</div>
+            <div class="lkpi-val kpi-counter" data-target="791">0</div>
+            <div class="lkpi-lbl">Profesores</div>
           </div>
           <div class="lkpi">
-            <div class="lkpi-val kpi-counter" data-target="499">0</div>
-            <div class="lkpi-lbl">Seriaciones</div>
+            <div class="lkpi-val kpi-counter" data-target="61">0</div>
+            <div class="lkpi-lbl">UEAs críticas</div>
           </div>
           <div class="lkpi">
-            <div class="lkpi-val kpi-counter" data-target="1859">0</div>
-            <div class="lkpi-lbl">UEAs analizadas</div>
+            <div class="lkpi-val kpi-counter" data-target="11">0</div>
+            <div class="lkpi-lbl">Vecindades</div>
           </div>
         </div>
       </div>
       <div class="meta-nodes animate-in delay-2">
-        <a class="meta-node" href="meta_1.html">
+        <a class="meta-node" href="conc_1.html">
           <div class="meta-node-tag">Infografía 1</div>
-          <div class="meta-node-title">El diagnóstico</div>
-          <div class="meta-node-desc">Los 10 programas tardan el doble del plazo nominal en titular su cohorte.</div>
+          <div class="meta-node-title">La concentración docente</div>
+          <div class="meta-node-desc">El Índice de Herfindahl-Hirschman aplicado a la impartición: 44.3 % de las UEAs con concentración alta.</div>
         </a>
-        <a class="meta-node" href="meta_2.html">
+        <a class="meta-node" href="conc_2.html">
           <div class="meta-node-tag">Infografía 2</div>
-          <div class="meta-node-title">Las causas</div>
-          <div class="meta-node-desc">Dos mecanismos estructurales imponen cotas mínimas de permanencia.</div>
+          <div class="meta-node-title">El riesgo estructural</div>
+          <div class="meta-node-desc">El Riesgo Concentrado combina cadenas de seriación con dependencia de un único docente.</div>
         </a>
-        <a class="meta-node" href="meta_3.html">
+        <a class="meta-node" href="conc_3.html">
           <div class="meta-node-tag">Infografía 3</div>
-          <div class="meta-node-title">La palanca</div>
-          <div class="meta-node-desc">El 26.5 % de seriaciones concentra el 80 % del beneficio alcanzable.</div>
+          <div class="meta-node-title">Redes y vecindades</div>
+          <div class="meta-node-desc">11 vecindades curriculares controladas donde la fragilidad no es puntual sino sistémica.</div>
         </a>
-        <a class="meta-node" href="meta_4.html">
+        <a class="meta-node meta-node-wide" href="conc_4.html">
           <div class="meta-node-tag">Infografía 4</div>
-          <div class="meta-node-title">El índice P</div>
-          <div class="meta-node-desc">Sesgo de diseño que retrasa el egreso hasta 4.7 trimestres.</div>
-          <div class="meta-node-sub">↳ Respuesta divisional: índices P y h →</div>
-        </a>
-        <a class="meta-node meta-node-wide" href="meta_5.html">
-          <div class="meta-node-tag">Infografía 5</div>
-          <div class="meta-node-title">Complejidad multidimensional</div>
-          <div class="meta-node-desc">El índice C mapea la disfunción en cinco dimensiones y orienta la intervención.</div>
+          <div class="meta-node-title">El mapa de riesgo</div>
+          <div class="meta-node-desc">Exposición estructural por plan de estudios y departamento: Ingeniería Civil, 30.6 % de UEAs críticas.</div>
         </a>
       </div>
     </div>
@@ -440,10 +432,10 @@
   <div style="padding:3rem 2rem;max-width:1440px;margin:0 auto" id="content">
     <div class="connect-box animate-in">
       <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
-      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">El análisis de eficiencia terminal documenta el problema; el proyecto de Modificaciones 2026 es, en parte, la respuesta. Evalúa con inteligencia artificial las propuestas de reforma curricular que aún no se han implementado — las mismas seriaciones y UEAs que aquí se identifican como palancas de mejora son las que el análisis de modificaciones examina como candidatas a reestructuración.</p>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">La concentración docente explica parte de la variación en eficiencia terminal que el <strong>Análisis de eficiencia terminal</strong> documenta por plan: una UEA con un único impartidor al final de una cadena larga no solo retarda el egreso, lo bloquea. Las recomendaciones de este análisis son insumo directo para las decisiones de asignación que las <strong>Modificaciones 2026</strong> deben contemplar.</p>
       <div class="connect-links">
+        <a class="connect-link" href="metanalisis.html">Ver Eficiencia terminal →</a>
         <a class="connect-link" href="modificaciones.html">Ver Modificaciones 2026 →</a>
-        <a class="connect-link" href="cat26p.html">Ver CAT 26P →</a>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="theme-color" content="#C82D23">
-  <title>Análisis de Eficiencia Terminal — DCBI · DCBI UAM-A</title>
+  <title>El mapa de riesgo — DCBI · DCBI UAM-A</title>
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <style>
   :root {
@@ -294,8 +294,8 @@
     <ul class="nav-links" id="navLinks"><li><a href="index.html" class="" onclick="closeNav()">🏠 Inicio</a></li>
 <li><a href="cat26p.html" class="" onclick="closeNav()">CAT 26P</a></li>
 <li><a href="cat26p_capacidad.html" class="" onclick="closeNav()">↳ Capacidad</a></li>
-<li><a href="metanalisis.html" class="active" onclick="closeNav()">Metaanálisis</a></li>
-<li><a href="concentracion.html" class="" onclick="closeNav()">Distribución docente</a></li>
+<li><a href="metanalisis.html" class="" onclick="closeNav()">Metaanálisis</a></li>
+<li><a href="concentracion.html" class="active" onclick="closeNav()">Distribución docente</a></li>
 <li><a href="modificaciones.html" class="" onclick="closeNav()">Modificaciones 2026</a></li></ul>
     <button class="nav-hamburger" id="hamburger" aria-label="Menú" onclick="toggleNav()">
       <span></span><span></span><span></span>
@@ -303,150 +303,76 @@
   </div>
 </nav>
 
-<style>
-  .landing-hero { min-height:100svh; background:var(--ink); color:#fff;
-                  display:flex; flex-direction:column; justify-content:center;
-                  padding:3rem 2rem; position:relative; overflow:hidden }
-  .landing-hero::before { content:''; position:absolute; inset:0;
-    background:radial-gradient(ellipse 80% 60% at 60% 40%, rgba(200,45,35,.12) 0%, transparent 70%);
-    pointer-events:none }
-  .landing-hero-inner { max-width:1440px; margin:0 auto; width:100%;
-                        display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center }
-  .landing-tag { font-size:.72rem; font-weight:700; letter-spacing:.16em;
-                 text-transform:uppercase; color:var(--red); margin-bottom:1rem }
-  .landing-h1 { font-size:clamp(2rem,5vw,4rem); font-weight:200; line-height:1.1;
-                letter-spacing:-.03em }
-  .landing-h1 strong { font-weight:800; display:block }
-  .landing-sub { margin-top:1.2rem; font-size:1rem; color:rgba(255,255,255,.5);
-                 max-width:520px; line-height:1.7 }
-  .landing-bar { width:56px; height:3px; background:var(--red); margin:1.8rem 0 }
-  .landing-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:.75rem; max-width:520px }
-  .lkpi { padding:.9rem; background:rgba(255,255,255,.06);
-          border:1px solid rgba(255,255,255,.1); border-radius:8px; text-align:center }
-  .lkpi-val { font-size:1.8rem; font-weight:700; color:#fff; line-height:1 }
-  .lkpi-lbl { font-size:.65rem; color:rgba(255,255,255,.4); margin-top:.3rem; letter-spacing:.04em }
-  .flow-diagram { display:flex; flex-direction:column; gap:1.5rem; padding:.5rem }
-  .flow-node { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
-               border-radius:12px; padding:1.4rem 1.6rem; cursor:pointer;
-               transition:background var(--ease),border-color var(--ease),transform var(--ease) }
-  .flow-node:hover { background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5);
-                     transform:translateX(6px) }
-  .flow-node-tag { font-size:.62rem; font-weight:700; letter-spacing:.12em;
-                   text-transform:uppercase; color:var(--red); margin-bottom:.4rem }
-  .flow-node-title { font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:.3rem }
-  .flow-node-desc { font-size:.8rem; color:rgba(255,255,255,.45); line-height:1.5 }
-  .flow-node-stat { font-size:1.6rem; font-weight:800; color:#fff; margin-top:.6rem }
-  .flow-node-stat-lbl { font-size:.68rem; color:rgba(255,255,255,.35) }
-  .flow-arrow { text-align:center; color:var(--red); font-size:1.4rem; opacity:.6 }
-  .scroll-hint { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
-                 font-size:.7rem; color:rgba(255,255,255,.3); text-align:center;
-                 animation:bobble 2s ease-in-out infinite }
-  @keyframes bobble { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(5px)} }
-  @media(max-width:960px) {
-    .landing-hero-inner { grid-template-columns:1fr; gap:2.5rem }
-    .landing-kpis { grid-template-columns:repeat(2,1fr); max-width:none }
-    .flow-diagram { flex-direction:row; gap:1rem }
-    .flow-arrow { writing-mode:horizontal-tb; align-self:center; transform:rotate(0deg) }
-    .flow-node { flex:1 }
-  }
-  @media(max-width:640px) {
-    .landing-hero { min-height:auto; padding:calc(52px + 2rem) 1.25rem 2rem }
-    .landing-h1 { font-size:clamp(1.8rem,8vw,2.8rem) }
-    .flow-diagram { flex-direction:column }
-    .flow-node:hover { transform:none }
-  }
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-label">Distribución docente · Infografía 4 · División de Ciencias Básicas e Ingeniería · UAM-Azcapotzalco</p>
+      <h1><strong>El mapa de riesgo</strong></h1>
+      <p class="hero-sub">Los análisis anteriores operaron sobre UEAs individuales y vecindades. Esta infografía eleva la escala: qué planes de estudio y qué departamentos concentran la mayor exposición estructural, con variación de dos órdenes de magnitud entre extremos.</p>
+      <div class="hero-bar"></div>
+    </div>
+  </div>
+</header>
 
-  .meta-nodes { display:grid; grid-template-columns:1fr 1fr; gap:.7rem }
-  .meta-node { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
-               border-radius:12px; padding:1rem 1.1rem; cursor:pointer;
-               transition:background var(--ease),border-color var(--ease);
-               text-decoration:none; display:block }
-  .meta-node:hover { background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5) }
-  .meta-node-tag { font-size:.6rem; font-weight:700; letter-spacing:.12em;
-                   text-transform:uppercase; color:var(--red); margin-bottom:.3rem }
-  .meta-node-title { font-size:.95rem; font-weight:700; color:#fff; margin-bottom:.25rem }
-  .meta-node-desc { font-size:.75rem; color:rgba(255,255,255,.4); line-height:1.45 }
-  .meta-node-sub { margin-top:.55rem; padding-top:.5rem;
-                   border-top:1px solid rgba(255,255,255,.1);
-                   font-size:.72rem; color:rgba(200,45,35,.8); font-weight:600 }
-  .meta-node-wide { grid-column:1/-1 }
-  @media(max-width:960px) { .meta-nodes { grid-template-columns:1fr } }
-</style>
-<main>
-  <div class="landing-hero">
-    <div class="landing-hero-inner">
-      <div>
-        <p class="landing-tag animate-in">UAM Azcapotzalco · División de Ciencias Básicas e Ingeniería</p>
-        <h1 class="landing-h1 animate-in delay-1">
-          Análisis de
-          <strong>eficiencia terminal</strong>
-        </h1>
-        <p class="landing-sub animate-in delay-2">
-          Cinco infografías interactivas que diagnostican el rezago en los diez programas
-          del Plan 2020: causas estructurales, palancas de mejora, índices de prelación
-          y complejidad sistémica — con datos de 2018 a 2025.
-        </p>
-        <div class="landing-bar animate-in delay-2"></div>
-        <div class="landing-kpis animate-in delay-3">
-          <div class="lkpi">
-            <div class="lkpi-val">10</div>
-            <div class="lkpi-lbl">Licenciaturas</div>
-          </div>
-          <div class="lkpi">
-            <div class="lkpi-val kpi-counter" data-target="6562">0</div>
-            <div class="lkpi-lbl">Estudiantes activos</div>
-          </div>
-          <div class="lkpi">
-            <div class="lkpi-val kpi-counter" data-target="499">0</div>
-            <div class="lkpi-lbl">Seriaciones</div>
-          </div>
-          <div class="lkpi">
-            <div class="lkpi-val kpi-counter" data-target="1859">0</div>
-            <div class="lkpi-lbl">UEAs analizadas</div>
-          </div>
-        </div>
+<main class="main">
+
+  <section class="section animate-in">
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid)">Los análisis anteriores operaron sobre UEAs individuales y vecindades. Esta infografía eleva la escala: ¿qué planes de estudio y qué departamentos concentran la mayor exposición estructural? La respuesta no es uniforme. La variación entre los planes más y menos expuestos alcanza dos órdenes de magnitud, y el patrón no es aleatorio: refleja la arquitectura curricular de cada licenciatura —la densidad de sus cadenas de seriación y la especialización de sus plantillas docentes— más que diferencias en el volumen de UEAs.</p>
+  </section>
+
+  <section class="section animate-in" id="chart-section-risk-plan">
+    <div class="section-header">
+      <h2>Riesgo estructural por plan de estudios</h2>
+      <span class="section-count">10 planes · UEAs críticas + alto riesgo + medio-bajo · RC medio como diamante</span>
+    </div>
+    <p class="section-desc">Barras apiladas por nivel de riesgo; el diamante negro en el eje superior marca el RC medio de cada plan. Los planes están ordenados de menor a mayor exposición total.</p>
+    <div class="read-callout"><strong>Qué buscar:</strong> la brecha entre Ingeniería Civil y el resto, el RC medio de los planes intermedios, y cuáles planes tienen cero UEAs críticas a pesar de tener HHI alto.</div>
+    <div class="chart-card animate-in delay-1">
+      <div class="chart-card-header">
+        <h3>Distribución de riesgo por plan de estudios</h3>
+        <span class="chart-type-tag">Interactivo</span>
       </div>
-      <div class="meta-nodes animate-in delay-2">
-        <a class="meta-node" href="meta_1.html">
-          <div class="meta-node-tag">Infografía 1</div>
-          <div class="meta-node-title">El diagnóstico</div>
-          <div class="meta-node-desc">Los 10 programas tardan el doble del plazo nominal en titular su cohorte.</div>
-        </a>
-        <a class="meta-node" href="meta_2.html">
-          <div class="meta-node-tag">Infografía 2</div>
-          <div class="meta-node-title">Las causas</div>
-          <div class="meta-node-desc">Dos mecanismos estructurales imponen cotas mínimas de permanencia.</div>
-        </a>
-        <a class="meta-node" href="meta_3.html">
-          <div class="meta-node-tag">Infografía 3</div>
-          <div class="meta-node-title">La palanca</div>
-          <div class="meta-node-desc">El 26.5 % de seriaciones concentra el 80 % del beneficio alcanzable.</div>
-        </a>
-        <a class="meta-node" href="meta_4.html">
-          <div class="meta-node-tag">Infografía 4</div>
-          <div class="meta-node-title">El índice P</div>
-          <div class="meta-node-desc">Sesgo de diseño que retrasa el egreso hasta 4.7 trimestres.</div>
-          <div class="meta-node-sub">↳ Respuesta divisional: índices P y h →</div>
-        </a>
-        <a class="meta-node meta-node-wide" href="meta_5.html">
-          <div class="meta-node-tag">Infografía 5</div>
-          <div class="meta-node-title">Complejidad multidimensional</div>
-          <div class="meta-node-desc">El índice C mapea la disfunción en cinco dimensiones y orienta la intervención.</div>
-        </a>
+      <div class="chart-canvas rendering lg" id="chart-risk-plan">
+        <div class="chart-skeleton"></div>
       </div>
     </div>
-    <div class="scroll-hint">▾ desplázate para explorar</div>
-  </div>
-  <div style="padding:3rem 2rem;max-width:1440px;margin:0 auto" id="content">
-    <div class="connect-box animate-in">
-      <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
-      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">El análisis de eficiencia terminal documenta el problema; el proyecto de Modificaciones 2026 es, en parte, la respuesta. Evalúa con inteligencia artificial las propuestas de reforma curricular que aún no se han implementado — las mismas seriaciones y UEAs que aquí se identifican como palancas de mejora son las que el análisis de modificaciones examina como candidatas a reestructuración.</p>
-      <div class="connect-links">
-        <a class="connect-link" href="modificaciones.html">Ver Modificaciones 2026 →</a>
-        <a class="connect-link" href="cat26p.html">Ver CAT 26P →</a>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem"><strong>Ingeniería Civil</strong> encabeza la clasificación con una distancia considerable respecto al resto: el <strong>30.6 % de sus UEAs son críticas</strong> (RC ≥ percentil 90) y el RC medio del plan es 0.36, el más alto entre los diez programas. Le siguen <strong>Ingeniería en Computación</strong> (17.6 % de UEAs críticas, RC medio 0.29) e <strong>Ingeniería Eléctrica</strong> (15.9 %, RC medio 0.27). En el extremo opuesto, <strong>Ingeniería Física, Ingeniería Química, Ingeniería Industrial e Ingeniería Metalúrgica</strong> registran cero UEAs en nivel crítico y RC medio inferior a 0.02. Esta diferencia no refleja una gestión docente mejor o peor en esos planes: refleja que sus cadenas de seriación son menos profundas y sus UEAs de especialidad tienen, históricamente, mayor diversidad de impartidores. El diseño curricular determina la magnitud del riesgo tanto como la política de asignación docente.</p>
+  </section>
+
+  <section class="section animate-in" id="chart-section-risk-dept">
+    <div class="section-header">
+      <h2>Mapa de riesgo por departamento</h2>
+      <span class="section-count">HHI mediana (eje x) · RC medio (eje y) · tamaño = n° UEAs</span>
+    </div>
+    <p class="section-desc">Cada burbuja es un departamento. La zona sombreada en rojo (HHI &gt; 0.5 y RC &gt; 0.15) marca el cuadrante de máxima exposición compuesta. El tamaño de la burbuja es proporcional al número de UEAs del departamento.</p>
+    <div class="read-callout"><strong>Qué buscar:</strong> qué departamentos entran en la zona crítica, cuál tiene el HHI más alto pero RC bajo, y cómo Ciencias Básicas se separa del resto en dirección contraria a todos.</div>
+    <div class="chart-card animate-in delay-1">
+      <div class="chart-card-header">
+        <h3>Perfil de riesgo departamental</h3>
+        <span class="chart-type-tag">Interactivo</span>
+      </div>
+      <div class="chart-canvas rendering md" id="chart-risk-dept">
+        <div class="chart-skeleton"></div>
       </div>
     </div>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem">A nivel departamental, <strong>Materiales</strong> registra el RC medio más alto entre los departamentos con más de cinco UEAs (0.21), con una mediana de HHI de 0.37 y el 14 % de sus UEAs en régimen de exclusiva. Es el departamento con mayor exposición compuesta, aunque permanece ligeramente por debajo del umbral crítico de HHI = 0.5. <strong>Dirección de la División</strong> presenta la mediana de HHI más alta (0.50) y el porcentaje de monopolios individuales más elevado (23 %), pero su RC medio es menor (0.13): sus UEAs en exclusiva están en su mayoría fuera de cadenas de seriación largas, lo que aísla el efecto de cascada más grave. <strong>Ciencias Básicas</strong> se comporta de forma inversa a todos los demás: HHI mediana baja (0.17), sin UEAs en el cuadrante crítico y el número de monopolios más reducido de la División, en coherencia con la estructura del Tronco General.</p>
+  </section>
+
+  <div class="recuadro animate-in">
+    <div class="recuadro-title">Síntesis</div>
+    <p>Tres conclusiones organizan la agenda de gobernanza que se desprende de este análisis. <strong>Primera:</strong> la concentración docente es el estado habitual del sistema, no una anomalía —el 44.3 % de las UEAs tiene HHI ≥ 0.5—, por lo que las políticas de relevo docente deben diseñarse como estructura permanente, no como respuesta a emergencias. <strong>Segunda:</strong> el riesgo estructural está localizado: 61 UEAs críticas en tres planes (Civil, Computación, Eléctrica) y un conjunto reducido de profesores que son puntos únicos de fallo acumulan la mayor parte de la exposición; la intervención focalizada tiene alto retorno. <strong>Tercera:</strong> medir solo el HHI es insuficiente —la vecindad C1 lo demuestra—: cualquier política de diversificación docente debe cruzar la concentración con la posición de la UEA en el grafo de seriaciones para priorizar correctamente.</p>
   </div>
+
+  <hr class="divider">
+
+  <div class="connect-box animate-in">
+    <div class="connect-box-title">Navegación</div>
+    <div class="connect-links">
+      <a class="connect-link" href="conc_3.html">← Infografía 3: Redes y vecindades</a>
+      <a class="connect-link" href="concentracion.html">↑ Índice Distribución docente</a>
+    </div>
+  </div>
+
 </main>
 
 
@@ -456,7 +382,10 @@
   Dr. César S. López-Monsalvo ·
   <a href="mailto:cslm@azc.uam.mx" style="color:rgba(255,255,255,.5);text-decoration:underline">cslm@azc.uam.mx</a>
 </footer>
-
+<nav class="bottom-nav" aria-label="Navegación rápida"><div class="bottom-nav-inner">
+      <a class="bottom-nav-item" href="conc_3.html"><span class="bottom-nav-icon">&#9664;</span>Vecindades</a>
+      <a class="bottom-nav-item" href="concentracion.html"><span class="bottom-nav-icon">&#127968;</span>Índice</a>
+    </div></nav>
 <script>
 
 
@@ -629,6 +558,138 @@ window.renderChart = function(containerId, traceFn, layoutFn) {
   io.observe(container);
 };
 
+
+renderChart('chart-risk-plan',
+  function() {
+    var labels = ["Ing. Metal\u00fargica", "Ing. Industrial", "Ing. Qu\u00edmica", "Lic. F\u00edsica Aplicada", "Ing. Mec\u00e1nica", "Ing. El\u00e9ctrica", "Ing. Ambiental", "Ing. Electr\u00f3nica", "Ing. Computaci\u00f3n", "Ing. Civil"];
+    var n_crit = [0, 0, 0, 0, 1, 3, 8, 7, 16, 26];
+    var n_alto = [0, 0, 0, 0, 2, 1, 25, 14, 25, 23];
+    var n_mb   = [56, 37, 36, 61, 13, 30, 110, 23, 50, 36];
+    var n_ueas = [56, 37, 36, 61, 16, 34, 143, 44, 91, 85];
+    var rc_med = [0.0088, 0.0106, 0.0135, 0.0185, 0.0787, 0.0984, 0.1313, 0.2731, 0.288, 0.3607];
+    var hhi_m  = [0.4873, 0.4264, 0.3487, 0.3138, 0.5594, 0.5203, 0.3066, 0.3811, 0.3508, 0.4663];
+    var pct_c  = [0.0, 0.0, 0.0, 0.0, 6.2, 8.8, 5.6, 15.9, 17.6, 30.6];
+    var pct_a  = [0.0, 0.0, 0.0, 0.0, 12.5, 2.9, 17.5, 31.8, 27.5, 27.1];
+    return [
+      {
+        type: 'bar',
+        orientation: 'h',
+        x: n_crit,
+        y: labels,
+        name: 'Crítico',
+        marker: { color: '#C82D23', opacity: 0.9 },
+        customdata: labels.map(function(l, i) { return [pct_c[i], n_ueas[i], rc_med[i]]; }),
+        hovertemplate: '%{y} — Crítico<br>UEAs: %{x} (%{customdata[0]}%)<br>RC medio: %{customdata[2]:.3f}<extra></extra>'
+      },
+      {
+        type: 'bar',
+        orientation: 'h',
+        x: n_alto,
+        y: labels,
+        name: 'Alto',
+        marker: { color: '#FF9800', opacity: 0.85 },
+        customdata: labels.map(function(l, i) { return [pct_a[i]]; }),
+        hovertemplate: '%{y} — Alto<br>UEAs: %{x} (%{customdata[0]}%)<extra></extra>'
+      },
+      {
+        type: 'bar',
+        orientation: 'h',
+        x: n_mb,
+        y: labels,
+        name: 'Medio-bajo',
+        marker: { color: 'rgba(0,0,0,0.12)' },
+        hovertemplate: '%{y} — Medio-bajo<br>UEAs: %{x}<extra></extra>'
+      },
+      {
+        type: 'scatter',
+        mode: 'markers',
+        x: rc_med,
+        y: labels,
+        xaxis: 'x2',
+        marker: { size: 9, color: '#1A1A1A', symbol: 'diamond', line: { color: '#fff', width: 1 } },
+        name: 'RC medio',
+        hovertemplate: 'RC medio: %{x:.3f}<extra></extra>'
+      }
+    ];
+  },
+  function() {
+    return Object.assign({}, LAYOUT_BASE, {
+      title: { text: 'Distribución de riesgo por plan de estudios', font: FONT, x: 0.5 },
+      xaxis:  { title: 'Número de UEAs', tickfont: FONT, domain: [0, 0.82] },
+      xaxis2: { title: 'RC medio', overlaying: 'x', side: 'top', range: [0, 0.5], tickfont: FONT, showgrid: false },
+      yaxis:  { automargin: true, tickfont: FONT },
+      barmode: 'stack',
+      margin: { l: 155, r: 20, t: 60, b: 50 },
+      bargap: 0.25,
+      legend: { x: 0.84, y: 0.5, font: FONT }
+    });
+  }
+);
+
+renderChart('chart-risk-dept',
+  function() {
+    var b_names  = ["EVA. DISENO EN E", "DERECHO", "PROCESOS TEC. RE", "Direcci\u00f3n", "INV.CONOCIMIENTO", "MEDIO AMBIENTE", "SOCIOLOGIA", "Humanidades", "Materiales", "ADMINISTRACION", "Electr\u00f3nica", "Sistemas", "Energ\u00eda", "Ciencias B\u00e1sicas", "ECONOMIA"];
+    var b_hhi    = [0.6736, 0.6172, 0.5306, 0.5, 0.4132, 0.39, 0.3795, 0.375, 0.3646, 0.346, 0.2639, 0.2503, 0.2474, 0.166, 0.1517];
+    var b_rc     = [0.2266, 0.0, 0.0, 0.1278, 0.0, 0.0, 0.0, 0.0, 0.2142, 0.0, 0.1638, 0.1918, 0.1864, 0.0759, 0.0];
+    var b_nueas  = [2, 2, 1, 109, 1, 2, 2, 5, 107, 2, 83, 62, 138, 89, 1];
+    var b_pct1   = [0.0, 50.0, 0.0, 22.9, 0.0, 0.0, 0.0, 20.0, 14.0, 0.0, 9.6, 6.5, 4.3, 4.5, 0.0];
+    var b_sz     = [8.0, 8.0, 8.0, 46.9814, 8.0, 8.0, 8.0, 10.0623, 46.5484, 8.0, 40.997, 35.433, 52.863, 42.4529, 8.0];
+    var b_colors = ["#2E7D32", "#C82D23", "#2E7D32", "#C82D23", "#2E7D32", "#2E7D32", "#2E7D32", "#C82D23", "#FF9800", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32"];
+    return [
+      {
+        type: 'scatter',
+        mode: 'markers+text',
+        x: b_hhi,
+        y: b_rc,
+        marker: {
+          size: b_sz,
+          color: b_colors,
+          opacity: 0.75,
+          line: { width: 1, color: 'rgba(255,255,255,0.6)' }
+        },
+        text: b_names,
+        textposition: 'top center',
+        textfont: Object.assign({}, FONT, { size: 10 }),
+        customdata: b_names.map(function(n, i) { return [b_nueas[i], b_pct1[i]]; }),
+        hovertemplate: '<b>%{text}</b><br>HHI mediana: %{x:.3f}<br>RC medio: %{y:.3f}<br>UEAs: %{customdata[0]}<br>% monopolio (HHI=1): %{customdata[1]}%<extra></extra>',
+        name: 'Departamento'
+      },
+      {
+        type: 'scatter',
+        mode: 'lines',
+        x: [0.5, 0.5, null, 0.5, 1.0],
+        y: [0.15, 0.7, null, 0.15, 0.15],
+        line: { color: 'rgba(200,45,35,0.25)', width: 1, dash: 'dot' },
+        fill: 'none',
+        hoverinfo: 'skip',
+        showlegend: false,
+        name: ''
+      }
+    ];
+  },
+  function() {
+    return Object.assign({}, LAYOUT_BASE, {
+      title: { text: 'Perfil de riesgo departamental (tamaño = n° UEAs, color = % monopolio)', font: FONT, x: 0.5 },
+      xaxis: { title: 'HHI mediana', tickfont: FONT, range: [0, 0.6] },
+      yaxis: { title: 'RC medio', tickfont: FONT, range: [-0.02, 0.35] },
+      margin: { l: 60, r: 30, t: 50, b: 60 },
+      showlegend: false,
+      shapes: [{
+        type: 'rect',
+        x0: 0.5, x1: 0.65, y0: 0.15, y1: 0.30,
+        fillcolor: 'rgba(200,45,35,0.06)',
+        line: { color: 'rgba(200,45,35,0.3)', width: 1, dash: 'dot' },
+        layer: 'below'
+      }],
+      annotations: [{
+        x: 0.57, y: 0.29,
+        text: 'Zona crítica',
+        showarrow: false,
+        font: Object.assign({}, FONT, { size: 10, color: '#C82D23' })
+      }]
+    });
+  }
+);
 
 </script>
 </body>

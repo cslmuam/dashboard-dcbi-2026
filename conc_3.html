@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <meta name="theme-color" content="#C82D23">
-  <title>Análisis de Eficiencia Terminal — DCBI · DCBI UAM-A</title>
+  <title>Redes y vecindades — DCBI · DCBI UAM-A</title>
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <style>
   :root {
@@ -294,8 +294,8 @@
     <ul class="nav-links" id="navLinks"><li><a href="index.html" class="" onclick="closeNav()">🏠 Inicio</a></li>
 <li><a href="cat26p.html" class="" onclick="closeNav()">CAT 26P</a></li>
 <li><a href="cat26p_capacidad.html" class="" onclick="closeNav()">↳ Capacidad</a></li>
-<li><a href="metanalisis.html" class="active" onclick="closeNav()">Metaanálisis</a></li>
-<li><a href="concentracion.html" class="" onclick="closeNav()">Distribución docente</a></li>
+<li><a href="metanalisis.html" class="" onclick="closeNav()">Metaanálisis</a></li>
+<li><a href="concentracion.html" class="active" onclick="closeNav()">Distribución docente</a></li>
 <li><a href="modificaciones.html" class="" onclick="closeNav()">Modificaciones 2026</a></li></ul>
     <button class="nav-hamburger" id="hamburger" aria-label="Menú" onclick="toggleNav()">
       <span></span><span></span><span></span>
@@ -303,150 +303,72 @@
   </div>
 </nav>
 
-<style>
-  .landing-hero { min-height:100svh; background:var(--ink); color:#fff;
-                  display:flex; flex-direction:column; justify-content:center;
-                  padding:3rem 2rem; position:relative; overflow:hidden }
-  .landing-hero::before { content:''; position:absolute; inset:0;
-    background:radial-gradient(ellipse 80% 60% at 60% 40%, rgba(200,45,35,.12) 0%, transparent 70%);
-    pointer-events:none }
-  .landing-hero-inner { max-width:1440px; margin:0 auto; width:100%;
-                        display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center }
-  .landing-tag { font-size:.72rem; font-weight:700; letter-spacing:.16em;
-                 text-transform:uppercase; color:var(--red); margin-bottom:1rem }
-  .landing-h1 { font-size:clamp(2rem,5vw,4rem); font-weight:200; line-height:1.1;
-                letter-spacing:-.03em }
-  .landing-h1 strong { font-weight:800; display:block }
-  .landing-sub { margin-top:1.2rem; font-size:1rem; color:rgba(255,255,255,.5);
-                 max-width:520px; line-height:1.7 }
-  .landing-bar { width:56px; height:3px; background:var(--red); margin:1.8rem 0 }
-  .landing-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:.75rem; max-width:520px }
-  .lkpi { padding:.9rem; background:rgba(255,255,255,.06);
-          border:1px solid rgba(255,255,255,.1); border-radius:8px; text-align:center }
-  .lkpi-val { font-size:1.8rem; font-weight:700; color:#fff; line-height:1 }
-  .lkpi-lbl { font-size:.65rem; color:rgba(255,255,255,.4); margin-top:.3rem; letter-spacing:.04em }
-  .flow-diagram { display:flex; flex-direction:column; gap:1.5rem; padding:.5rem }
-  .flow-node { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
-               border-radius:12px; padding:1.4rem 1.6rem; cursor:pointer;
-               transition:background var(--ease),border-color var(--ease),transform var(--ease) }
-  .flow-node:hover { background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5);
-                     transform:translateX(6px) }
-  .flow-node-tag { font-size:.62rem; font-weight:700; letter-spacing:.12em;
-                   text-transform:uppercase; color:var(--red); margin-bottom:.4rem }
-  .flow-node-title { font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:.3rem }
-  .flow-node-desc { font-size:.8rem; color:rgba(255,255,255,.45); line-height:1.5 }
-  .flow-node-stat { font-size:1.6rem; font-weight:800; color:#fff; margin-top:.6rem }
-  .flow-node-stat-lbl { font-size:.68rem; color:rgba(255,255,255,.35) }
-  .flow-arrow { text-align:center; color:var(--red); font-size:1.4rem; opacity:.6 }
-  .scroll-hint { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
-                 font-size:.7rem; color:rgba(255,255,255,.3); text-align:center;
-                 animation:bobble 2s ease-in-out infinite }
-  @keyframes bobble { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(5px)} }
-  @media(max-width:960px) {
-    .landing-hero-inner { grid-template-columns:1fr; gap:2.5rem }
-    .landing-kpis { grid-template-columns:repeat(2,1fr); max-width:none }
-    .flow-diagram { flex-direction:row; gap:1rem }
-    .flow-arrow { writing-mode:horizontal-tb; align-self:center; transform:rotate(0deg) }
-    .flow-node { flex:1 }
-  }
-  @media(max-width:640px) {
-    .landing-hero { min-height:auto; padding:calc(52px + 2rem) 1.25rem 2rem }
-    .landing-h1 { font-size:clamp(1.8rem,8vw,2.8rem) }
-    .flow-diagram { flex-direction:column }
-    .flow-node:hover { transform:none }
-  }
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-label">Distribución docente · Infografía 3 · División de Ciencias Básicas e Ingeniería · UAM-Azcapotzalco</p>
+      <h1><strong>Redes y vecindades</strong></h1>
+      <p class="hero-sub">Una vecindad curricular controlada es un grupo de UEAs relacionadas donde un pequeño número de profesores domina la impartición histórica del bloque completo: 11 vecindades identificadas donde la fragilidad es sistémica, no puntual.</p>
+      <div class="hero-bar"></div>
+    </div>
+  </div>
+</header>
 
-  .meta-nodes { display:grid; grid-template-columns:1fr 1fr; gap:.7rem }
-  .meta-node { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
-               border-radius:12px; padding:1rem 1.1rem; cursor:pointer;
-               transition:background var(--ease),border-color var(--ease);
-               text-decoration:none; display:block }
-  .meta-node:hover { background:rgba(255,255,255,.09); border-color:rgba(200,45,35,.5) }
-  .meta-node-tag { font-size:.6rem; font-weight:700; letter-spacing:.12em;
-                   text-transform:uppercase; color:var(--red); margin-bottom:.3rem }
-  .meta-node-title { font-size:.95rem; font-weight:700; color:#fff; margin-bottom:.25rem }
-  .meta-node-desc { font-size:.75rem; color:rgba(255,255,255,.4); line-height:1.45 }
-  .meta-node-sub { margin-top:.55rem; padding-top:.5rem;
-                   border-top:1px solid rgba(255,255,255,.1);
-                   font-size:.72rem; color:rgba(200,45,35,.8); font-weight:600 }
-  .meta-node-wide { grid-column:1/-1 }
-  @media(max-width:960px) { .meta-nodes { grid-template-columns:1fr } }
-</style>
-<main>
-  <div class="landing-hero">
-    <div class="landing-hero-inner">
-      <div>
-        <p class="landing-tag animate-in">UAM Azcapotzalco · División de Ciencias Básicas e Ingeniería</p>
-        <h1 class="landing-h1 animate-in delay-1">
-          Análisis de
-          <strong>eficiencia terminal</strong>
-        </h1>
-        <p class="landing-sub animate-in delay-2">
-          Cinco infografías interactivas que diagnostican el rezago en los diez programas
-          del Plan 2020: causas estructurales, palancas de mejora, índices de prelación
-          y complejidad sistémica — con datos de 2018 a 2025.
-        </p>
-        <div class="landing-bar animate-in delay-2"></div>
-        <div class="landing-kpis animate-in delay-3">
-          <div class="lkpi">
-            <div class="lkpi-val">10</div>
-            <div class="lkpi-lbl">Licenciaturas</div>
-          </div>
-          <div class="lkpi">
-            <div class="lkpi-val kpi-counter" data-target="6562">0</div>
-            <div class="lkpi-lbl">Estudiantes activos</div>
-          </div>
-          <div class="lkpi">
-            <div class="lkpi-val kpi-counter" data-target="499">0</div>
-            <div class="lkpi-lbl">Seriaciones</div>
-          </div>
-          <div class="lkpi">
-            <div class="lkpi-val kpi-counter" data-target="1859">0</div>
-            <div class="lkpi-lbl">UEAs analizadas</div>
-          </div>
-        </div>
+<main class="main">
+
+  <section class="section animate-in">
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid)">Una <strong>vecindad curricular controlada</strong> es un grupo de UEAs relacionadas entre sí —por seriación formal, por corregistro obligatorio o por similitud de contenido en sus programas— donde además un pequeño número de profesores domina la impartición histórica del bloque completo. La combinación de vínculos curriculares fuertes con concentración docente sostenida crea una zona del plan de estudios donde la fragilidad no es puntual sino sistémica: afectar a un docente o a una UEA del bloque afecta al conjunto. El análisis identificó <strong>11 vecindades controladas</strong> de entre 22 grupos detectados automáticamente.</p>
+  </section>
+
+  <section class="section animate-in" id="chart-section-vecindades">
+    <div class="section-header">
+      <h2>Vecindades curriculares controladas (HHI cluster)</h2>
+      <span class="section-count">11 vecindades · HHI de vecindad agregado</span>
+    </div>
+    <p class="section-desc">El HHI de vecindad agrega la concentración docente a nivel del bloque completo, no UEA por UEA. Las barras en naranja tienen concentración elevada; las verdes, moderada. Pasa el cursor para ver el RC medio del bloque.</p>
+    <div class="read-callout"><strong>Qué buscar:</strong> el hallazgo contraintuitivo: las vecindades con mayor HHI de cluster no son las de mayor riesgo curricular real. La posición en el grafo de seriaciones importa más que el HHI agregado.</div>
+    <div class="chart-card animate-in delay-1">
+      <div class="chart-card-header">
+        <h3>HHI de vecindad curricular (11 vecindades controladas)</h3>
+        <span class="chart-type-tag">Interactivo</span>
       </div>
-      <div class="meta-nodes animate-in delay-2">
-        <a class="meta-node" href="meta_1.html">
-          <div class="meta-node-tag">Infografía 1</div>
-          <div class="meta-node-title">El diagnóstico</div>
-          <div class="meta-node-desc">Los 10 programas tardan el doble del plazo nominal en titular su cohorte.</div>
-        </a>
-        <a class="meta-node" href="meta_2.html">
-          <div class="meta-node-tag">Infografía 2</div>
-          <div class="meta-node-title">Las causas</div>
-          <div class="meta-node-desc">Dos mecanismos estructurales imponen cotas mínimas de permanencia.</div>
-        </a>
-        <a class="meta-node" href="meta_3.html">
-          <div class="meta-node-tag">Infografía 3</div>
-          <div class="meta-node-title">La palanca</div>
-          <div class="meta-node-desc">El 26.5 % de seriaciones concentra el 80 % del beneficio alcanzable.</div>
-        </a>
-        <a class="meta-node" href="meta_4.html">
-          <div class="meta-node-tag">Infografía 4</div>
-          <div class="meta-node-title">El índice P</div>
-          <div class="meta-node-desc">Sesgo de diseño que retrasa el egreso hasta 4.7 trimestres.</div>
-          <div class="meta-node-sub">↳ Respuesta divisional: índices P y h →</div>
-        </a>
-        <a class="meta-node meta-node-wide" href="meta_5.html">
-          <div class="meta-node-tag">Infografía 5</div>
-          <div class="meta-node-title">Complejidad multidimensional</div>
-          <div class="meta-node-desc">El índice C mapea la disfunción en cinco dimensiones y orienta la intervención.</div>
-        </a>
+      <div class="chart-canvas rendering md" id="chart-vecindades">
+        <div class="chart-skeleton"></div>
       </div>
     </div>
-    <div class="scroll-hint">▾ desplázate para explorar</div>
-  </div>
-  <div style="padding:3rem 2rem;max-width:1440px;margin:0 auto" id="content">
-    <div class="connect-box animate-in">
-      <div class="connect-box-title">¿Cómo se conecta con los demás proyectos?</div>
-      <p style="font-size:.84rem;color:var(--mid);line-height:1.6">El análisis de eficiencia terminal documenta el problema; el proyecto de Modificaciones 2026 es, en parte, la respuesta. Evalúa con inteligencia artificial las propuestas de reforma curricular que aún no se han implementado — las mismas seriaciones y UEAs que aquí se identifican como palancas de mejora son las que el análisis de modificaciones examina como candidatas a reestructuración.</p>
-      <div class="connect-links">
-        <a class="connect-link" href="modificaciones.html">Ver Modificaciones 2026 →</a>
-        <a class="connect-link" href="cat26p.html">Ver CAT 26P →</a>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem">El gráfico expone un hallazgo contraintuitivo que tiene consecuencias directas para la gobernanza: <strong>las vecindades con mayor concentración docente agregada no son las de mayor riesgo curricular</strong>. La vecindad C16 (Comportamiento Mecánico de los Materiales), con el HHI de cluster más alto del conjunto (0.137), registra Riesgo Concentrado nulo en todas sus UEAs porque ninguna de ellas forma parte de cadenas de seriación formales: la concentración existe, pero está desacoplada del mecanismo de cascada. En contraste, la vecindad C1 (Hidráulica y recursos hídricos), con un HHI de cluster de apenas 0.026, acumula <strong>19 UEAs en nivel crítico</strong> precisamente por el mecanismo inverso: concentración docente moderada amplificada por cadenas de hasta nueve eslabones. El riesgo institucional real es más alto donde la concentración docente <strong>parece</strong> menor. Medir solo el HHI, sin considerar la posición en el grafo de seriaciones, lleva a priorizar mal.</p>
+  </section>
+
+  <section class="section animate-in" id="chart-section-vecindades-risk">
+    <div class="section-header">
+      <h2>UEAs críticas por vecindad curricular</h2>
+      <span class="section-count">Crítico (RC ≥ p90) + Alto (RC p75–p90) · barras apiladas</span>
+    </div>
+    <p class="section-desc">El apilado muestra UEAs críticas (rojo) y alto riesgo (naranja) por vecindad. La longitud total indica la exposición agregada del bloque.</p>
+    <div class="read-callout"><strong>Qué buscar:</strong> qué vecindades acumulan más UEAs críticas y cómo eso contrasta con su posición en el gráfico anterior de HHI de cluster.</div>
+    <div class="chart-card animate-in delay-1">
+      <div class="chart-card-header">
+        <h3>UEAs en riesgo por vecindad curricular</h3>
+        <span class="chart-type-tag">Interactivo</span>
+      </div>
+      <div class="chart-canvas rendering sm" id="chart-vecindades-risk">
+        <div class="chart-skeleton"></div>
       </div>
     </div>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem">Entre las vecindades más relevantes para la gobernanza destacan tres perfiles distintos. <strong>Cluster 13 — Comunicaciones (Electrónica)</strong> agrupa 19 UEAs de la línea de comunicaciones analógicas y digitales con sus laboratorios correspondientes; su sensibilidad estructural es alta porque combina teoría y práctica en cadenas de seriación verticales donde el estudiante no puede avanzar sin haber completado los cursos precedentes, todos bajo la misma estructura de impartición concentrada (tasa de aprobación media: 74.5 %). <strong>Cluster 11 — Mecánica de sólidos y edificación</strong> agrupa 24 UEAs con la segunda tasa de aprobación más baja de las vecindades controladas (64.6 %): la combinación de bajo rendimiento y concentración docente crea un cuello de botella académico sostenido. <strong>Cluster 17 — Prácticas profesionales</strong> presenta un riesgo de naturaleza diferente: sus 11 UEAs de prácticas son, en varios planes, un <strong>requisito de egreso</strong>, de modo que la concentración docente en este bloque tiene implicaciones directas sobre la eficiencia terminal, no solo sobre el avance trimestral.</p>
+  </section>
+
+  <hr class="divider">
+
+  <div class="connect-box animate-in">
+    <div class="connect-box-title">Navegación</div>
+    <p style="font-size:.84rem;color:var(--mid);line-height:1.6">Las vecindades controladas revelan la textura interna del riesgo; el mapa de riesgo por plan y por departamento muestra su distribución institucional. La siguiente infografía cierra el análisis identificando qué planes y qué departamentos acumulan la mayor exposición estructural y dónde la intervención produciría el mayor retorno.</p>
+    <div class="connect-links">
+      <a class="connect-link" href="conc_2.html">← Infografía 2: El riesgo estructural</a>
+      <a class="connect-link" href="conc_4.html">Infografía 4: El mapa de riesgo →</a>
+    </div>
   </div>
+
 </main>
 
 
@@ -456,7 +378,11 @@
   Dr. César S. López-Monsalvo ·
   <a href="mailto:cslm@azc.uam.mx" style="color:rgba(255,255,255,.5);text-decoration:underline">cslm@azc.uam.mx</a>
 </footer>
-
+<nav class="bottom-nav" aria-label="Navegación rápida"><div class="bottom-nav-inner">
+      <a class="bottom-nav-item" href="conc_2.html"><span class="bottom-nav-icon">&#9664;</span>Riesgo</a>
+      <a class="bottom-nav-item" href="concentracion.html"><span class="bottom-nav-icon">&#127968;</span>Índice</a>
+      <a class="bottom-nav-item" href="conc_4.html"><span class="bottom-nav-icon">&#9654;</span>Mapa</a>
+    </div></nav>
 <script>
 
 
@@ -629,6 +555,83 @@ window.renderChart = function(containerId, traceFn, layoutFn) {
   io.observe(container);
 };
 
+
+renderChart('chart-vecindades',
+  function() {
+    var names  = ["Comportamiento Mec\u00e1nico y Fractura de\u2026", "Sistemas de Comunicaciones Anal\u00f3gicas,\u2026", "Sistemas Digitales, Redes y Proyectos de\u2026", "Pr\u00e1cticas Profesionales y Gesti\u00f3n de\u2026", "An\u00e1lisis y Dise\u00f1o Estructural de Obras de\u2026", "Metalurgia de Procesos: Fundici\u00f3n, Formado\u2026", "Arquitectura de Computadoras, Redes y\u2026", "Seminarios y Proyectos de Integraci\u00f3n\u2026", "Hidr\u00e1ulica, Geotecnia y Construcci\u00f3n de\u2026", "F\u00edsica Aplicada, Matem\u00e1ticas Avanzadas y\u2026", "F\u00edsica Aplicada, Matem\u00e1ticas Avanzadas y\u2026"];
+    var hhi_c  = [0.1373, 0.0915, 0.0826, 0.0801, 0.0479, 0.0456, 0.0302, 0.0294, 0.0261, 0.0187, 0.0115];
+    var hhi_m  = [0.4759, 0.44, 0.5, 1.0, 0.3142, 0.38, 0.3333, 0.4832, 0.42, 0.25, 0.2175];
+    var nueas  = [14, 19, 11, 11, 24, 35, 37, 48, 53, 55, 35];
+    var pct    = [0.2694, 0.136, 0.2102, 0.1698, 0.1062, 0.1185, 0.0533, 0.0659, 0.049, 0.0338, 0.0273];
+    var rc     = [0.5524, 0.5121, 0.4951, 0.7596, 0.3991, 0.4371, 0.4204, 0.5354, 0.4763, 0.3423, 0.2849];
+    var colors = ["#FF9800", "#FF9800", "#FF9800", "#FF9800", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32", "#2E7D32"];
+    var full   = ["Comportamiento Mec\u00e1nico y Fractura de Materiales Met\u00e1licos", "Sistemas de Comunicaciones Anal\u00f3gicas, Digitales y Radiofrecuencia", "Sistemas Digitales, Redes y Proyectos de Integraci\u00f3n El\u00e9ctrica", "Pr\u00e1cticas Profesionales y Gesti\u00f3n de Calidad Industrial", "An\u00e1lisis y Dise\u00f1o Estructural de Obras de Ingenier\u00eda Civil", "Metalurgia de Procesos: Fundici\u00f3n, Formado y Tratamientos T\u00e9rmicos", "Arquitectura de Computadoras, Redes y Sistemas de Informaci\u00f3n", "Seminarios y Proyectos de Integraci\u00f3n Multidisciplinar en Ingenier\u00eda", "Hidr\u00e1ulica, Geotecnia y Construcci\u00f3n de Infraestructura Civil", "F\u00edsica Aplicada, Matem\u00e1ticas Avanzadas y Fundamentos Computacionales", "F\u00edsica Aplicada, Matem\u00e1ticas Avanzadas y Fundamentos Computacionales"];
+    return [{
+      type: 'bar',
+      orientation: 'h',
+      x: hhi_c,
+      y: names,
+      marker: { color: colors, opacity: 0.85 },
+      text: hhi_c.map(function(v) { return v.toFixed(4); }),
+      textposition: 'outside',
+      cliponaxis: false,
+      customdata: names.map(function(n, i) { return [full[i], nueas[i], (pct[i]*100).toFixed(1), hhi_m[i], rc[i]]; }),
+      hovertemplate: '<b>%{customdata[0]}</b><br>HHI vecindad: %{x:.4f}<br>HHI mediana UEAs: %{customdata[3]:.3f}<br>UEAs: %{customdata[1]}<br>% grupos prof. dominante: %{customdata[2]}%<br>RC medio: %{customdata[4]:.3f}<extra></extra>',
+      name: 'HHI vecindad'
+    }];
+  },
+  function() {
+    return Object.assign({}, LAYOUT_BASE, {
+      title: { text: 'HHI de vecindad curricular (11 vecindades controladas)', font: FONT, x: 0.5 },
+      xaxis: { title: 'HHI de vecindad', tickfont: FONT, range: [0, 0.20] },
+      yaxis: { automargin: true, tickfont: FONT },
+      margin: { l: 290, r: 60, t: 50, b: 50 },
+      bargap: 0.3
+    });
+  }
+);
+
+renderChart('chart-vecindades-risk',
+  function() {
+    var names   = ["Comportamiento Mec\u00e1nico y Fractura de\u2026", "Sistemas de Comunicaciones Anal\u00f3gicas,\u2026", "Sistemas Digitales, Redes y Proyectos de\u2026", "Pr\u00e1cticas Profesionales y Gesti\u00f3n de\u2026", "An\u00e1lisis y Dise\u00f1o Estructural de Obras de\u2026", "Metalurgia de Procesos: Fundici\u00f3n, Formado\u2026", "Arquitectura de Computadoras, Redes y\u2026", "Seminarios y Proyectos de Integraci\u00f3n\u2026", "Hidr\u00e1ulica, Geotecnia y Construcci\u00f3n de\u2026", "F\u00edsica Aplicada, Matem\u00e1ticas Avanzadas y\u2026", "F\u00edsica Aplicada, Matem\u00e1ticas Avanzadas y\u2026"];
+    var n_crit  = [0, 1, 0, 0, 6, 0, 11, 0, 19, 4, 4];
+    var n_alto  = [0, 1, 2, 0, 5, 0, 13, 5, 18, 5, 8];
+    var rc_max  = [0.0, 0.862, 0.4, 0.0, 1.0, 0.213, 1.0, 0.435, 1.0, 1.0, 1.0];
+    var full    = ["Comportamiento Mec\u00e1nico y Fractura de Materiales Met\u00e1licos", "Sistemas de Comunicaciones Anal\u00f3gicas, Digitales y Radiofrecuencia", "Sistemas Digitales, Redes y Proyectos de Integraci\u00f3n El\u00e9ctrica", "Pr\u00e1cticas Profesionales y Gesti\u00f3n de Calidad Industrial", "An\u00e1lisis y Dise\u00f1o Estructural de Obras de Ingenier\u00eda Civil", "Metalurgia de Procesos: Fundici\u00f3n, Formado y Tratamientos T\u00e9rmicos", "Arquitectura de Computadoras, Redes y Sistemas de Informaci\u00f3n", "Seminarios y Proyectos de Integraci\u00f3n Multidisciplinar en Ingenier\u00eda", "Hidr\u00e1ulica, Geotecnia y Construcci\u00f3n de Infraestructura Civil", "F\u00edsica Aplicada, Matem\u00e1ticas Avanzadas y Fundamentos Computacionales", "F\u00edsica Aplicada, Matem\u00e1ticas Avanzadas y Fundamentos Computacionales"];
+    return [
+      {
+        type: 'bar',
+        orientation: 'h',
+        x: n_crit,
+        y: names,
+        name: 'Crítico',
+        marker: { color: '#C82D23', opacity: 0.9 },
+        customdata: full.map(function(f, i) { return [f, rc_max[i]]; }),
+        hovertemplate: '<b>%{customdata[0]}</b><br>UEAs críticas: %{x}<br>RC máx: %{customdata[1]:.3f}<extra></extra>'
+      },
+      {
+        type: 'bar',
+        orientation: 'h',
+        x: n_alto,
+        y: names,
+        name: 'Alto',
+        marker: { color: '#FF9800', opacity: 0.85 },
+        hovertemplate: '<b>%{y}</b><br>UEAs alto riesgo: %{x}<extra></extra>'
+      }
+    ];
+  },
+  function() {
+    return Object.assign({}, LAYOUT_BASE, {
+      title: { text: 'UEAs en riesgo por vecindad curricular', font: FONT, x: 0.5 },
+      xaxis: { title: 'Número de UEAs', tickfont: FONT },
+      yaxis: { automargin: true, tickfont: FONT },
+      barmode: 'stack',
+      margin: { l: 290, r: 30, t: 50, b: 50 },
+      bargap: 0.3,
+      legend: { x: 0.75, y: 0.05, font: FONT }
+    });
+  }
+);
 
 </script>
 </body>
