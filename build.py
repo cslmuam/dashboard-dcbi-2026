@@ -1028,6 +1028,7 @@ index_html = page_shell(
     bottom_nav_items="""
       <a class="bottom-nav-item" href="cat26p.html"><span class="bottom-nav-icon">🗓</span>CAT</a>
       <a class="bottom-nav-item" href="metanalisis.html"><span class="bottom-nav-icon">📊</span>Eficiencia</a>
+      <a class="bottom-nav-item" href="concentracion.html"><span class="bottom-nav-icon">👥</span>Docentes</a>
       <a class="bottom-nav-item" href="modificaciones.html"><span class="bottom-nav-icon">📋</span>Modif.</a>
     """,
 )
