@@ -930,7 +930,21 @@
   </section>
 
   <hr class="divider">
-  <div class="connect-box animate-in">
+  <div class="connect-box animate-in" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
+    <div>
+      <div class="connect-box-title">Reporte técnico completo</div>
+      <p style="font-size:.84rem;color:var(--mid);line-height:1.6;margin:0">Arquitectura del sistema multiagente, algoritmos y validación formal · 27 pp. · PDF</p>
+    </div>
+    <a href="reporte_tecnico_sistema_multiagente.pdf" download
+       style="display:inline-flex;align-items:center;gap:.5rem;background:var(--red);color:#fff;
+              text-decoration:none;padding:.7rem 1.4rem;border-radius:8px;font-size:.85rem;
+              font-weight:700;white-space:nowrap;transition:opacity .15s"
+       onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+      ↓ Descargar PDF
+    </a>
+  </div>
+
+  <div class="connect-box animate-in" style="margin-top:1rem">
     <div class="connect-box-title">Ver los resultados del ciclo 26-P</div>
     <div class="connect-links">
       <a class="connect-link" href="#" onclick="switchPart('resultados',document.querySelector('.part-tab'));return false">← Resultados del ciclo 26-P</a>
