@@ -138,7 +138,7 @@ DATA_DIR = ADMIN / 'Metanalisis/Output/datos'
 _plan_names = {
     'amb':'Ambiental','civ':'Civil','com':'Computación','ele':'Eléctrica',
     'elo':'Electrónica','fis':'Física','ind':'Industrial','mec':'Mecánica',
-    'met':'Metalurgia','qui':'Química'
+    'met':'Metalúrgica','qui':'Química'
 }
 _plans_order = ['amb','civ','com','ele','elo','fis','ind','mec','met','qui']
 
@@ -1261,7 +1261,7 @@ CAT_ASIGNACION_CONTENT = f"""
       <span class="section-count">10 licenciaturas · 674 estudiantes</span>
     </div>
     <p class="section-desc">
-      Ingeniería en Computación concentra el mayor nuevo ingreso (166 estudiantes, 24.6 %),
+      Ingeniería Computación concentra el mayor nuevo ingreso (166 estudiantes, 24.6 %),
       seguida de Mecánica (112) e Ingeniería Civil (84). La gráfica de género por licenciatura
       muestra la distribución de alumnas y alumnos en cada programa — información relevante para
       la planeación de grupos matutinos. El sistema garantiza que todos los estudiantes de un
@@ -5257,7 +5257,7 @@ CONC4_CONTENT = """
         <div class="chart-skeleton"></div>
       </div>
     </div>
-    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem"><strong>Ingeniería Civil</strong> encabeza la clasificación con una distancia considerable respecto al resto: el <strong>30.6 % de sus UEAs son críticas</strong> (RC ≥ percentil 90) y el RC medio del plan es 0.36, el más alto entre los diez programas. Le siguen <strong>Ingeniería en Computación</strong> (17.6 % de UEAs críticas, RC medio 0.29) e <strong>Ingeniería Eléctrica</strong> (15.9 %, RC medio 0.27). En el extremo opuesto, <strong>Ingeniería Física, Ingeniería Química, Ingeniería Industrial e Ingeniería Metalúrgica</strong> registran cero UEAs en nivel crítico y RC medio inferior a 0.02. Esta diferencia no refleja una gestión docente mejor o peor en esos planes: refleja que sus cadenas de seriación son menos profundas y sus UEAs de especialidad tienen, históricamente, mayor diversidad de impartidores. El diseño curricular determina la magnitud del riesgo tanto como la política de asignación docente.</p>
+    <p style="font-size:.92rem;line-height:1.75;color:var(--mid);margin-top:1.2rem"><strong>Ingeniería Civil</strong> encabeza la clasificación con una distancia considerable respecto al resto: el <strong>30.6 % de sus UEAs son críticas</strong> (RC ≥ percentil 90) y el RC medio del plan es 0.36, el más alto entre los diez programas. Le siguen <strong>Ingeniería Computación</strong> (17.6 % de UEAs críticas, RC medio 0.29) e <strong>Ingeniería Eléctrica</strong> (15.9 %, RC medio 0.27). En el extremo opuesto, <strong>Ingeniería Física, Ingeniería Química, Ingeniería Industrial e Ingeniería Metalúrgica</strong> registran cero UEAs en nivel crítico y RC medio inferior a 0.02. Esta diferencia no refleja una gestión docente mejor o peor en esos planes: refleja que sus cadenas de seriación son menos profundas y sus UEAs de especialidad tienen, históricamente, mayor diversidad de impartidores. El diseño curricular determina la magnitud del riesgo tanto como la política de asignación docente.</p>
   </section>
 
   <section class="section animate-in" id="chart-section-risk-dept">
